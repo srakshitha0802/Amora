@@ -10,11 +10,13 @@ import {
   X,
 } from 'lucide-react';
 import {
+  API_BASE_URL,
   BULK_PRODUCTS,
   CORPORATE_PILLARS,
   PRINTING_FINISHES,
   buildWhatsAppUrl,
 } from '../data/products';
+import { buildLocalQuotationTicket } from '../utils/quotation';
 import type {
   CorporatePrefill,
   PrintingFinishId,
@@ -210,22 +212,37 @@ export const CorporateSection: React.FC<CorporateSectionProps> = ({
     }
 
     setIsSubmitting(true);
+    const requestPayload = {
+      customerName,
+      contactNumber,
+      email,
+      products: selectedFormProducts,
+      quantity: Math.floor(parsedFormQty),
+      finish: formFinish,
+      requirements,
+      deliveryLocation,
+      artworkFileName,
+    };
+
     try {
-      const res = await fetch('/api/quotations', {
+      const res = await fetch(`${API_BASE_URL}/api/quotations`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          customerName,
-          contactNumber,
-          email,
-          products: selectedFormProducts,
-          quantity: Math.floor(parsedFormQty),
-          finish: formFinish,
-          requirements,
-          deliveryLocation,
-          artworkFileName,
-        }),
+        body: JSON.stringify(requestPayload),
       });
+      const contentType = res.headers.get('content-type') || '';
+
+      // Static hosts (e.g. GitHub Pages) return 404/405 or HTML instead of JSON API
+      if (res.status === 404 || res.status === 405 || !contentType.includes('application/json')) {
+        const local = buildLocalQuotationTicket(requestPayload);
+        if (local.error || !local.ticket) {
+          setFormError(local.error || 'Could not generate quotation summary.');
+          return;
+        }
+        setTicket(local.ticket);
+        return;
+      }
+
       const data = await res.json();
       if (!res.ok) {
         setFormError(data.error || 'Could not generate quotation summary.');
@@ -233,7 +250,15 @@ export const CorporateSection: React.FC<CorporateSectionProps> = ({
       }
       setTicket(data.ticket as QuotationTicket);
     } catch {
-      setFormError('Network issue while generating your quotation ticket. Please try again.');
+      // Static GitHub Pages fallback when no API server is attached
+      const local = buildLocalQuotationTicket(requestPayload);
+      if (local.ticket) {
+        setTicket(local.ticket);
+      } else {
+        setFormError(
+          local.error || 'Network issue while generating your quotation ticket. Please try again.'
+        );
+      }
     } finally {
       setIsSubmitting(false);
     }

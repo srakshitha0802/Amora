@@ -1,6 +1,9 @@
 import type { PrintingFinish, Product, ProductCategory } from '../types';
 
-export const BRAND_LOGO_URL = '/assets/aistudio/PHOTO-2026-11-21-11-46-55_ece32d0a.jpg';
+const BASE_URL = import.meta.env.BASE_URL || '/';
+
+export const BRAND_LOGO_URL = `${BASE_URL}assets/aistudio/PHOTO-2026-11-21-11-46-55_ece32d0a.jpg`;
+export const API_BASE_URL = (import.meta.env.VITE_API_BASE_URL || '').replace(/\/+$/, '');
 export const INSTAGRAM_URL = 'https://www.instagram.com/amora.co._?dmpr=eDcycW4yZm1qNzM%3D';
 export const INSTAGRAM_HANDLE = '@amora.co._';
 export const STUDIO_EMAIL = 'hello@amora.co.in';

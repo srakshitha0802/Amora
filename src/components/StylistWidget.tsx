@@ -1,5 +1,6 @@
 import React from 'react';
-import { AlertCircle, MessageSquareHeart, Send, X } from 'lucide-react';
+import { AlertCircle, MessageCircle, MessageSquareHeart, Send, X } from 'lucide-react';
+import { API_BASE_URL, buildWhatsAppUrl } from '../data/products';
 
 interface StylistMessage {
   id: string;
@@ -55,7 +56,7 @@ export const StylistWidget: React.FC = () => {
     setIsLoading(true);
 
     try {
-      const res = await fetch('/api/stylist', {
+      const res = await fetch(`${API_BASE_URL}/api/stylist`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -63,6 +64,15 @@ export const StylistWidget: React.FC = () => {
           history: historyForApi,
         }),
       });
+      const contentType = res.headers.get('content-type') || '';
+
+      if (res.status === 404 || res.status === 405 || !contentType.includes('application/json')) {
+        setErrorMsg(
+          'Live AI Stylist requires the Amora backend server (configure VITE_API_BASE_URL for GitHub Pages). You can chat directly with our studio on WhatsApp below.'
+        );
+        return;
+      }
+
       const data = await res.json();
 
       if (!res.ok) {
@@ -81,7 +91,9 @@ export const StylistWidget: React.FC = () => {
         },
       ]);
     } catch {
-      setErrorMsg('Unable to reach the Amora Gift & Merch Stylist right now.');
+      setErrorMsg(
+        'Could not connect to the AI Stylist backend. You can still message our Kalyan studio directly on WhatsApp below.'
+      );
     } finally {
       setIsLoading(false);
     }
@@ -150,10 +162,26 @@ export const StylistWidget: React.FC = () => {
             {errorMsg && (
               <div
                 role="alert"
-                className="rounded-xl bg-[#FCE7F3] border border-[#DFB2C7] px-3.5 py-2.5 text-xs text-[#3B0D27] flex items-start gap-2"
+                className="rounded-xl bg-[#FCE7F3] border border-[#DFB2C7] px-3.5 py-2.5 text-xs text-[#3B0D27] space-y-2"
               >
-                <AlertCircle className="w-4 h-4 shrink-0 text-[#8C1D40] mt-0.5" aria-hidden="true" />
-                <span>{errorMsg}</span>
+                <div className="flex items-start gap-2">
+                  <AlertCircle className="w-4 h-4 shrink-0 text-[#8C1D40] mt-0.5" aria-hidden="true" />
+                  <span>{errorMsg}</span>
+                </div>
+                <a
+                  href={buildWhatsAppUrl(
+                    `Hello Amora.co! I was browsing your store and had a question: ${
+                      messages.filter((m) => m.role === 'user').slice(-1)[0]?.text ??
+                      'Looking for gifting & merch advice'
+                    }`
+                  )}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#3B0D27] text-[#FDFBF7] text-[11px] font-medium hover:bg-[#59163C] transition-colors"
+                >
+                  <MessageCircle className="w-3.5 h-3.5" aria-hidden="true" />
+                  Ask Amora Studio on WhatsApp
+                </a>
               </div>
             )}
 
