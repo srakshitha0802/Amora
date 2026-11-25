@@ -14,6 +14,7 @@ import {
   INSTAGRAM_URL,
   INSTAGRAM_LOOKBOOK,
   STUDIO_EMAIL,
+  WHATSAPP_CATALOG_URL,
   buildWhatsAppUrl,
 } from '../data/products';
 import { ProductVisual } from './ProductVisual';
@@ -374,45 +375,48 @@ export const AboutAndContactSection: React.FC<AboutAndContactSectionProps> = ({
       </section>
 
       {/* Footer */}
-      <footer className="bg-[#232E36] text-[#FAF6F0] pt-14 pb-28 md:pb-14">
+      <footer className="bg-[#2E2A32] text-[#F8F4EA] pt-14 pb-28 md:pb-14">
         <div className="max-w-[1280px] mx-auto px-5 sm:px-8">
           <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-8 pb-8 mb-8 border-b border-white/10">
             <div>
               <p className="font-serif text-3xl font-semibold">amora.co</p>
-              <p className="text-sm text-[#E3A4AE]/70 mt-1 font-serif italic">
-                prints, &amp; pretty things
+              <p className="text-sm text-[#C88DA0] mt-1 font-serif italic">
+                Thoughtfully Personalised. Beautifully Branded.
+              </p>
+              <p className="text-xs text-white/60 mt-1">
+                A creative studio for personalised gifts, custom merchandise and corporate gifting.
               </p>
             </div>
-            <div className="flex flex-wrap gap-4">
+            <div className="flex flex-wrap gap-3">
               <a
-                href={conciergeWhatsApp}
+                href={WHATSAPP_CATALOG_URL}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-white/10 text-[#FAF6F0] text-sm font-medium hover:bg-white/15 transition-colors"
+                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-[#6D2E58] text-[#F8F4EA] text-xs font-semibold hover:bg-[#8E4474] transition-colors shadow-md"
               >
-                <MessageCircle className="w-4 h-4" aria-hidden="true" />
-                WhatsApp
+                <MessageCircle className="w-4 h-4 text-[#25D366]" aria-hidden="true" />
+                <span>WhatsApp Catalog</span>
               </a>
               <a
                 href={INSTAGRAM_URL}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-white/10 text-[#FAF6F0] text-sm font-medium hover:bg-white/15 transition-colors"
+                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-white/10 text-[#F8F4EA] text-xs font-semibold hover:bg-white/15 transition-colors"
               >
                 <Instagram className="w-4 h-4" aria-hidden="true" />
-                Instagram
+                <span>Instagram</span>
               </a>
             </div>
           </div>
           <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
-            <div className="flex flex-wrap items-center gap-x-6 gap-y-2 text-xs text-white/50">
+            <div className="flex flex-wrap items-center gap-x-6 gap-y-2 text-xs text-white/60">
               <a href="#home" className="hover:text-white transition-colors">Home</a>
-              <a href="#shop" className="hover:text-white transition-colors">Catalogue</a>
-              <a href="#corporate" className="hover:text-white transition-colors">Corporate (MOQ 30+)</a>
               <a href="#about" className="hover:text-white transition-colors">About</a>
+              <a href="#shop" className="hover:text-white transition-colors">Catalogue</a>
+              <a href="#corporate" className="hover:text-white transition-colors">Corporate Merchandise (MOQ 36+)</a>
               <a href="#contact" className="hover:text-white transition-colors">Contact</a>
             </div>
-            <p className="text-xs text-white/35">
+            <p className="text-xs text-white/40">
               © {new Date().getFullYear()} Amora.co · Founded by Achintya Gurba · Kalyan, Maharashtra
             </p>
           </div>

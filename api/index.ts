@@ -33,21 +33,24 @@ PRODUCT CATALOG & STRICT MOQ RULES (ALWAYS ENFORCE THESE ACCURATELY):
    - Custom Sticker Sheets (starting ₹159) — waterproof kiss-cut matte vinyl sheets for laptops, journals, and gifting.
    - Personalised Photostrips & Letters (starting ₹249) — classic 4-frame photo booth strips paired with textured letterpress-style keepsake envelopes.
 
-2. CORPORATE & BULK MERCHANDISE — STRICT MOQ: 30+ PIECES PER ORDER (NEVER accept or promise fewer than 30 units for these 4 items!):
-   - Custom Printed Water Bottles (indicative ₹390–₹540/pc depending on tier & finish) — double-wall matte insulated flasks.
-   - Custom Printed Mugs (indicative ₹220–₹320/pc) — 330ml matte/gloss ceramic mugs.
-   - Custom Printed Mousepads (indicative ₹160–₹240/pc) — stitched-edge micro-weave ergonomic desk pads.
-   - Custom Printed Keyboard Mats (indicative ₹420–₹590/pc) — extended 800x300mm anti-slip full desk mats.
+2. CORPORATE & BULK MERCHANDISE — STRICT MOQ: 36+ PIECES PER ORDER (NEVER accept or promise fewer than 36 units for corporate merchandise!):
+   - Custom Printed Mousepad (₹99 per piece) — standard low-friction desk mousepad with anti-slip rubber base.
+   - Custom Printed Round Mousepad (₹99 per piece) — round 200mm circular micro-weave mousepad with stitched rim.
+   - Custom Printed Keyboard / Table Mat (₹299 per piece) — extended 800x300mm anti-slip full desk mat.
+   - Custom Printed Coffee Mug (₹199 per piece) — 330ml studio ceramic mug with vivid wrap imprint.
+   - Custom Printed Sipper Bottle — 600 ml (₹350 per piece) — stainless steel sipper flask with leak-proof flip nozzle cap.
+   - Custom Printed Sports Bottle — 750 ml (₹350 per piece) — double-wall insulated sports bottle with carabiner loop lid.
 
 CORPORATE SOLUTIONS & PRINTING FINISHES:
 - Solutions: Corporate Merchandise, Customised Employee Welcome Kits, Company-Branded Merchandise, Employee Appreciation Gifts, Custom Printing Solutions.
 - Finishes: UV Print (vibrant full-colour, raised tactile logo), Screen Print (crisp 1–2 colour bold branding, best value at scale), Sublimation (edge-to-edge full-wrap prints on mugs & mats), Laser Engraving (permanent understated metallic mark on bottles).
-- Bulk tiers: Starter Studio (30–74 pcs), Growth Team (75–199 pcs), Enterprise Run (200+ pcs).
+- Bulk tiers: Starter Studio (36–74 pcs), Growth Team (75–199 pcs), Enterprise Run (200+ pcs).
 
 GUIDELINES FOR YOUR RESPONSES:
 - Keep answers warm, editorial, concise (3–6 short sentences or crisp bullet points), and genuinely actionable.
-- If a user asks for fewer than 30 Water Bottles, Mugs, Mousepads, or Keyboard Mats, politely explain Amora.co's strict 30-piece minimum order quantity (MOQ) for corporate merchandise, and suggest either bundling up to 30 units OR pivoting to No-MOQ personal keepsakes (like Polaroids, Photo Frames, Bookmarks, or Photostrips & Letters) for smaller groups!
-- Use Indian Rupees (₹) when discussing budgets or estimates, clearly noting bulk prices are indicative estimates pending final artwork review.
+- If a user asks for fewer than 36 pieces of corporate merchandise, politely explain Amora.co's strict 36-piece minimum order quantity (MOQ) for corporate merchandise, and suggest either bundling up to 36 units OR pivoting to No-MOQ personal keepsakes (like Polaroids, Photo Frames, Bookmarks, or Photostrips & Letters) for smaller groups!
+- Note that shipping charges are excluded and final quotations depend on quantity and customisation requirements.
+- Use Indian Rupees (₹) when discussing budgets or estimates.
 - When helpful, invite them to try the Live Product Customiser drawer on the site, the Corporate Kit Estimator, or message the Kalyan studio directly on WhatsApp.`;
 
 interface ChatTurn {
@@ -166,10 +169,12 @@ interface QuotationPayload {
 }
 
 const BULK_UNIT_RATES: Record<string, number> = {
-  'Custom Printed Water Bottles': 460,
-  'Custom Printed Mugs': 265,
-  'Custom Printed Mousepads': 195,
-  'Custom Printed Keyboard Mats': 495,
+  'Custom Printed Mousepad': 99,
+  'Custom Printed Round Mousepad': 99,
+  'Custom Printed Keyboard / Table Mat': 299,
+  'Custom Printed Coffee Mug': 199,
+  'Custom Printed Sipper Bottle': 350,
+  'Custom Printed Sports Bottle': 350,
   'Custom Mix / Employee Welcome Kit': 890,
 };
 
@@ -195,9 +200,9 @@ const handleQuotations = (req: Request, res: Response) => {
     res.status(400).json({ error: 'Please select at least one corporate product.' });
     return;
   }
-  if (!Number.isFinite(quantity) || quantity < 30) {
+  if (!Number.isFinite(quantity) || quantity < 36) {
     res.status(400).json({
-      error: 'Corporate merchandise orders require a strict minimum order quantity (MOQ) of 30 pieces.',
+      error: 'Corporate merchandise orders require a strict minimum order quantity (MOQ) of 36 pieces.',
     });
     return;
   }
@@ -207,7 +212,7 @@ const handleQuotations = (req: Request, res: Response) => {
       ? { name: 'Enterprise Run (200+ pcs)', discount: 0.18 }
       : quantity >= 75
         ? { name: 'Growth Team (75–199 pcs)', discount: 0.1 }
-        : { name: 'Starter Studio (30–74 pcs)', discount: 0 };
+        : { name: 'Starter Studio (36–74 pcs)', discount: 0 };
 
   const baseSum = products.reduce((sum, item) => sum + (BULK_UNIT_RATES[item] ?? 350), 0);
   const perUnitEstimate = Math.round(baseSum * (1 - tier.discount));

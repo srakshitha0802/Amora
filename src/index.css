@@ -1,34 +1,32 @@
-@import url('https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,600&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&display=swap');
 @import "tailwindcss";
 
 @theme {
-  --font-serif: "Instrument Serif", Georgia, serif;
+  --font-serif: "Cormorant Garamond", Georgia, serif;
   --font-editorial: "Cormorant Garamond", Georgia, serif;
-  --font-sans: "Plus Jakarta Sans", -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-sans: "DM Sans", -apple-system, BlinkMacSystemFont, sans-serif;
 
-  /* Brand Core Tokens */
-  --color-plum: #76577B;
-  --color-plum-light: #9A72A0;
-  --color-plum-glow: #8E6C94;
+  /* Approved Amora Brand Core Tokens */
+  --color-plum: #6D2E58;
+  --color-dusty-rose: #C88DA0;
+  --color-blush: #EBC6CF;
+  --color-ivory: #F8F4EA;
+  --color-lilac: #D8C6E6;
+  --color-charcoal: #2E2A32;
   
-  --color-blush: #E3A4AE;
-  --color-blush-light: #F7B5BF;
-  
-  --color-ivory: #FAF6F0;
-  --color-cream: #F5F0E8;
-  
-  --color-charcoal: #161E24;
-  --color-rose-gold: #E8998D;
-  --color-champagne: #F3C69F;
+  --color-plum-light: #8E4474;
+  --color-plum-glow: #6D2E58;
+  --color-blush-light: #F4DCE2;
+  --color-cream: #F8F4EA;
 }
 
 :root {
-  --bg-canvas: #06080C;
-  --bg-elevated: #0B0E14;
-  --text-primary: #FAF6F0;
-  --text-secondary: #CBD5E1;
-  --text-muted: #94A3B8;
-  --border-subtle: rgba(255, 255, 255, 0.12);
+  --bg-canvas: #1A161E;
+  --bg-elevated: #26202A;
+  --text-primary: #F8F4EA;
+  --text-secondary: #D8C6E6;
+  --text-muted: #A89CAE;
+  --border-subtle: rgba(248, 244, 234, 0.12);
   --glass-bg: rgba(255, 255, 255, 0.03);
   --glass-border-gradient: linear-gradient(
     180deg,
@@ -42,20 +40,20 @@
 }
 
 .light {
-  --bg-canvas: #F5F1EB;
+  --bg-canvas: #F8F4EA;
   --bg-elevated: #FFFFFF;
-  --text-primary: #161E24;
-  --text-secondary: #424D55;
-  --text-muted: #64748B;
-  --border-subtle: rgba(118, 87, 123, 0.18);
-  --glass-bg: rgba(255, 255, 255, 0.82);
+  --text-primary: #2E2A32;
+  --text-secondary: #584F5E;
+  --text-muted: #7E7285;
+  --border-subtle: rgba(109, 46, 88, 0.16);
+  --glass-bg: rgba(255, 255, 255, 0.88);
   --glass-border-gradient: linear-gradient(
     180deg,
-    rgba(118, 87, 123, 0.35) 0%,
-    rgba(227, 164, 174, 0.25) 20%,
-    rgba(118, 87, 123, 0.08) 50%,
-    rgba(227, 164, 174, 0.25) 80%,
-    rgba(118, 87, 123, 0.35) 100%
+    rgba(109, 46, 88, 0.35) 0%,
+    rgba(200, 141, 160, 0.25) 20%,
+    rgba(109, 46, 88, 0.08) 50%,
+    rgba(200, 141, 160, 0.25) 80%,
+    rgba(109, 46, 88, 0.35) 100%
   );
 }
 

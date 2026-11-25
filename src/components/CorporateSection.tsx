@@ -29,10 +29,12 @@ interface CorporateSectionProps {
 }
 
 const BULK_PRODUCT_OPTIONS = [
-  'Custom Printed Water Bottles',
-  'Custom Printed Mugs',
-  'Custom Printed Mousepads',
-  'Custom Printed Keyboard Mats',
+  'Custom Printed Mousepad',
+  'Custom Printed Round Mousepad',
+  'Custom Printed Keyboard / Table Mat',
+  'Custom Printed Coffee Mug',
+  'Custom Printed Sipper Bottle',
+  'Custom Printed Sports Bottle',
   'Custom Mix / Employee Welcome Kit',
 ];
 
@@ -47,9 +49,9 @@ export const CorporateSection: React.FC<CorporateSectionProps> = ({
 }) => {
   // Interactive Corporate Kit Estimator State
   const [selectedKitIds, setSelectedKitIds] = React.useState<string[]>([
-    'water-bottles',
-    'mugs',
-    'keyboard-mats',
+    'custom-printed-sipper-bottle',
+    'custom-printed-coffee-mug',
+    'custom-printed-keyboard-mat',
   ]);
   const [teamSizeInput, setTeamSizeInput] = React.useState<string>('50');
   const [selectedFinishId, setSelectedFinishId] = React.useState<PrintingFinishId>('uv');
@@ -60,8 +62,8 @@ export const CorporateSection: React.FC<CorporateSectionProps> = ({
   const [contactNumber, setContactNumber] = React.useState('');
   const [email, setEmail] = React.useState('');
   const [selectedFormProducts, setSelectedFormProducts] = React.useState<string[]>([
-    'Custom Printed Water Bottles',
-    'Custom Printed Mugs',
+    'Custom Printed Sipper Bottle',
+    'Custom Printed Coffee Mug',
   ]);
   const [quantityInput, setQuantityInput] = React.useState<string>('50');
   const [formFinish, setFormFinish] = React.useState<string>('UV Print');
@@ -81,7 +83,7 @@ export const CorporateSection: React.FC<CorporateSectionProps> = ({
     if (prefill.products.length > 0) {
       setSelectedFormProducts(prefill.products);
     }
-    setQuantityInput(String(Math.max(30, prefill.quantity)));
+    setQuantityInput(String(Math.max(36, prefill.quantity)));
     if (prefill.finish) {
       setFormFinish(prefill.finish);
     }
@@ -92,8 +94,8 @@ export const CorporateSection: React.FC<CorporateSectionProps> = ({
 
   // Estimator Calculations
   const parsedTeamSize = Number(teamSizeInput);
-  const isEstimatorBelowMoq = !Number.isFinite(parsedTeamSize) || parsedTeamSize < 30;
-  const effectiveTeamSize = isEstimatorBelowMoq ? 30 : Math.floor(parsedTeamSize);
+  const isEstimatorBelowMoq = !Number.isFinite(parsedTeamSize) || parsedTeamSize < 36;
+  const effectiveTeamSize = isEstimatorBelowMoq ? 36 : Math.floor(parsedTeamSize);
 
   const activeFinish =
     PRINTING_FINISHES.find((f) => f.id === selectedFinishId) ?? PRINTING_FINISHES[0];
@@ -105,7 +107,7 @@ export const CorporateSection: React.FC<CorporateSectionProps> = ({
         ? { name: 'Enterprise Run (200+ pcs)', discountLabel: '18% volume savings', discount: 0.18 }
         : effectiveTeamSize >= 75
           ? { name: 'Growth Team (75–199 pcs)', discountLabel: '10% volume savings', discount: 0.1 }
-          : { name: 'Starter Studio (30–74 pcs)', discountLabel: 'Standard bulk tier', discount: 0 };
+          : { name: 'Starter Studio (36–74 pcs)', discountLabel: 'Standard bulk tier', discount: 0 };
 
     const rawKitPrice = selectedProducts.reduce(
       (sum, item) => sum + item.unitPriceEstimate + activeFinish.perUnitAdder,
@@ -151,7 +153,7 @@ export const CorporateSection: React.FC<CorporateSectionProps> = ({
       productId: p.id,
       name: p.name,
       isBulkOnly: true,
-      moq: 30,
+      moq: 36,
       quantity: effectiveTeamSize,
       unitPriceEstimate: Math.round((p.unitPriceEstimate + activeFinish.perUnitAdder) * (1 - estimatorSummary.tier.discount)),
       finish: activeFinish.name,
@@ -164,7 +166,7 @@ export const CorporateSection: React.FC<CorporateSectionProps> = ({
 
   // Form Logic
   const parsedFormQty = Number(quantityInput);
-  const isFormBelowMoq = quantityInput.trim() !== '' && (!Number.isFinite(parsedFormQty) || parsedFormQty < 30);
+  const isFormBelowMoq = quantityInput.trim() !== '' && (!Number.isFinite(parsedFormQty) || parsedFormQty < 36);
 
   const toggleFormProduct = (label: string) => {
     setSelectedFormProducts((prev) =>
@@ -206,8 +208,8 @@ export const CorporateSection: React.FC<CorporateSectionProps> = ({
       setFormError('Select at least one bulk merchandise product.');
       return;
     }
-    if (!Number.isFinite(parsedFormQty) || parsedFormQty < 30) {
-      setFormError('Minimum Order Quantity for corporate merchandise is 30 pieces.');
+    if (!Number.isFinite(parsedFormQty) || parsedFormQty < 36) {
+      setFormError('Minimum Order Quantity for corporate merchandise is 36 pieces.');
       return;
     }
 
@@ -253,7 +255,7 @@ export const CorporateSection: React.FC<CorporateSectionProps> = ({
       `Delivery Location: ${t.deliveryLocation}`,
       `----------------------------------------`,
       `Products Requested: ${t.products.join(', ')}`,
-      `Quantity: ${t.quantity} pieces (MOQ 30+ verified)`,
+      `Quantity: ${t.quantity} pieces (MOQ 36+ verified)`,
       `Preferred Finish: ${t.finish}`,
       `Tier Guidance: ${t.tierName}`,
       `Indicative Estimate: ${formatInr(t.estimatedTotalRange.low)} – ${formatInr(t.estimatedTotalRange.high)} (~${formatInr(t.estimatedPerUnit)}/set)`,
@@ -298,12 +300,12 @@ export const CorporateSection: React.FC<CorporateSectionProps> = ({
         {/* B2B Intro Header */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-end mb-12">
           <div className="lg:col-span-7">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold uppercase tracking-wider mb-4 bg-[#76577B]/10 text-[#76577B] border border-[#76577B]/20">
-              Corporate &amp; Businesses Portal · Strict MOQ 30+ Units
+            <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full text-xs font-semibold uppercase tracking-wider mb-4 bg-[#6D2E58]/10 text-[#6D2E58] border border-[#6D2E58]/20">
+              Corporate &amp; Businesses Portal · Strict MOQ 36+ Units
             </div>
             <h2
               className={`font-serif text-3xl sm:text-5xl font-semibold leading-tight ${
-                isDark ? 'text-[#FAF6F0]' : 'text-[#161E24]'
+                isDark ? 'text-[#F8F4EA]' : 'text-[#2E2A32]'
               }`}
               style={{ textWrap: 'balance' }}
             >
@@ -312,7 +314,7 @@ export const CorporateSection: React.FC<CorporateSectionProps> = ({
           </div>
           <div className="lg:col-span-5">
             <p className={`text-sm sm:text-[15px] leading-relaxed ${
-              isDark ? 'text-[#CBD5E1]' : 'text-[#424D55]'
+              isDark ? 'text-[#D8C6E6]' : 'text-[#584F5E]'
             }`}>
               We partner with HR teams, founders, and brand managers across Thane, Mumbai, and
               pan-India to craft company-branded welcome kits and appreciation gifts that employees
@@ -328,23 +330,23 @@ export const CorporateSection: React.FC<CorporateSectionProps> = ({
               key={pillar.number}
               className={`rounded-2xl p-6 flex flex-col justify-between border transition-all ${
                 isDark
-                  ? 'liquid-glass border-white/10'
-                  : 'bg-white border-[#76577B]/20 shadow-md'
+                  ? 'bg-[#26202A]/80 border-white/10'
+                  : 'bg-white border-[#6D2E58]/20 shadow-md'
               }`}
             >
               <div>
                 <span className={`text-xs font-semibold tabular-nums ${
-                  isDark ? 'text-[#E3A4AE]' : 'text-[#76577B]'
+                  isDark ? 'text-[#C88DA0]' : 'text-[#6D2E58]'
                 }`}>
                   {pillar.number}.
                 </span>
                 <h3 className={`font-serif text-2xl font-semibold mt-2 leading-snug ${
-                  isDark ? 'text-[#FAF6F0]' : 'text-[#161E24]'
+                  isDark ? 'text-[#F8F4EA]' : 'text-[#2E2A32]'
                 }`}>
                   {pillar.title}
                 </h3>
                 <p className={`text-sm mt-2.5 leading-relaxed ${
-                  isDark ? 'text-[#CBD5E1]' : 'text-[#424D55]'
+                  isDark ? 'text-[#D8C6E6]' : 'text-[#584F5E]'
                 }`}>
                   {pillar.description}
                 </p>
@@ -356,35 +358,35 @@ export const CorporateSection: React.FC<CorporateSectionProps> = ({
         {/* Interactive Corporate Kit Estimator */}
         <div className={`rounded-2xl overflow-hidden mb-14 border transition-all ${
           isDark
-            ? 'liquid-glass border-white/10'
-            : 'bg-white border-[#76577B]/20 shadow-xl'
+            ? 'bg-[#26202A]/80 border-white/10'
+            : 'bg-white border-[#6D2E58]/20 shadow-xl'
         }`}>
           <div className="grid grid-cols-1 lg:grid-cols-12">
             {/* Left Configurator Controls */}
             <div className={`lg:col-span-7 p-6 sm:p-8 lg:p-10 border-b lg:border-b-0 lg:border-r ${
-              isDark ? 'border-white/10' : 'border-[#76577B]/15'
+              isDark ? 'border-white/10' : 'border-[#6D2E58]/15'
             }`}>
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold uppercase tracking-wider mb-2 bg-[#76577B]/10 text-[#76577B]">
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold uppercase tracking-wider mb-2 bg-[#6D2E58]/10 text-[#6D2E58]">
                 Interactive B2B Configurator
               </div>
               <h3 className={`font-serif text-3xl font-semibold ${
-                isDark ? 'text-[#FAF6F0]' : 'text-[#161E24]'
+                isDark ? 'text-[#F8F4EA]' : 'text-[#2E2A32]'
               }`}>
                 Corporate Kit Estimator
               </h3>
               <p className={`text-sm mt-1.5 ${
-                isDark ? 'text-[#CBD5E1]' : 'text-[#424D55]'
+                isDark ? 'text-[#D8C6E6]' : 'text-[#584F5E]'
               }`}>
-                Combine any of our 4 bulk merchandise essentials, set your team size (30+ minimum),
+                Combine any of our confirmed bulk merchandise essentials, set your team size (36+ minimum),
                 and preview instant volume tier guidance.
               </p>
 
               {/* Step 1: Select Bulk Items */}
               <div className="mt-7">
                 <span className={`block text-xs font-semibold uppercase tracking-wider mb-3 ${
-                  isDark ? 'text-[#FAF6F0]' : 'text-[#161E24]'
+                  isDark ? 'text-[#F8F4EA]' : 'text-[#2E2A32]'
                 }`}>
-                  1. Select items for your kit (MOQ 30+ each)
+                  1. Select items for your kit (MOQ 36+ each)
                 </span>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                   {BULK_PRODUCTS.map((product) => {
@@ -397,21 +399,21 @@ export const CorporateSection: React.FC<CorporateSectionProps> = ({
                         className={`text-left p-4 rounded-xl border transition-all cursor-pointer flex items-start justify-between gap-3 ${
                           checked
                             ? (isDark
-                                ? 'bg-[#76577B]/30 border-[#E3A4AE] text-white shadow-md'
-                                : 'bg-[#76577B]/10 border-[#76577B] text-[#161E24] shadow-sm')
+                                ? 'bg-[#6D2E58]/30 border-[#C88DA0] text-white shadow-md'
+                                : 'bg-[#6D2E58]/10 border-[#6D2E58] text-[#2E2A32] shadow-sm')
                             : (isDark
-                                ? 'bg-white/5 border-white/10 text-[#CBD5E1] hover:border-white/20'
-                                : 'bg-[#FAF6F0] border-[#76577B]/15 text-[#424D55] hover:border-[#76577B]/30')
+                                ? 'bg-white/5 border-white/10 text-[#D8C6E6] hover:border-white/20'
+                                : 'bg-[#F8F4EA] border-[#6D2E58]/15 text-[#584F5E] hover:border-[#6D2E58]/30')
                         }`}
                       >
                         <div>
                           <p className={`text-sm font-semibold ${
                             checked
-                              ? (isDark ? 'text-white' : 'text-[#161E24]')
-                              : (isDark ? 'text-[#FAF6F0]' : 'text-[#161E24]')
+                              ? (isDark ? 'text-white' : 'text-[#2E2A32]')
+                              : (isDark ? 'text-[#F8F4EA]' : 'text-[#2E2A32]')
                           }`}>{product.shortName}</p>
                           <p className={`text-xs mt-0.5 tabular-nums ${
-                            isDark ? 'text-[#CBD5E1]' : 'text-[#64748B]'
+                            isDark ? 'text-[#D8C6E6]' : 'text-[#7E7285]'
                           }`}>
                             Base ~{formatInr(product.unitPriceEstimate)} / pc
                           </p>
@@ -419,8 +421,8 @@ export const CorporateSection: React.FC<CorporateSectionProps> = ({
                         <span
                           className={`w-5 h-5 rounded-md flex items-center justify-center shrink-0 mt-0.5 border transition-colors ${
                             checked
-                              ? 'bg-[#76577B] border-[#76577B] text-white'
-                              : (isDark ? 'bg-black/30 border-white/20' : 'bg-white border-[#76577B]/20')
+                              ? 'bg-[#6D2E58] border-[#6D2E58] text-white'
+                              : (isDark ? 'bg-black/30 border-white/20' : 'bg-white border-[#6D2E58]/20')
                           }`}
                         >
                           {checked && <Check className="w-3.5 h-3.5" aria-hidden="true" />}
@@ -431,19 +433,19 @@ export const CorporateSection: React.FC<CorporateSectionProps> = ({
                 </div>
               </div>
 
-              {/* Step 2: Team Size (Enforces 30+ MOQ) */}
+              {/* Step 2: Team Size (Enforces 36+ MOQ) */}
               <div className="mt-7">
                 <div className="flex items-center justify-between gap-4 mb-2">
                   <label
                     htmlFor="estimator-team-size"
                     className={`text-xs font-semibold uppercase tracking-wider ${
-                      isDark ? 'text-[#FAF6F0]' : 'text-[#161E24]'
+                      isDark ? 'text-[#F8F4EA]' : 'text-[#2E2A32]'
                     }`}
                   >
-                    2. Team size / quantity (Minimum 30 units)
+                    2. Team size / quantity (Minimum 36 units)
                   </label>
                   <span className={`text-xs font-bold tabular-nums px-2.5 py-0.5 rounded-full ${
-                    isDark ? 'bg-white/10 text-[#FAF6F0]' : 'bg-[#76577B]/10 text-[#76577B]'
+                    isDark ? 'bg-white/10 text-[#F8F4EA]' : 'bg-[#6D2E58]/10 text-[#6D2E58]'
                   }`}>
                     {effectiveTeamSize} kits
                   </span>
@@ -451,31 +453,31 @@ export const CorporateSection: React.FC<CorporateSectionProps> = ({
                 <div className="flex items-center gap-4">
                   <input
                     type="range"
-                    min={30}
+                    min={36}
                     max={500}
-                    step={5}
-                    value={Math.min(500, Math.max(30, effectiveTeamSize))}
+                    step={1}
+                    value={Math.min(500, Math.max(36, effectiveTeamSize))}
                     onChange={(e) => setTeamSizeInput(e.target.value)}
                     aria-label="Team size slider"
-                    className="flex-1 accent-[#76577B] cursor-pointer"
+                    className="flex-1 accent-[#6D2E58] cursor-pointer"
                   />
                   <input
                     id="estimator-team-size"
                     type="number"
-                    min={1}
+                    min={36}
                     value={teamSizeInput}
                     onChange={(e) => setTeamSizeInput(e.target.value)}
-                    className={`w-24 px-3 py-2 text-sm font-semibold tabular-nums rounded-lg border focus:outline-none focus:border-[#76577B] ${
+                    className={`w-24 px-3 py-2 text-sm font-semibold tabular-nums rounded-lg border focus:outline-none focus:border-[#6D2E58] ${
                       isDark
                         ? 'bg-black/40 border-white/20 text-white'
-                        : 'bg-[#FAF6F0] border-[#76577B]/30 text-[#161E24]'
+                        : 'bg-[#F8F4EA] border-[#6D2E58]/30 text-[#2E2A32]'
                     }`}
                   />
                 </div>
                 {isEstimatorBelowMoq && (
                   <p className="mt-2 inline-flex items-center gap-1.5 text-xs font-semibold text-[#8C1D40]">
                     <AlertCircle className="w-3.5 h-3.5 shrink-0" aria-hidden="true" />
-                    Corporate merchandise carries a strict 30-piece MOQ. Estimate below is anchored to 30 kits.
+                    Corporate merchandise carries a strict 36-piece MOQ. Estimate below is anchored to 36 kits.
                   </p>
                 )}
               </div>
@@ -768,14 +770,14 @@ export const CorporateSection: React.FC<CorporateSectionProps> = ({
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
                   <label htmlFor="b2b-qty" className={`block text-xs font-semibold uppercase tracking-wider mb-1.5 ${
-                    isDark ? 'text-[#FAF6F0]' : 'text-[#161E24]'
+                    isDark ? 'text-[#F8F4EA]' : 'text-[#2E2A32]'
                   }`}>
-                    Quantity Required (Strict MOQ: 30+) *
+                    Quantity Required (Strict MOQ: 36+) *
                   </label>
                   <input
                     id="b2b-qty"
                     type="number"
-                    min={1}
+                    min={36}
                     required
                     value={quantityInput}
                     onChange={(e) => setQuantityInput(e.target.value)}
@@ -783,15 +785,15 @@ export const CorporateSection: React.FC<CorporateSectionProps> = ({
                       isFormBelowMoq
                         ? 'border-[#B4234B] bg-[#B4234B]/10 text-[#8C1D40]'
                         : (isDark
-                            ? 'bg-black/40 border-white/15 text-white focus:border-[#76577B]'
-                            : 'bg-[#FAF6F0] border-[#76577B]/25 text-[#161E24] focus:border-[#76577B]')
+                            ? 'bg-black/40 border-white/15 text-white focus:border-[#6D2E58]'
+                            : 'bg-[#F8F4EA] border-[#6D2E58]/25 text-[#2E2A32] focus:border-[#6D2E58]')
                     }`}
                   />
                   {isFormBelowMoq && (
                     <p className="mt-1.5 inline-flex items-start gap-1.5 text-xs font-semibold text-[#8C1D40]">
                       <AlertCircle className="w-3.5 h-3.5 shrink-0 mt-0.5" aria-hidden="true" />
-                      Quantity must be at least 30 pieces for corporate merchandise. For smaller
-                      orders, explore our No-MOQ keepsakes.
+                      Quantity must be at least 36 pieces for corporate merchandise. For smaller
+                      orders, explore our No-MOQ personal keepsakes.
                     </p>
                   )}
                 </div>

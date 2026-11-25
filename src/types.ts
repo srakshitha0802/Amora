@@ -1,9 +1,11 @@
 export type ProductCategory =
   | 'All'
-  | 'Prints & Keepsakes'
-  | 'Stickers & Photocards'
-  | 'Corporate Merchandise (MOQ 30+)'
-  | 'Customised Products';
+  | 'Corporate Merchandise'
+  | 'Polaroids & Photo Products'
+  | 'Personalised Gifts'
+  | 'Stickers'
+  | 'Bookmarks & Stationery'
+  | 'Posters & Prints';
 
 export type OrderMode = 'all' | 'personal' | 'bulk';
 
@@ -17,7 +19,10 @@ export type ProductVisualType =
   | 'water-bottle'
   | 'mug'
   | 'mousepad'
-  | 'keyboard-mat';
+  | 'round-mousepad'
+  | 'keyboard-mat'
+  | 'sipper-bottle'
+  | 'sports-bottle';
 
 export interface Product {
   id: string;
@@ -32,6 +37,7 @@ export interface Product {
   unitLabel: string;
   description: string;
   specs: string[];
+  customisationInfo?: string;
   visualType: ProductVisualType;
   defaultAccent: string;
   defaultSampleText: string;

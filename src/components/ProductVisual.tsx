@@ -515,7 +515,7 @@ export const ProductVisual: React.FC<ProductVisualProps> = ({
         </div>
       )}
 
-      {/* 9. CUSTOM PRINTED MOUSEPADS (BULK 30+) */}
+      {/* 9. CUSTOM PRINTED MOUSEPADS (BULK 36+) */}
       {visualType === 'mousepad' && (
         <div className="relative z-10 flex items-center justify-center">
           <div
@@ -556,6 +556,123 @@ export const ProductVisual: React.FC<ProductVisualProps> = ({
               >
                 {displayCaption}
               </p>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* 9B. CUSTOM PRINTED ROUND MOUSEPAD (BULK 36+) */}
+      {visualType === 'round-mousepad' && (
+        <div className="relative z-10 flex items-center justify-center">
+          <div
+            className={`relative rounded-full shadow-[0_18px_32px_-12px_rgba(59,13,39,0.28)] p-3 flex flex-col items-center justify-center text-center overflow-hidden border-2 border-white/40 ${
+              isStudio ? 'w-48 h-48' : 'w-36 h-36'
+            }`}
+            style={{
+              backgroundColor: accentColor,
+            }}
+          >
+            <div
+              className="absolute inset-0 opacity-15 pointer-events-none rounded-full"
+              style={{
+                backgroundImage:
+                  'radial-gradient(#FAF6F0 0.75px, transparent 0.75px)',
+                backgroundSize: '10px 10px',
+              }}
+            />
+            <div className="relative z-10 flex flex-col items-center justify-center gap-1.5 max-w-[85%]">
+              {uploadedImage ? (
+                <div className="w-10 h-10 rounded-full bg-white/95 p-1 flex items-center justify-center overflow-hidden">
+                  <img src={uploadedImage} alt="Round mousepad logo" className="w-full h-full object-contain" />
+                </div>
+              ) : (
+                <span className="text-[8px] uppercase tracking-widest text-[#EBC6CF] font-medium">
+                  200mm Round
+                </span>
+              )}
+              <p
+                className={`truncate max-w-full text-[#FAF6F0] ${textFontClass} ${
+                  isStudio ? 'text-sm' : 'text-[11px]'
+                }`}
+              >
+                {displayCaption}
+              </p>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* 9C. CUSTOM PRINTED SIPPER BOTTLE (600 ML) */}
+      {visualType === 'sipper-bottle' && (
+        <div className="relative z-10 flex items-center justify-center">
+          <div className="relative flex flex-col items-center">
+            {/* Sipper Cap with Flip Spout */}
+            <div className="w-10 h-7 rounded-t-lg bg-[#2E2A32] relative flex items-center justify-center shadow-xs">
+              <div className="w-4 h-2.5 rounded-t-sm bg-[#6D2E58] absolute -top-2" />
+            </div>
+            {/* Bottle Neck */}
+            <div className="w-12 h-3 bg-[#424D55]" />
+            {/* Stainless Body */}
+            <div
+              className={`relative rounded-b-[18px] shadow-[0_20px_36px_-12px_rgba(46,42,50,0.35)] flex flex-col items-center justify-center p-3 overflow-hidden ${
+                isStudio ? 'w-24 h-56' : 'w-18 h-44'
+              }`}
+              style={{ backgroundColor: accentColor }}
+            >
+              <div className="relative z-10 flex flex-col items-center gap-2 max-w-full">
+                {uploadedImage ? (
+                  <div className="w-9 h-9 rounded bg-white/90 p-1 flex items-center justify-center overflow-hidden">
+                    <img src={uploadedImage} alt="Sipper imprint" className="w-full h-full object-contain" />
+                  </div>
+                ) : (
+                  <span className="text-[8px] uppercase tracking-widest text-[#EBC6CF]">600 ml</span>
+                )}
+                <span
+                  className={`text-center leading-tight max-w-full truncate px-1 text-[#F8F4EA] ${textFontClass} ${
+                    isStudio ? 'text-xs' : 'text-[9px]'
+                  }`}
+                >
+                  {displayCaption}
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* 9D. CUSTOM PRINTED SPORTS BOTTLE (750 ML) */}
+      {visualType === 'sports-bottle' && (
+        <div className="relative z-10 flex items-center justify-center">
+          <div className="relative flex flex-col items-center">
+            {/* Carabiner Sport Loop Cap */}
+            <div className="w-11 h-8 rounded-t-xl bg-[#2E2A32] relative flex items-center justify-center">
+              <div className="w-6 h-3 rounded-t-full border-2 border-[#D8C6E6] absolute -top-2.5" />
+            </div>
+            {/* Metal Ring Collar */}
+            <div className="w-13 h-3 bg-[#C88DA0]" />
+            {/* Ergonomic Tapered Bottle Body */}
+            <div
+              className={`relative rounded-b-[20px] shadow-[0_22px_40px_-14px_rgba(46,42,50,0.4)] flex flex-col items-center justify-center p-3 overflow-hidden ${
+                isStudio ? 'w-26 h-60' : 'w-20 h-48'
+              }`}
+              style={{ backgroundColor: accentColor }}
+            >
+              <div className="relative z-10 flex flex-col items-center gap-2.5 max-w-full">
+                {uploadedImage ? (
+                  <div className="w-10 h-10 rounded bg-white/90 p-1 flex items-center justify-center overflow-hidden">
+                    <img src={uploadedImage} alt="Sports bottle logo" className="w-full h-full object-contain" />
+                  </div>
+                ) : (
+                  <span className="text-[8px] uppercase tracking-widest text-[#EBC6CF]">750 ml Insulated</span>
+                )}
+                <span
+                  className={`text-center leading-tight max-w-full truncate px-1 text-[#F8F4EA] ${textFontClass} ${
+                    isStudio ? 'text-xs' : 'text-[10px]'
+                  }`}
+                >
+                  {displayCaption}
+                </span>
+              </div>
             </div>
           </div>
         </div>

@@ -143,10 +143,10 @@ export const ParticleHero: React.FC<ParticleHeroProps> = ({
                 <span className={`font-serif text-3xl sm:text-4xl font-semibold leading-none tracking-tight ${
                   isDark ? 'text-[#FAF6F0]' : 'text-[#161E24]'
                 }`}>
-                  amora<span className="text-[#E3A4AE]">.co</span>
+                  amora<span className="text-[#C88DA0]">.co</span>
                 </span>
                 <span className={`font-editorial italic text-xs sm:text-sm tracking-widest mt-1 ${
-                  isDark ? 'text-[#CBD5E1]' : 'text-[#64748B]'
+                  isDark ? 'text-[#D8C6E6]' : 'text-[#7E7285]'
                 }`}>
                   prints, &amp; pretty things
                 </span>
@@ -155,17 +155,17 @@ export const ParticleHero: React.FC<ParticleHeroProps> = ({
 
             {/* Main Editorial Headline with Dynamic Word Rotator */}
             <h1 className={`font-serif text-4xl sm:text-6xl lg:text-7xl font-normal tracking-tight leading-[0.98] mb-5 ${
-              isDark ? 'text-[#FAF6F0]' : 'text-[#161E24]'
+              isDark ? 'text-[#F8F4EA]' : 'text-[#2E2A32]'
             }`}>
               Thoughtfully <HeroHeadlineRotator theme={theme} /> <br />
-              <em className="italic text-[#E3A4AE] font-normal">Beautifully branded.</em>
+              <em className="italic text-[#C88DA0] font-normal">Beautifully branded.</em>
             </h1>
 
-            {/* Subtitle */}
+            {/* Subtitle explicitly introducing Amora as a creative studio */}
             <p className={`text-sm sm:text-base max-w-lg leading-relaxed mb-8 ${
-              isDark ? 'text-[#CBD5E1]' : 'text-[#424D55]'
+              isDark ? 'text-[#D8C6E6]' : 'text-[#584F5E]'
             }`}>
-              From a single tactile polaroid tucked into a wax-sealed letter to 500-piece company onboarding kits — thoughtfully crafted in our Kalyan studio.
+              A creative studio for personalised gifts, custom merchandise and corporate gifting — thoughtfully crafted in our Kalyan studio.
             </p>
 
             {/* Dual-Track Primary Action CTAs */}
@@ -173,47 +173,47 @@ export const ParticleHero: React.FC<ParticleHeroProps> = ({
               <button
                 type="button"
                 onClick={() => {
-                  playTactileClick(1800, 0.04);
-                  onExplorePersonal();
+                  playTactileClick(1600, 0.04);
+                  onExploreCorporate();
                 }}
                 className={`rounded-full px-6 sm:px-7 py-3 sm:py-3.5 text-xs sm:text-sm font-semibold transition-all inline-flex items-center gap-2.5 shadow-xl hover:-translate-y-0.5 cursor-pointer border ${
                   isDark
-                    ? 'liquid-glass-plum text-white border-[#E3A4AE]/40 hover:opacity-95'
-                    : 'bg-[#76577B] text-white border-[#76577B] hover:bg-[#5E4462] shadow-[#76577B]/25'
+                    ? 'bg-[#6D2E58] text-[#F8F4EA] border-[#C88DA0]/40 hover:bg-[#8E4474]'
+                    : 'bg-[#6D2E58] text-[#F8F4EA] border-[#6D2E58] hover:bg-[#522142] shadow-[#6D2E58]/25'
                 }`}
               >
-                <span>Personal Keepsakes (No MOQ)</span>
-                <ArrowRight className="w-4 h-4 text-[#FAF6F0]" />
+                <span>Enquire for Bulk Orders</span>
+                <ArrowRight className="w-4 h-4 text-[#F8F4EA]" />
               </button>
 
               <button
                 type="button"
                 onClick={() => {
-                  playTactileClick(1600, 0.04);
-                  onExploreCorporate();
+                  playTactileClick(1800, 0.04);
+                  onExplorePersonal();
                 }}
                 className={`rounded-full px-6 sm:px-7 py-3 sm:py-3.5 text-xs sm:text-sm font-semibold transition-all inline-flex items-center gap-2.5 hover:-translate-y-0.5 cursor-pointer border ${
                   isDark
-                    ? 'liquid-glass border-white/20 hover:bg-white/10 text-[#FAF6F0]'
-                    : 'bg-white border-[#76577B]/25 hover:bg-[#FAF6F0] text-[#161E24] shadow-md'
+                    ? 'border-white/20 hover:bg-white/10 text-[#F8F4EA]'
+                    : 'bg-white border-[#6D2E58]/25 hover:bg-[#F8F4EA] text-[#2E2A32] shadow-md'
                 }`}
               >
-                <span>Corporate Merchandise (MOQ: 30+)</span>
-                <ArrowRight className="w-4 h-4 text-[#76577B]" />
+                <span>Personal Keepsakes (No MOQ)</span>
+                <ArrowRight className="w-4 h-4 text-[#6D2E58]" />
               </button>
             </div>
 
             {/* Trust Badges */}
             <div className={`grid grid-cols-3 gap-3 sm:gap-4 pt-6 border-t w-full max-w-lg text-[11px] sm:text-xs ${
-              isDark ? 'border-white/10 text-[#CBD5E1]' : 'border-[#76577B]/20 text-[#424D55]'
+              isDark ? 'border-white/10 text-[#D8C6E6]' : 'border-[#6D2E58]/20 text-[#584F5E]'
             }`}>
               <div className="flex items-center gap-1.5 sm:gap-2">
-                <ShieldCheck className="w-4 h-4 text-[#E3A4AE] shrink-0" />
+                <ShieldCheck className="w-4 h-4 text-[#C88DA0] shrink-0" />
                 <span>No MOQ on Keepsakes</span>
               </div>
               <div className="flex items-center gap-1.5 sm:gap-2">
-                <Box className="w-4 h-4 text-[#F3C69F] shrink-0" />
-                <span>MOQ: 30+ Corporate</span>
+                <Box className="w-4 h-4 text-[#EBC6CF] shrink-0" />
+                <span>MOQ: 36+ Corporate</span>
               </div>
               <div className="flex items-center gap-1.5 sm:gap-2">
                 <MessageCircle className="w-4 h-4 text-[#25D366] shrink-0" />
