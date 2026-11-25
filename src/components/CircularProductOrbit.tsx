@@ -1,7 +1,8 @@
-import React, { useState, useEffect, useRef, useMemo } from 'react';
-import { ArrowLeft, ArrowRight, Sparkles, MessageCircle, Heart, Box } from 'lucide-react';
+import React, { useState, useEffect, useRef, useMemo, useCallback } from 'react';
+import { ArrowLeft, ArrowRight, Sparkles, MessageCircle, Heart, Box, Check } from 'lucide-react';
 import type { Product } from '../types';
-import { buildWhatsAppUrl } from '../data/products';
+import { buildWhatsAppUrl, getProductImage } from '../data/products';
+import { playTactileClick } from '../utils/audio';
 
 interface CircularProductOrbitProps {
   products: Product[];
@@ -9,47 +10,60 @@ interface CircularProductOrbitProps {
   theme?: 'dark' | 'light';
 }
 
-// Curated high-res editorial photos for each product
-const PRODUCT_EDITORIAL_IMAGES: Record<string, string> = {
-  'photo-frames': 'https://images.unsplash.com/photo-1513519245088-0e12902e5a38?auto=format&fit=crop&w=800&q=80',
-  'bookmarks': 'https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?auto=format&fit=crop&w=800&q=80',
-  'photocards-posters': 'https://images.unsplash.com/photo-1579783902614-a3fb3927b675?auto=format&fit=crop&w=800&q=80',
-  'polaroids': 'https://images.unsplash.com/photo-1526170375885-4d8ecf77b99f?auto=format&fit=crop&w=800&q=80',
-  'sticker-sheets': 'https://images.unsplash.com/photo-1534447677768-be436bb09401?auto=format&fit=crop&w=800&q=80',
-  'photostrips-letters': 'https://images.unsplash.com/photo-1586075010923-2dd4570fb338?auto=format&fit=crop&w=800&q=80',
-  'water-bottles': 'https://images.unsplash.com/photo-1602143407151-7111542de6e8?auto=format&fit=crop&w=800&q=80',
-  'mugs': 'https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?auto=format&fit=crop&w=800&q=80',
-  'mousepads': 'https://images.unsplash.com/photo-1616440347437-b1c73416efc2?auto=format&fit=crop&w=800&q=80',
-  'keyboard-mats': 'https://images.unsplash.com/photo-1589365278144-c9e705f843ba?auto=format&fit=crop&w=800&q=80',
-};
+// Curated 8 Signature Highlight Pieces for balanced 45-degree turntable layout
+const FEATURED_RUNWAY_IDS = [
+  'custom-printed-sipper-bottle-600ml',
+  'custom-printed-coffee-mug',
+  'custom-printed-keyboard-mat',
+  'custom-printed-mousepad',
+  'pack-of-16-matte-polaroids',
+  'spotify-polaroids-set-of-3',
+  'page-whisper',
+  'cool-laptop-stickers',
+];
 
 export const CircularProductOrbit: React.FC<CircularProductOrbitProps> = ({
   products,
   onCustomiseProduct,
-  theme = 'dark',
+  theme = 'light',
 }) => {
-  const [rotation, setRotation] = useState(0);
-  const [isDragging, setIsDragging] = useState(false);
-  const [isAutoRotating, setIsAutoRotating] = useState(true);
-  const dragStartRef = useRef<{ x: number; rotation: number }>({ x: 0, rotation: 0 });
-  const touchStartRef = useRef<number | null>(null);
-  const animFrameRef = useRef<number | null>(null);
-  const containerRef = useRef<HTMLDivElement>(null);
+  const isDark = theme === 'dark';
 
-  const total = products.length;
+  // Filter curated products for the 360 runway
+  const runwayProducts = useMemo(() => {
+    const featured = FEATURED_RUNWAY_IDS.map((id) => products.find((p) => p.id === id)).filter(
+      Boolean
+    ) as Product[];
+    return featured.length >= 6 ? featured : products.slice(0, 8);
+  }, [products]);
+
+  const total = runwayProducts.length;
   const angleStep = 360 / total;
 
-  // Responsive device mode and radius
-  const [isMobile, setIsMobile] = useState(false);
-  const [radius, setRadius] = useState(420);
+  // Physics animation state refs (keeps animation 100% butter-smooth without React state lag)
+  const targetRotationRef = useRef(0);
+  const currentRotationRef = useRef(0);
+  const velocityRef = useRef(0);
+  const isDraggingRef = useRef(false);
+  const lastPointerXRef = useRef(0);
+  const lastPointerTimeRef = useRef(0);
+  const idleTimerRef = useRef(0);
+  const animFrameRef = useRef<number | null>(null);
 
+  // React state for UI indicators & active card
+  const [displayRotation, setDisplayRotation] = useState(0);
+  const [activeIndex, setActiveIndex] = useState(0);
+  const [isMobile, setIsMobile] = useState(false);
+  const [radius, setRadius] = useState(400);
+
+  // Responsive radius calculation
   useEffect(() => {
     const handleResize = () => {
       const w = window.innerWidth;
-      const mobile = w < 768;
-      setIsMobile(mobile);
-      if (w < 1024) setRadius(350);
-      else if (w < 1280) setRadius(390);
+      setIsMobile(w < 768);
+      if (w < 640) setRadius(280);
+      else if (w < 1024) setRadius(340);
+      else if (w < 1280) setRadius(380);
       else setRadius(420);
     };
     handleResize();
@@ -57,389 +71,383 @@ export const CircularProductOrbit: React.FC<CircularProductOrbitProps> = ({
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
-  // Smooth continuous auto-rotation on desktop when idle
+  // Main High-Precision Physics Loop (Lerp + Momentum Inertia + Auto-Pan)
   useEffect(() => {
-    if (isMobile || !isAutoRotating || isDragging) return;
+    let lastTime = performance.now();
 
-    const tick = () => {
-      setRotation((prev) => (prev + 0.12) % 360);
-      animFrameRef.current = requestAnimationFrame(tick);
+    const loop = (time: number) => {
+      const dt = Math.min(32, time - lastTime);
+      lastTime = time;
+
+      if (!isDraggingRef.current) {
+        // Apply inertia velocity decay
+        if (Math.abs(velocityRef.current) > 0.005) {
+          targetRotationRef.current += velocityRef.current * (dt / 16);
+          velocityRef.current *= 0.92; // smooth exponential friction
+        } else {
+          velocityRef.current = 0;
+          idleTimerRef.current += dt;
+
+          // Gentle continuous turntable auto-pan when user is idle for 2.5s
+          if (idleTimerRef.current > 2500 && !isMobile) {
+            targetRotationRef.current += 0.045 * (dt / 16);
+          }
+        }
+      } else {
+        idleTimerRef.current = 0;
+      }
+
+      // Smooth Spring / Lerp towards target rotation
+      const diff = targetRotationRef.current - currentRotationRef.current;
+      currentRotationRef.current += diff * 0.085;
+
+      // Sync display state occasionally for active index calculation
+      const curr = currentRotationRef.current;
+      setDisplayRotation(curr);
+
+      const normalized = ((-curr % 360) + 360) % 360;
+      const nearestIdx = Math.round(normalized / angleStep) % total;
+      setActiveIndex(nearestIdx);
+
+      animFrameRef.current = requestAnimationFrame(loop);
     };
 
-    animFrameRef.current = requestAnimationFrame(tick);
+    animFrameRef.current = requestAnimationFrame(loop);
     return () => {
       if (animFrameRef.current) cancelAnimationFrame(animFrameRef.current);
     };
-  }, [isMobile, isAutoRotating, isDragging]);
+  }, [angleStep, total, isMobile]);
 
-  // Pointer drag events on desktop
+  // Pointer & Drag Interactions
   const handlePointerDown = (e: React.PointerEvent) => {
-    if (isMobile) return;
-    setIsDragging(true);
-    setIsAutoRotating(false);
-    dragStartRef.current = {
-      x: e.clientX,
-      rotation: rotation,
-    };
+    isDraggingRef.current = true;
+    velocityRef.current = 0;
+    idleTimerRef.current = 0;
+    lastPointerXRef.current = e.clientX;
+    lastPointerTimeRef.current = performance.now();
   };
 
   const handlePointerMove = (e: React.PointerEvent) => {
-    if (!isDragging || isMobile) return;
-    const deltaX = e.clientX - dragStartRef.current.x;
-    const nextRotation = dragStartRef.current.rotation - deltaX * 0.42;
-    setRotation(nextRotation);
+    if (!isDraggingRef.current) return;
+    const now = performance.now();
+    const dt = Math.max(1, now - lastPointerTimeRef.current);
+    const dx = e.clientX - lastPointerXRef.current;
+
+    // Apply drag directly to target with sensitivity
+    const dragFactor = isMobile ? 0.35 : 0.28;
+    targetRotationRef.current -= dx * dragFactor;
+
+    // Track instant velocity for inertia throw
+    velocityRef.current = -dx / dt * 5.2;
+
+    lastPointerXRef.current = e.clientX;
+    lastPointerTimeRef.current = now;
   };
 
   const handlePointerUp = () => {
-    if (isMobile) return;
-    setIsDragging(false);
-    setTimeout(() => {
-      setIsAutoRotating(true);
-    }, 4500);
+    if (!isDraggingRef.current) return;
+    isDraggingRef.current = false;
+    playTactileClick(1400, 0.02);
   };
 
-  // Mobile Touch Swipe Handling
-  const handleTouchStart = (e: React.TouchEvent) => {
-    if (e.touches.length > 0) {
-      touchStartRef.current = e.touches[0].clientX;
-    }
-  };
+  // Step Buttons (Next / Prev with Smooth Spring Settling)
+  const handleNext = useCallback(() => {
+    playTactileClick(1600, 0.03);
+    idleTimerRef.current = 0;
+    velocityRef.current = 0;
+    const currentNearest = Math.round(targetRotationRef.current / angleStep);
+    targetRotationRef.current = (currentNearest + 1) * angleStep;
+  }, [angleStep]);
 
-  const handleTouchEnd = (e: React.TouchEvent) => {
-    if (touchStartRef.current === null) return;
-    const touchEnd = e.changedTouches[0]?.clientX;
-    if (touchEnd !== undefined) {
-      const diff = touchStartRef.current - touchEnd;
-      if (diff > 40) {
-        handleNext();
-      } else if (diff < -40) {
-        handlePrev();
-      }
-    }
-    touchStartRef.current = null;
-  };
+  const handlePrev = useCallback(() => {
+    playTactileClick(1600, 0.03);
+    idleTimerRef.current = 0;
+    velocityRef.current = 0;
+    const currentNearest = Math.round(targetRotationRef.current / angleStep);
+    targetRotationRef.current = (currentNearest - 1) * angleStep;
+  }, [angleStep]);
 
-  // Step controls
-  const handleNext = () => {
-    setIsAutoRotating(false);
-    setRotation((prev) => Math.round((prev + angleStep) / angleStep) * angleStep);
-  };
+  // Direct Card or Dot Click (Smooth Shortest-Path Spin)
+  const handleSelectCard = (index: number) => {
+    playTactileClick(1700, 0.03);
+    idleTimerRef.current = 0;
+    velocityRef.current = 0;
 
-  const handlePrev = () => {
-    setIsAutoRotating(false);
-    setRotation((prev) => Math.round((prev - angleStep) / angleStep) * angleStep);
-  };
-
-  const handleCardClick = (index: number) => {
-    setIsAutoRotating(false);
     const targetAngle = -index * angleStep;
-    const currentNorm = ((rotation % 360) + 360) % 360;
+    const curr = targetRotationRef.current;
+    const currentNorm = ((curr % 360) + 360) % 360;
     const targetNorm = ((targetAngle % 360) + 360) % 360;
-    let diff = targetNorm - currentNorm;
-    if (diff > 180) diff -= 360;
-    if (diff < -180) diff += 360;
-    setRotation(rotation + diff);
+
+    let delta = targetNorm - currentNorm;
+    if (delta > 180) delta -= 360;
+    if (delta < -180) delta += 360;
+
+    targetRotationRef.current = curr + delta;
   };
 
-  // Active front card index
-  const activeIndex = useMemo(() => {
-    const norm = ((-rotation % 360) + 360) % 360;
-    return Math.round(norm / angleStep) % total;
-  }, [rotation, angleStep, total]);
-
-  const activeProduct = products[activeIndex] || products[0];
+  const activeProduct = runwayProducts[activeIndex] || runwayProducts[0];
 
   return (
-    <div
-      ref={containerRef}
-      className="relative w-full py-16 sm:py-24 select-none overflow-hidden"
+    <section
+      id="orbit-showcase"
+      className="relative w-full py-18 sm:py-26 select-none overflow-hidden transition-colors duration-300"
       onPointerDown={handlePointerDown}
       onPointerMove={handlePointerMove}
       onPointerUp={handlePointerUp}
       onPointerCancel={handlePointerUp}
-      style={{ cursor: !isMobile && isDragging ? 'grabbing' : !isMobile ? 'grab' : 'default' }}
+      style={{ cursor: isDraggingRef.current ? 'grabbing' : 'grab' }}
     >
-      {/* Ambient background glows */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full bg-[#76577B]/12 blur-[140px] pointer-events-none" />
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[420px] h-[420px] rounded-full bg-[#E3A4AE]/12 blur-[120px] pointer-events-none" />
+      {/* Studio Ambient Backdrops */}
+      <div
+        className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[650px] h-[650px] rounded-full blur-[160px] pointer-events-none ${
+          isDark ? 'bg-[#6D2E58]/18' : 'bg-[#C88DA0]/14'
+        }`}
+      />
+      <div
+        className={`absolute bottom-10 left-1/2 -translate-x-1/2 w-[450px] h-[250px] rounded-full blur-[120px] pointer-events-none ${
+          isDark ? 'bg-[#C88DA0]/10' : 'bg-[#6D2E58]/8'
+        }`}
+      />
 
       {/* Section Header */}
-      <div className="max-w-4xl mx-auto px-6 text-center mb-6 sm:mb-8 relative z-10 pointer-events-none">
-        <div className="inline-flex items-center gap-2 px-3.5 sm:px-4 py-1.5 rounded-full liquid-glass border border-[#E3A4AE]/30 text-[#E3A4AE] text-[11px] sm:text-xs font-semibold uppercase tracking-widest mb-4">
-          <Sparkles className="w-3.5 h-3.5 text-[#F3C69F]" />
-          <span>Interactive 3D Orbit Runway · Spin to Explore</span>
+      <div className="max-w-4xl mx-auto px-6 text-center mb-10 sm:mb-14 relative z-10 pointer-events-none">
+        <div
+          className={`inline-flex items-center gap-2 px-3.5 sm:px-4 py-1.5 rounded-full text-[11px] sm:text-xs font-semibold uppercase tracking-widest mb-4 border shadow-xs ${
+            isDark
+              ? 'bg-white/5 border-white/15 text-[#C88DA0]'
+              : 'bg-white border-[#6D2E58]/20 text-[#6D2E58] shadow-xs'
+          }`}
+        >
+          <Sparkles className="w-3.5 h-3.5 text-[#C88DA0]" />
+          <span>360° Studio Runway · Kalyan Workshop</span>
         </div>
         <h2 className="font-serif text-3xl sm:text-5xl lg:text-6xl font-normal tracking-tight">
-          Every piece in <em className="italic text-[#E3A4AE] font-normal">360° motion.</em>
+          Every product in <em className="italic text-[#C88DA0] font-normal">tactile 360° motion.</em>
         </h2>
-        <p className="mt-3 text-xs sm:text-base text-current opacity-70 max-w-xl mx-auto">
-          {isMobile
-            ? 'Swipe or use arrows to discover keepsakes & corporate merchandise.'
-            : 'Drag horizontally, flick, or use the controls below to rotate the 3D showcase.'}
+        <p
+          className={`mt-3 text-xs sm:text-base max-w-xl mx-auto leading-relaxed ${
+            isDark ? 'text-[#D8C6E6]' : 'text-[#584F5E]'
+          }`}
+        >
+          Drag horizontally to spin the studio turntable. Experience our confirmed corporate merchandise and handcrafted personal keepsakes from every angle.
         </p>
       </div>
 
-      {isMobile ? (
-        /* ─── MOBILE TOUCH CAROUSEL: Zero Overlap, 100% Crisp & Responsive ─── */
+      {/* ─── 3D PERSPECTIVE ORBIT STAGE ─── */}
+      <div className="relative w-full h-[400px] sm:h-[460px] my-4 flex items-center justify-center orbit-cylinder-stage">
+        
+        {/* Studio Turntable Ground Ring Shadow */}
         <div
-          className="relative w-full px-5 max-w-[340px] mx-auto z-10"
-          onTouchStart={handleTouchStart}
-          onTouchEnd={handleTouchEnd}
+          className="absolute top-1/2 left-1/2 -translate-x-1/2 translate-y-28 sm:translate-y-36 w-[500px] sm:w-[650px] h-20 rounded-full blur-xl pointer-events-none"
+          style={{
+            background: isDark
+              ? 'radial-gradient(ellipse, rgba(109,46,88,0.4) 0%, rgba(0,0,0,0) 70%)'
+              : 'radial-gradient(ellipse, rgba(109,46,88,0.18) 0%, rgba(0,0,0,0) 70%)',
+          }}
+        />
+
+        {/* 3D Rotating Ring Container */}
+        <div
+          className="orbit-cylinder-ring relative w-[240px] sm:w-[260px] h-[340px] sm:h-[370px]"
+          style={{
+            transform: `rotateY(${-displayRotation}deg)`,
+            transformStyle: 'preserve-3d',
+          }}
         >
-          <div
-            className={`w-full rounded-2xl p-3.5 flex flex-col justify-between relative overflow-hidden transition-all duration-300 shadow-xl border ${
-              theme === 'dark'
-                ? 'bg-[#0B0E14]/95 border-white/15'
-                : 'bg-white border-[#76577B]/20 shadow-xl'
-            }`}
-          >
-            {/* Product Image Area */}
-            <div className="relative w-full h-[180px] rounded-xl overflow-hidden bg-black/20 mb-3">
-              <img
-                src={PRODUCT_EDITORIAL_IMAGES[activeProduct.id] || PRODUCT_EDITORIAL_IMAGES['photo-frames']}
-                alt={activeProduct.name}
-                className="w-full h-full object-cover"
-              />
+          {runwayProducts.map((product, index) => {
+            const cardAngle = index * angleStep;
+            const relAngle = ((cardAngle - displayRotation) % 360 + 360) % 360;
+            const rad = (relAngle * Math.PI) / 180;
+            const cosVal = Math.cos(rad);
 
-              {/* Badge Pill */}
-              <div className="absolute top-2 left-2">
-                <span
-                  className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[9px] font-semibold uppercase tracking-wider backdrop-blur-md shadow-sm ${
-                    activeProduct.isBulkOnly
-                      ? 'bg-[#232E36]/90 text-[#F3C69F] border border-[#F3C69F]/40'
-                      : 'bg-white/90 text-[#76577B] border border-[#E3A4AE]/40'
-                  }`}
-                >
-                  {activeProduct.isBulkOnly ? (
-                    <>
-                      <Box className="w-2.5 h-2.5 text-[#F3C69F]" />
-                      MOQ: 30+
-                    </>
-                  ) : (
-                    <>
-                      <Heart className="w-2.5 h-2.5 text-[#E3A4AE] fill-[#E3A4AE]" />
-                      No MOQ
-                    </>
-                  )}
-                </span>
-              </div>
+            // Hide cards pointing away (> 90 degrees back) to eliminate crowding and optimize rendering
+            if (cosVal < 0.05) return null;
 
-              {/* Price Tag */}
-              <div className="absolute bottom-2 right-2">
-                <span className="px-2 py-0.5 rounded text-[11px] font-semibold bg-black/70 text-[#FAF6F0] backdrop-blur-md">
-                  {activeProduct.priceLabel}
-                </span>
-              </div>
-            </div>
+            const isFront = cosVal > 0.72;
+            const isCurrentActive = index === activeIndex;
+            const blurPx = Math.max(0, Math.round((1 - cosVal) * 2.5));
+            const opacity = Math.max(0.4, cosVal);
+            const scale = Math.max(0.85, 0.92 + cosVal * 0.12);
+            const zIndex = Math.round((cosVal + 1) * 100);
 
-            {/* Product Details */}
-            <div className="flex flex-col justify-between flex-1">
-              <div>
-                <h3 className="font-serif text-lg font-semibold leading-tight line-clamp-1">
-                  {activeProduct.name}
-                </h3>
-                <p className="text-[11px] opacity-75 mt-1 leading-relaxed line-clamp-2">
-                  {activeProduct.description}
-                </p>
-              </div>
+            const imageSrc = product.imageUrl || getProductImage(product.id);
 
-              {/* Action Button */}
-              <div className="pt-3">
-                <button
-                  type="button"
-                  onClick={() => onCustomiseProduct(activeProduct)}
-                  className={`w-full py-2 px-3 text-xs font-semibold rounded-lg transition-all cursor-pointer shadow-sm ${
-                    theme === 'dark'
-                      ? 'bg-white text-[#06080C] hover:bg-[#FAF6F0]'
-                      : 'bg-[#76577B] text-white hover:bg-[#5E4462]'
-                  }`}
-                >
-                  Customise &amp; Preview
-                </button>
-              </div>
-            </div>
-          </div>
-
-          {/* Mobile Swipe Hint */}
-          <div className="text-center mt-3 text-[11px] opacity-60">
-            Swipe left or right · {activeIndex + 1} of {total}
-          </div>
-        </div>
-      ) : (
-        /* ─── DESKTOP 3D ORBIT CYLINDER: Front-Focused, Elegantly Proportioned ─── */
-        <div className="relative w-full h-[420px] sm:h-[450px] my-2 flex items-center justify-center orbit-cylinder-stage">
-          <div
-            className="orbit-cylinder-ring relative w-[230px] h-[320px]"
-            style={{
-              transform: `rotateY(${-rotation}deg)`,
-            }}
-          >
-            {products.map((product, index) => {
-              const cardAngle = index * angleStep;
-              const relAngle = ((cardAngle - rotation) % 360 + 360) % 360;
-              const rad = (relAngle * Math.PI) / 180;
-              const cosVal = Math.cos(rad);
-
-              // Hide back-facing cards to eliminate overlapping clutter
-              if (cosVal < 0.05) return null;
-
-              const isFront = cosVal > 0.65;
-              const blurPx = Math.max(0, Math.round((1 - cosVal) * 3));
-              const opacity = Math.max(0.45, cosVal);
-              const scale = Math.max(0.88, 0.94 + cosVal * 0.06);
-
-              const isCurrentActive = index === activeIndex;
-              const imageSrc = PRODUCT_EDITORIAL_IMAGES[product.id] || PRODUCT_EDITORIAL_IMAGES['photo-frames'];
-
-              return (
+            return (
+              <div
+                key={product.id}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  handleSelectCard(index);
+                }}
+                className="orbit-card-item absolute inset-0 rounded-3xl overflow-hidden transition-all duration-150"
+                style={{
+                  transform: `rotateY(${cardAngle}deg) translateZ(${radius}px) scale(${scale})`,
+                  filter: `blur(${blurPx}px)`,
+                  opacity: opacity,
+                  zIndex: zIndex,
+                  pointerEvents: isFront ? 'auto' : 'none',
+                }}
+              >
                 <div
-                  key={product.id}
-                  onClick={() => handleCardClick(index)}
-                  className="orbit-card-item absolute inset-0 rounded-2xl overflow-hidden shadow-xl transition-all duration-200"
-                  style={{
-                    transform: `rotateY(${cardAngle}deg) translateZ(${radius}px) scale(${scale})`,
-                    filter: `blur(${blurPx}px)`,
-                    opacity: opacity,
-                    zIndex: Math.round((cosVal + 1) * 100),
-                    pointerEvents: isFront ? 'auto' : 'none',
-                  }}
+                  className={`w-full h-full p-3.5 sm:p-4 flex flex-col justify-between rounded-3xl relative overflow-hidden transition-all duration-300 border ${
+                    isDark
+                      ? 'bg-[#26202A]/95 border-white/15'
+                      : 'bg-white/95 border-[#6D2E58]/20 shadow-[0_15px_35px_rgba(109,46,88,0.08)]'
+                  } ${
+                    isCurrentActive
+                      ? 'ring-2 ring-[#C88DA0] shadow-[0_20px_45px_rgba(109,46,88,0.25)]'
+                      : ''
+                  }`}
                 >
-                  <div
-                    className={`w-full h-full p-3 flex flex-col justify-between rounded-2xl relative overflow-hidden transition-all duration-300 ${
-                      theme === 'dark'
-                        ? 'bg-[#0B0E14]/92 border border-white/15'
-                        : 'bg-white/95 border border-[#76577B]/20 shadow-xl'
-                    } ${isCurrentActive ? 'ring-2 ring-[#E3A4AE]/60 shadow-[0_15px_35px_rgba(118,87,123,0.3)]' : ''}`}
-                  >
-                    {/* Product Image Area */}
-                    <div className="relative w-full h-[58%] rounded-xl overflow-hidden bg-black/20">
-                      <img
-                        src={imageSrc}
-                        alt={product.name}
-                        className="w-full h-full object-cover transition-transform duration-500 hover:scale-105"
-                        loading="lazy"
-                      />
+                  {/* Product Photography Container */}
+                  <div className="relative w-full h-[60%] rounded-2xl overflow-hidden bg-black/10">
+                    <img
+                      src={imageSrc}
+                      alt={product.name}
+                      className="w-full h-full object-cover transition-transform duration-500 hover:scale-105"
+                      loading="lazy"
+                    />
 
-                      {/* Badge Pill */}
-                      <div className="absolute top-2 left-2">
-                        <span
-                          className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[9px] font-semibold uppercase tracking-wider backdrop-blur-md shadow-sm ${
-                            product.isBulkOnly
-                              ? 'bg-[#232E36]/85 text-[#F3C69F] border border-[#F3C69F]/40'
-                              : 'bg-white/85 text-[#76577B] border border-[#E3A4AE]/40'
-                          }`}
-                        >
-                          {product.isBulkOnly ? (
-                            <>
-                              <Box className="w-2.5 h-2.5 text-[#F3C69F]" />
-                              MOQ: 30+
-                            </>
-                          ) : (
-                            <>
-                              <Heart className="w-2.5 h-2.5 text-[#E3A4AE] fill-[#E3A4AE]" />
-                              No MOQ
-                            </>
-                          )}
-                        </span>
-                      </div>
-
-                      {/* Price Tag */}
-                      <div className="absolute bottom-2 right-2">
-                        <span className="px-2 py-0.5 rounded text-[10px] font-semibold bg-black/60 text-[#FAF6F0] backdrop-blur-md">
-                          {product.priceLabel}
-                        </span>
-                      </div>
+                    {/* Category Pill Tag */}
+                    <div className="absolute top-2.5 left-2.5">
+                      <span
+                        className={`inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10px] font-semibold uppercase tracking-wider backdrop-blur-md shadow-xs ${
+                          product.isBulkOnly
+                            ? 'bg-[#6D2E58]/90 text-[#F8F4EA] border border-[#C88DA0]/40'
+                            : 'bg-white/90 text-[#6D2E58] border border-[#6D2E58]/30'
+                        }`}
+                      >
+                        {product.isBulkOnly ? (
+                          <>
+                            <Box className="w-2.5 h-2.5 text-[#EBC6CF]" />
+                            <span>MOQ: 36 pcs</span>
+                          </>
+                        ) : (
+                          <>
+                            <Heart className="w-2.5 h-2.5 text-[#C88DA0] fill-[#C88DA0]" />
+                            <span>No MOQ</span>
+                          </>
+                        )}
+                      </span>
                     </div>
 
-                    {/* Card Details */}
-                    <div className="pt-2 flex flex-col justify-between flex-1">
-                      <div>
-                        <h3 className="font-serif text-base font-semibold leading-snug line-clamp-1">
-                          {product.name}
-                        </h3>
-                        <p className="text-[11px] opacity-70 line-clamp-1 mt-0.5">
-                          {product.description}
-                        </p>
-                      </div>
+                    {/* Price Tag Overlay */}
+                    <div className="absolute bottom-2.5 right-2.5">
+                      <span className="px-2.5 py-0.5 rounded-md text-[11px] font-bold bg-black/80 text-[#F8F4EA] backdrop-blur-md shadow-xs">
+                        {product.priceLabel}
+                      </span>
+                    </div>
+                  </div>
 
-                      {/* Primary Button */}
-                      <div className="pt-2">
-                        <button
-                          type="button"
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            onCustomiseProduct(product);
-                          }}
-                          className={`w-full py-1.5 px-3 text-[11px] font-semibold rounded-lg transition-all cursor-pointer shadow-sm ${
-                            theme === 'dark'
-                              ? 'bg-white text-[#06080C] hover:bg-[#FAF6F0]'
-                              : 'bg-[#76577B] text-white hover:bg-[#5E4462]'
-                          }`}
-                        >
-                          Customise &amp; Preview
-                        </button>
-                      </div>
+                  {/* Card Editorial Info */}
+                  <div className="pt-2.5 flex flex-col justify-between flex-1">
+                    <div>
+                      <h3 className="font-serif text-lg font-semibold leading-tight line-clamp-1 group-hover:text-[#C88DA0]">
+                        {product.name}
+                      </h3>
+                      <p
+                        className={`text-[11px] line-clamp-1 mt-1 leading-relaxed ${
+                          isDark ? 'text-[#D8C6E6]' : 'text-[#584F5E]'
+                        }`}
+                      >
+                        {product.description}
+                      </p>
+                    </div>
+
+                    {/* Customise & Preview Button */}
+                    <div className="pt-2">
+                      <button
+                        type="button"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          playTactileClick(1800, 0.03);
+                          onCustomiseProduct(product);
+                        }}
+                        className="w-full py-2 px-3 text-xs font-semibold rounded-xl transition-all cursor-pointer shadow-sm bg-[#6D2E58] text-[#F8F4EA] hover:bg-[#8E4474] flex items-center justify-center gap-1.5"
+                      >
+                        <span>Customise &amp; Preview</span>
+                      </button>
                     </div>
                   </div>
                 </div>
-              );
-            })}
-          </div>
+              </div>
+            );
+          })}
         </div>
-      )}
+      </div>
 
-      {/* Orbit Navigation Controls & Active Product Focal Bar */}
-      <div className="max-w-xl mx-auto px-6 mt-6 sm:mt-10 flex flex-col sm:flex-row items-center justify-between gap-4 relative z-20">
+      {/* ─── FOCUSED PRODUCT BAR & STUDIO CONTROLS ─── */}
+      <div className="max-w-3xl mx-auto px-5 sm:px-8 mt-6 flex flex-col sm:flex-row items-center justify-between gap-4 relative z-20">
+        
+        {/* Navigation Arrows & Dot Indicators */}
         <div className="flex items-center gap-3">
           <button
             type="button"
             onClick={handlePrev}
             className={`w-10 h-10 rounded-full flex items-center justify-center border hover:scale-105 active:scale-95 transition-all cursor-pointer shadow-md ${
-              theme === 'dark'
-                ? 'liquid-glass border-white/20 text-white'
-                : 'bg-white border-[#76577B]/25 text-[#161E24]'
+              isDark
+                ? 'bg-[#26202A] border-white/20 text-[#F8F4EA] hover:bg-white/10'
+                : 'bg-white border-[#6D2E58]/25 text-[#2E2A32] hover:bg-[#F8F4EA]'
             }`}
-            title="Previous Product"
-            aria-label="Previous product"
+            title="Previous Piece"
+            aria-label="Previous piece"
           >
             <ArrowLeft className="w-4 h-4" />
           </button>
+
+          {/* Dot Array */}
+          <div className="flex items-center gap-1.5 px-2">
+            {runwayProducts.map((_, dotIdx) => (
+              <button
+                key={dotIdx}
+                type="button"
+                onClick={() => handleSelectCard(dotIdx)}
+                className={`transition-all duration-300 rounded-full cursor-pointer ${
+                  dotIdx === activeIndex
+                    ? 'w-6 h-2 bg-[#6D2E58] dark:bg-[#C88DA0]'
+                    : 'w-2 h-2 bg-current opacity-30 hover:opacity-70'
+                }`}
+                aria-label={`Jump to item ${dotIdx + 1}`}
+              />
+            ))}
+          </div>
+
           <button
             type="button"
             onClick={handleNext}
             className={`w-10 h-10 rounded-full flex items-center justify-center border hover:scale-105 active:scale-95 transition-all cursor-pointer shadow-md ${
-              theme === 'dark'
-                ? 'liquid-glass border-white/20 text-white'
-                : 'bg-white border-[#76577B]/25 text-[#161E24]'
+              isDark
+                ? 'bg-[#26202A] border-white/20 text-[#F8F4EA] hover:bg-white/10'
+                : 'bg-white border-[#6D2E58]/25 text-[#2E2A32] hover:bg-[#F8F4EA]'
             }`}
-            title="Next Product"
-            aria-label="Next product"
+            title="Next Piece"
+            aria-label="Next piece"
           >
             <ArrowRight className="w-4 h-4" />
           </button>
-          <span className="text-xs opacity-70 tracking-wider tabular-nums font-semibold">
-            {activeIndex + 1} / {total}
-          </span>
         </div>
 
-        {/* Quick WhatsApp Inquiry for Current Focus Product */}
-        <a
-          href={buildWhatsAppUrl(
-            `Hi Achintya! I'm interested in ordering/customising "${activeProduct?.name}" at Amora.co.`
-          )}
-          target="_blank"
-          rel="noopener noreferrer"
-          className={`rounded-full px-5 py-2.5 text-xs font-semibold inline-flex items-center gap-2 transition-all cursor-pointer shadow-md ${
-            theme === 'dark'
-              ? 'liquid-glass-plum text-white border border-[#E3A4AE]/40 hover:opacity-90'
-              : 'bg-[#76577B] text-white hover:bg-[#5E4462] shadow-[#76577B]/25 border border-[#76577B]'
-          }`}
-        >
-          <MessageCircle className="w-3.5 h-3.5 text-[#25D366]" />
-          <span>Enquire about {activeProduct?.shortName}</span>
-        </a>
+        {/* Focused Product WhatsApp Action */}
+        <div className="flex items-center gap-3">
+          <span className="text-xs opacity-75 tabular-nums font-mono">
+            0{activeIndex + 1} / 0{total}
+          </span>
+          <a
+            href={buildWhatsAppUrl(
+              `Hello Amora! I am viewing "${activeProduct?.name}" (${activeProduct?.priceLabel}) on your 360° Studio Runway and would like to enquire.`
+            )}
+            target="_blank"
+            rel="noopener noreferrer"
+            onClick={() => playTactileClick(1700, 0.03)}
+            className="rounded-full px-5 py-2.5 text-xs font-semibold inline-flex items-center gap-2 transition-all cursor-pointer shadow-md bg-[#6D2E58] text-[#F8F4EA] hover:bg-[#8E4474] border border-[#C88DA0]/40"
+          >
+            <MessageCircle className="w-3.5 h-3.5 text-[#25D366]" />
+            <span>Enquire about {activeProduct?.shortName}</span>
+          </a>
+        </div>
+
       </div>
-    </div>
+    </section>
   );
 };
 

@@ -4,11 +4,23 @@
     "name": "Custom Printed Mousepad",
     "shortName": "Standard Mousepad",
     "category": "corporate-merchandise",
-    "categories": ["Corporate Merchandise"],
+    "categories": [
+      "Corporate Merchandise"
+    ],
     "primaryCategory": "Corporate Merchandise",
     "description": "Standard low-friction desk mousepad customised with client branding and anti-slip rubber base.",
-    "specifications": ["Standard Mousepad (240×200mm)", "Anti-slip natural rubber base", "Stitched edge", "MOQ: 36 pieces"],
-    "specs": ["MOQ: 36 Pieces", "Standard Desk Mousepad", "Anti-slip rubber base", "Shipping charges excluded"],
+    "specifications": [
+      "Standard Mousepad (240×200mm)",
+      "Anti-slip natural rubber base",
+      "Stitched edge",
+      "MOQ: 36 pieces"
+    ],
+    "specs": [
+      "MOQ: 36 Pieces",
+      "Standard Desk Mousepad",
+      "Anti-slip rubber base",
+      "Shipping charges excluded"
+    ],
     "price": 99,
     "currency": "INR",
     "priceUnit": "piece",
@@ -19,7 +31,7 @@
     "minOrderValue": 3564,
     "orderType": "bulk-only",
     "isBulkOnly": true,
-    "image": "/assets/catalog/corporate-merchandise/mousepad.jpg",
+    "image": "/assets/catalog/corporate-merchandise/standard-mousepad.jpg",
     "imageType": "actual-product-photo",
     "shippingIncluded": false,
     "priceStatus": "provided",
@@ -27,18 +39,31 @@
     "customisationInfo": "Full-colour dye sublimation or screen print branding.",
     "visualType": "mousepad",
     "defaultAccent": "#6D2E58",
-    "defaultSampleText": "AMORA CORP"
+    "defaultSampleText": "AMORA CORP",
+    "imageUrl": "/assets/catalog/corporate-merchandise/standard-mousepad.jpg"
   },
   {
     "id": "custom-printed-round-mousepad",
     "name": "Custom Printed Round Mousepad",
     "shortName": "Round Mousepad",
     "category": "corporate-merchandise",
-    "categories": ["Corporate Merchandise"],
+    "categories": [
+      "Corporate Merchandise"
+    ],
     "primaryCategory": "Corporate Merchandise",
     "description": "Round 200mm circular micro-weave mousepad with reinforced stitched rim for modern minimalist workspaces.",
-    "specifications": ["Round 200mm diameter", "Precision stitched border", "Micro-weave cloth", "MOQ: 36 pieces"],
-    "specs": ["MOQ: 36 Pieces", "Round 200mm Diameter", "Precision stitched border", "Shipping charges excluded"],
+    "specifications": [
+      "Round 200mm diameter",
+      "Precision stitched border",
+      "Micro-weave cloth",
+      "MOQ: 36 pieces"
+    ],
+    "specs": [
+      "MOQ: 36 Pieces",
+      "Round 200mm Diameter",
+      "Precision stitched border",
+      "Shipping charges excluded"
+    ],
     "price": 99,
     "currency": "INR",
     "priceUnit": "piece",
@@ -57,18 +82,31 @@
     "customisationInfo": "High-density dye sublimation with pantone-accurate reproduction.",
     "visualType": "round-mousepad",
     "defaultAccent": "#6D2E58",
-    "defaultSampleText": "STUDIO TEAM"
+    "defaultSampleText": "STUDIO TEAM",
+    "imageUrl": "/assets/catalog/corporate-merchandise/round-mousepad.jpg"
   },
   {
     "id": "custom-printed-keyboard-mat",
     "name": "Custom Printed Keyboard / Table Mat",
     "shortName": "Extended Desk Mat",
     "category": "corporate-merchandise",
-    "categories": ["Corporate Merchandise"],
+    "categories": [
+      "Corporate Merchandise"
+    ],
     "primaryCategory": "Corporate Merchandise",
     "description": "Extended 800×300mm workspace table mat engineered with anti-fray stitched borders for employee welcome kits.",
-    "specifications": ["Extended 800×300mm desk coverage", "Reinforced anti-fray stitched rim", "Water-resistant micro-texture", "MOQ: 36 pieces"],
-    "specs": ["MOQ: 36 Pieces", "800×300mm Extended Mat", "Anti-fray stitched border", "Shipping charges excluded"],
+    "specifications": [
+      "Extended 800×300mm desk coverage",
+      "Reinforced anti-fray stitched rim",
+      "Water-resistant micro-texture",
+      "MOQ: 36 pieces"
+    ],
+    "specs": [
+      "MOQ: 36 Pieces",
+      "800×300mm Extended Mat",
+      "Anti-fray stitched border",
+      "Shipping charges excluded"
+    ],
     "price": 299,
     "currency": "INR",
     "priceUnit": "piece",
@@ -87,18 +125,31 @@
     "customisationInfo": "Edge-to-edge custom corporate graphics, values or typography.",
     "visualType": "keyboard-mat",
     "defaultAccent": "#2E2A32",
-    "defaultSampleText": "DESIGNED FOR FOCUS"
+    "defaultSampleText": "DESIGNED FOR FOCUS",
+    "imageUrl": "/assets/catalog/corporate-merchandise/keyboard-mat.jpg"
   },
   {
     "id": "custom-printed-coffee-mug",
     "name": "Custom Printed Coffee Mug",
     "shortName": "Custom Logo / Design Mug",
     "category": "corporate-merchandise",
-    "categories": ["Corporate Merchandise"],
+    "categories": [
+      "Corporate Merchandise"
+    ],
     "primaryCategory": "Corporate Merchandise",
     "description": "Heavyweight 330ml studio ceramic mug with vivid wrap imprint, scratch-resistant gloss glaze and desk-ready durability.",
-    "specifications": ["330 ml Studio Ceramic", "Dishwasher & microwave safe", "Pantone-matched wrap", "MOQ: 36 pieces"],
-    "specs": ["MOQ: 36 Pieces", "330 ml Studio Ceramic", "Dishwasher & microwave safe", "Shipping charges excluded"],
+    "specifications": [
+      "330 ml Studio Ceramic",
+      "Dishwasher & microwave safe",
+      "Pantone-matched wrap",
+      "MOQ: 36 pieces"
+    ],
+    "specs": [
+      "MOQ: 36 Pieces",
+      "330 ml Studio Ceramic",
+      "Dishwasher & microwave safe",
+      "Shipping charges excluded"
+    ],
     "price": 199,
     "currency": "INR",
     "priceUnit": "piece",
@@ -117,18 +168,31 @@
     "customisationInfo": "Full wrap sublimation or clean front/back vector logo imprint.",
     "visualType": "mug",
     "defaultAccent": "#6D2E58",
-    "defaultSampleText": "WELCOME ABOARD"
+    "defaultSampleText": "WELCOME ABOARD",
+    "imageUrl": "/assets/catalog/corporate-merchandise/coffee-mug.jpg"
   },
   {
     "id": "custom-printed-sipper-bottle",
     "name": "Custom Printed Sipper Bottle",
     "shortName": "600 ml Sipper Bottle",
     "category": "corporate-merchandise",
-    "categories": ["Corporate Merchandise"],
+    "categories": [
+      "Corporate Merchandise"
+    ],
     "primaryCategory": "Corporate Merchandise",
     "description": "Food-grade stainless steel 600 ml sipper flask with leak-proof flip nozzle cap, tailored for active teams and conferences.",
-    "specifications": ["600 ml capacity", "Food-grade stainless steel", "Leak-proof flip spout lid", "MOQ: 36 pieces"],
-    "specs": ["MOQ: 36 Pieces", "600 ml Capacity", "Leak-proof sipper lid", "Shipping charges excluded"],
+    "specifications": [
+      "600 ml capacity",
+      "Food-grade stainless steel",
+      "Leak-proof flip spout lid",
+      "MOQ: 36 pieces"
+    ],
+    "specs": [
+      "MOQ: 36 Pieces",
+      "600 ml Capacity",
+      "Leak-proof sipper lid",
+      "Shipping charges excluded"
+    ],
     "price": 350,
     "currency": "INR",
     "priceUnit": "piece",
@@ -154,11 +218,23 @@
     "name": "Custom Printed Sports Bottle",
     "shortName": "750 ml Sports Bottle",
     "category": "corporate-merchandise",
-    "categories": ["Corporate Merchandise"],
+    "categories": [
+      "Corporate Merchandise"
+    ],
     "primaryCategory": "Corporate Merchandise",
     "description": "Double-wall insulated 750 ml sports bottle in matte executive finish with rugged carabiner carry lid.",
-    "specifications": ["750 ml capacity", "Double-wall vacuum insulation", "Carabiner carry loop", "MOQ: 36 pieces"],
-    "specs": ["MOQ: 36 Pieces", "750 ml Capacity", "Ergonomic carabiner lid", "Shipping charges excluded"],
+    "specifications": [
+      "750 ml capacity",
+      "Double-wall vacuum insulation",
+      "Carabiner carry loop",
+      "MOQ: 36 pieces"
+    ],
+    "specs": [
+      "MOQ: 36 Pieces",
+      "750 ml Capacity",
+      "Ergonomic carabiner lid",
+      "Shipping charges excluded"
+    ],
     "price": 350,
     "currency": "INR",
     "priceUnit": "piece",
@@ -184,11 +260,21 @@
     "name": "Pack of 5 Matte Polaroids",
     "shortName": "5 Matte Polaroids",
     "category": "polaroids",
-    "categories": ["Polaroids & Photo Products"],
+    "categories": [
+      "Polaroids & Photo Products"
+    ],
     "primaryCategory": "Polaroids & Photo Products",
     "description": "Nostalgic instant-style thick-border prints in tactile anti-glare archival matte finish.",
-    "specifications": ["5 Matte Prints", "300 GSM Archival Card", "Classic 3.5×4.2 inch Polaroid frame"],
-    "specs": ["Pack of 5", "Anti-glare velvet matte", "Custom handwritten-style bottom text"],
+    "specifications": [
+      "5 Matte Prints",
+      "300 GSM Archival Card",
+      "Classic 3.5×4.2 inch Polaroid frame"
+    ],
+    "specs": [
+      "Pack of 5",
+      "Anti-glare velvet matte",
+      "Custom handwritten-style bottom text"
+    ],
     "price": 125,
     "currency": "INR",
     "priceUnit": "pack",
@@ -213,11 +299,21 @@
     "name": "Pack of 8 Matte Polaroids",
     "shortName": "8 Matte Polaroids",
     "category": "polaroids",
-    "categories": ["Polaroids & Photo Products"],
+    "categories": [
+      "Polaroids & Photo Products"
+    ],
     "primaryCategory": "Polaroids & Photo Products",
     "description": "Curated 8-photo memory story printed on non-reflective velvety matte cardstock.",
-    "specifications": ["8 Matte Prints", "300 GSM Archival Card", "Custom date/caption imprint"],
-    "specs": ["Pack of 8", "Anti-glare velvet matte", "Custom bottom caption"],
+    "specifications": [
+      "8 Matte Prints",
+      "300 GSM Archival Card",
+      "Custom date/caption imprint"
+    ],
+    "specs": [
+      "Pack of 8",
+      "Anti-glare velvet matte",
+      "Custom bottom caption"
+    ],
     "price": 159,
     "currency": "INR",
     "priceUnit": "pack",
@@ -242,11 +338,21 @@
     "name": "Pack of 16 Matte Polaroids",
     "shortName": "16 Matte Polaroids",
     "category": "polaroids",
-    "categories": ["Polaroids & Photo Products"],
+    "categories": [
+      "Polaroids & Photo Products"
+    ],
     "primaryCategory": "Polaroids & Photo Products",
     "description": "Complete vacation or anniversary memory archive with 16 textured matte Polaroid prints.",
-    "specifications": ["16 Matte Prints", "300 GSM Archival Card", "Kraft keepsake envelope included"],
-    "specs": ["Pack of 16", "Anti-glare velvet matte", "Keepsake packaging"],
+    "specifications": [
+      "16 Matte Prints",
+      "300 GSM Archival Card",
+      "Kraft keepsake envelope included"
+    ],
+    "specs": [
+      "Pack of 16",
+      "Anti-glare velvet matte",
+      "Keepsake packaging"
+    ],
     "price": 199,
     "currency": "INR",
     "priceUnit": "pack",
@@ -271,11 +377,21 @@
     "name": "Pack of 5 Glossy Polaroids",
     "shortName": "5 Glossy Polaroids",
     "category": "polaroids",
-    "categories": ["Polaroids & Photo Products"],
+    "categories": [
+      "Polaroids & Photo Products"
+    ],
     "primaryCategory": "Polaroids & Photo Products",
     "description": "High-shine vibrant photo prints capturing vivid colors, deep blacks, and rich contrast.",
-    "specifications": ["5 Glossy Prints", "300 GSM High-Gloss RC Photo Paper", "UV-coated"],
-    "specs": ["Pack of 5", "High-vibrancy gloss coat", "Deep contrast saturation"],
+    "specifications": [
+      "5 Glossy Prints",
+      "300 GSM High-Gloss RC Photo Paper",
+      "UV-coated"
+    ],
+    "specs": [
+      "Pack of 5",
+      "High-vibrancy gloss coat",
+      "Deep contrast saturation"
+    ],
     "price": 149,
     "currency": "INR",
     "priceUnit": "pack",
@@ -300,11 +416,21 @@
     "name": "Pack of 8 Glossy Polaroids",
     "shortName": "8 Glossy Polaroids",
     "category": "polaroids",
-    "categories": ["Polaroids & Photo Products"],
+    "categories": [
+      "Polaroids & Photo Products"
+    ],
     "primaryCategory": "Polaroids & Photo Products",
     "description": "Eight brilliant high-gloss keepsake prints calibrated for radiant portraits and landscapes.",
-    "specifications": ["8 Glossy Prints", "300 GSM High-Gloss RC Photo Paper", "UV-coated"],
-    "specs": ["Pack of 8", "High-vibrancy gloss coat", "Vivid colour reproduction"],
+    "specifications": [
+      "8 Glossy Prints",
+      "300 GSM High-Gloss RC Photo Paper",
+      "UV-coated"
+    ],
+    "specs": [
+      "Pack of 8",
+      "High-vibrancy gloss coat",
+      "Vivid colour reproduction"
+    ],
     "price": 199,
     "currency": "INR",
     "priceUnit": "pack",
@@ -329,11 +455,21 @@
     "name": "Pack of 16 Glossy Polaroids",
     "shortName": "16 Glossy Polaroids",
     "category": "polaroids",
-    "categories": ["Polaroids & Photo Products"],
+    "categories": [
+      "Polaroids & Photo Products"
+    ],
     "primaryCategory": "Polaroids & Photo Products",
     "description": "Luxe 16-pack of high-gloss instant-style prints ideal for gifting, journaling, or moodboards.",
-    "specifications": ["16 Glossy Prints", "300 GSM High-Gloss RC Photo Paper", "UV-coated"],
-    "specs": ["Pack of 16", "High-vibrancy gloss coat", "Collector keepsake set"],
+    "specifications": [
+      "16 Glossy Prints",
+      "300 GSM High-Gloss RC Photo Paper",
+      "UV-coated"
+    ],
+    "specs": [
+      "Pack of 16",
+      "High-vibrancy gloss coat",
+      "Collector keepsake set"
+    ],
     "price": 299,
     "currency": "INR",
     "priceUnit": "pack",
@@ -358,11 +494,22 @@
     "name": "K-Pop Group Pack",
     "shortName": "K-Pop Pack",
     "category": "photo-products",
-    "categories": ["Polaroids & Photo Products", "Personalised Gifts"],
+    "categories": [
+      "Polaroids & Photo Products",
+      "Personalised Gifts"
+    ],
     "primaryCategory": "Polaroids & Photo Products",
     "description": "Ultimate commemorative idol collector pack with rounded-edge holographic/silk photocards and posters.",
-    "specifications": ["Premium Photocards & Mini Prints Set", "Velvet silk lamination", "Rounded collector corners"],
-    "specs": ["Curated Idol Collection", "Silk velvet coat", "Collector packaging"],
+    "specifications": [
+      "Premium Photocards & Mini Prints Set",
+      "Velvet silk lamination",
+      "Rounded collector corners"
+    ],
+    "specs": [
+      "Curated Idol Collection",
+      "Silk velvet coat",
+      "Collector packaging"
+    ],
     "price": 599,
     "currency": "INR",
     "priceUnit": "pack",
@@ -387,11 +534,21 @@
     "name": "Film Strips (Set of 3)",
     "shortName": "Film Strips (Set of 3)",
     "category": "photo-products",
-    "categories": ["Polaroids & Photo Products"],
+    "categories": [
+      "Polaroids & Photo Products"
+    ],
     "primaryCategory": "Polaroids & Photo Products",
     "description": "Authentic cinematic 35mm film border strips highlighting 3 frames each with custom typography.",
-    "specifications": ["Set of 3 Film Strips", "300 GSM Lustre Card", "Vintage sprocket perforation detailing"],
-    "specs": ["Set of 3 Strips", "35mm border styling", "3 frames per strip"],
+    "specifications": [
+      "Set of 3 Film Strips",
+      "300 GSM Lustre Card",
+      "Vintage sprocket perforation detailing"
+    ],
+    "specs": [
+      "Set of 3 Strips",
+      "35mm border styling",
+      "3 frames per strip"
+    ],
     "price": 199,
     "currency": "INR",
     "priceUnit": "set",
@@ -416,11 +573,22 @@
     "name": "Spotify Polaroids (Set of 3)",
     "shortName": "Spotify Polaroids (3)",
     "category": "photo-products",
-    "categories": ["Polaroids & Photo Products", "Personalised Gifts"],
+    "categories": [
+      "Polaroids & Photo Products",
+      "Personalised Gifts"
+    ],
     "primaryCategory": "Polaroids & Photo Products",
     "description": "Custom Polaroid prints with scannable Spotify code, song title, artist name, and your favorite memory photo.",
-    "specifications": ["Set of 3 Prints", "Scannable Spotify Audio Code", "High-resolution photo print"],
-    "specs": ["Set of 3 Prints", "Scannable Spotify Code", "Custom song & timestamp"],
+    "specifications": [
+      "Set of 3 Prints",
+      "Scannable Spotify Audio Code",
+      "High-resolution photo print"
+    ],
+    "specs": [
+      "Set of 3 Prints",
+      "Scannable Spotify Code",
+      "Custom song & timestamp"
+    ],
     "price": 149,
     "currency": "INR",
     "priceUnit": "set",
@@ -445,11 +613,22 @@
     "name": "Spotify Polaroids (Set of 5)",
     "shortName": "Spotify Polaroids (5)",
     "category": "photo-products",
-    "categories": ["Polaroids & Photo Products", "Personalised Gifts"],
+    "categories": [
+      "Polaroids & Photo Products",
+      "Personalised Gifts"
+    ],
     "primaryCategory": "Polaroids & Photo Products",
     "description": "Five custom Polaroid soundtrack prints with scannable Spotify codes pairing songs with photos.",
-    "specifications": ["Set of 5 Prints", "Scannable Spotify Audio Code", "300 GSM Photo Stock"],
-    "specs": ["Set of 5 Prints", "Scannable Spotify Code", "Custom playlist favorites"],
+    "specifications": [
+      "Set of 5 Prints",
+      "Scannable Spotify Audio Code",
+      "300 GSM Photo Stock"
+    ],
+    "specs": [
+      "Set of 5 Prints",
+      "Scannable Spotify Code",
+      "Custom playlist favorites"
+    ],
     "price": 199,
     "currency": "INR",
     "priceUnit": "set",
@@ -474,11 +653,22 @@
     "name": "Photobooth Strips (Set of 3)",
     "shortName": "Photobooth Strips (3)",
     "category": "photo-products",
-    "categories": ["Polaroids & Photo Products", "Personalised Gifts"],
+    "categories": [
+      "Polaroids & Photo Products",
+      "Personalised Gifts"
+    ],
     "primaryCategory": "Polaroids & Photo Products",
     "description": "Retro 4-pose photo booth vertical strips with bespoke caption and studio watermark.",
-    "specifications": ["Set of 3 Strips", "4 Frames per strip", "Archival 300 GSM satin card"],
-    "specs": ["Set of 3 Strips", "4 Photos each", "Wax-sealed envelope option"],
+    "specifications": [
+      "Set of 3 Strips",
+      "4 Frames per strip",
+      "Archival 300 GSM satin card"
+    ],
+    "specs": [
+      "Set of 3 Strips",
+      "4 Photos each",
+      "Wax-sealed envelope option"
+    ],
     "price": 149,
     "currency": "INR",
     "priceUnit": "set",
@@ -503,11 +693,21 @@
     "name": "Goofy Cat Stickers (Paper-Based)",
     "shortName": "Goofy Cat Stickers",
     "category": "stickers",
-    "categories": ["Stickers"],
+    "categories": [
+      "Stickers"
+    ],
     "primaryCategory": "Stickers",
     "description": "Whimsical hand-illustrated feline sticker pack printed on premium matte adhesive paper.",
-    "specifications": ["Paper-Based Matte Finish", "Precision Die-Cut", "Pack of 12+ stickers"],
-    "specs": ["Paper-based matte", "Pack of 12+", "Journal & planner friendly"],
+    "specifications": [
+      "Paper-Based Matte Finish",
+      "Precision Die-Cut",
+      "Pack of 12+ stickers"
+    ],
+    "specs": [
+      "Paper-based matte",
+      "Pack of 12+",
+      "Journal & planner friendly"
+    ],
     "price": 89,
     "currency": "INR",
     "priceUnit": "pack",
@@ -517,7 +717,7 @@
     "moq": 1,
     "orderType": "consumer-ready",
     "isBulkOnly": false,
-    "image": "/assets/catalog/stickers/goofy-cat.jpg",
+    "image": "https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?auto=format&fit=crop&w=800&q=80",
     "imageType": "actual-product-photo",
     "shippingIncluded": false,
     "priceStatus": "provided",
@@ -525,18 +725,29 @@
     "customisationInfo": "Curated studio illustration sheet.",
     "visualType": "sticker-sheet",
     "defaultAccent": "#C88DA0",
-    "defaultSampleText": "cat vibes"
+    "defaultSampleText": "cat vibes",
+    "imageUrl": "https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?auto=format&fit=crop&w=800&q=80"
   },
   {
     "id": "demon-slayer-stickers",
     "name": "Demon Slayer Stickers (Paper-Based)",
     "shortName": "Demon Slayer Stickers",
     "category": "stickers",
-    "categories": ["Stickers"],
+    "categories": [
+      "Stickers"
+    ],
     "primaryCategory": "Stickers",
     "description": "Anime character sticker collection with crisp ink lines on smooth paper stock.",
-    "specifications": ["Paper-Based Matte", "Precision Die-Cut", "Pack of 10+ characters"],
-    "specs": ["Paper-based", "Anime character pack", "Clean peel-and-stick"],
+    "specifications": [
+      "Paper-Based Matte",
+      "Precision Die-Cut",
+      "Pack of 10+ characters"
+    ],
+    "specs": [
+      "Paper-based",
+      "Anime character pack",
+      "Clean peel-and-stick"
+    ],
     "price": 99,
     "currency": "INR",
     "priceUnit": "pack",
@@ -546,7 +757,7 @@
     "moq": 1,
     "orderType": "consumer-ready",
     "isBulkOnly": false,
-    "image": "/assets/catalog/stickers/demon-slayer.jpg",
+    "image": "https://images.unsplash.com/photo-1578632767115-351597cf2477?auto=format&fit=crop&w=800&q=80",
     "imageType": "actual-product-photo",
     "shippingIncluded": false,
     "priceStatus": "provided",
@@ -554,18 +765,29 @@
     "customisationInfo": "Curated Demon Slayer artwork pack.",
     "visualType": "sticker-sheet",
     "defaultAccent": "#2E2A32",
-    "defaultSampleText": "slayer pack"
+    "defaultSampleText": "slayer pack",
+    "imageUrl": "https://images.unsplash.com/photo-1578632767115-351597cf2477?auto=format&fit=crop&w=800&q=80"
   },
   {
     "id": "cool-laptop-stickers",
     "name": "Cool Laptop Stickers (Paper-Based)",
     "shortName": "Cool Laptop Stickers",
     "category": "stickers",
-    "categories": ["Stickers"],
+    "categories": [
+      "Stickers"
+    ],
     "primaryCategory": "Stickers",
     "description": "Tech, developer and indie aesthetic stickers designed for laptops, cases, and notebooks.",
-    "specifications": ["Paper-Based Adhesive", "Matte Lamination", "Pack of 10 stickers"],
-    "specs": ["Paper-based adhesive", "Pack of 10", "Laptop & diary friendly"],
+    "specifications": [
+      "Paper-Based Adhesive",
+      "Matte Lamination",
+      "Pack of 10 stickers"
+    ],
+    "specs": [
+      "Paper-based adhesive",
+      "Pack of 10",
+      "Laptop & diary friendly"
+    ],
     "price": 99,
     "currency": "INR",
     "priceUnit": "pack",
@@ -575,7 +797,7 @@
     "moq": 1,
     "orderType": "consumer-ready",
     "isBulkOnly": false,
-    "image": "/assets/catalog/stickers/laptop-stickers.jpg",
+    "image": "https://images.unsplash.com/photo-1581291518655-9523c932edcf?auto=format&fit=crop&w=800&q=80",
     "imageType": "actual-product-photo",
     "shippingIncluded": false,
     "priceStatus": "provided",
@@ -583,18 +805,29 @@
     "customisationInfo": "Assorted developer, coffee, and studio quotes.",
     "visualType": "sticker-sheet",
     "defaultAccent": "#6D2E58",
-    "defaultSampleText": "build cool things"
+    "defaultSampleText": "build cool things",
+    "imageUrl": "https://images.unsplash.com/photo-1581291518655-9523c932edcf?auto=format&fit=crop&w=800&q=80"
   },
   {
     "id": "bts-stickers",
     "name": "BTS Stickers (Paper-Based)",
     "shortName": "BTS Stickers",
     "category": "stickers",
-    "categories": ["Stickers"],
+    "categories": [
+      "Stickers"
+    ],
     "primaryCategory": "Stickers",
     "description": "Vibrant BTS fan illustrations, logos, and album motifs on smooth paper sticker stock.",
-    "specifications": ["Paper-Based Finish", "Precision Kiss-Cut", "Pack of 12 stickers"],
-    "specs": ["Paper-based", "BTS member & logo pack", "K-pop aesthetic"],
+    "specifications": [
+      "Paper-Based Finish",
+      "Precision Kiss-Cut",
+      "Pack of 12 stickers"
+    ],
+    "specs": [
+      "Paper-based",
+      "BTS member & logo pack",
+      "K-pop aesthetic"
+    ],
     "price": 89,
     "currency": "INR",
     "priceUnit": "pack",
@@ -604,7 +837,7 @@
     "moq": 1,
     "orderType": "consumer-ready",
     "isBulkOnly": false,
-    "image": "/assets/catalog/stickers/bts-stickers.jpg",
+    "image": "https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?auto=format&fit=crop&w=800&q=80",
     "imageType": "actual-product-photo",
     "shippingIncluded": false,
     "priceStatus": "provided",
@@ -612,18 +845,29 @@
     "customisationInfo": "Official era and album inspired illustrations.",
     "visualType": "sticker-sheet",
     "defaultAccent": "#D8C6E6",
-    "defaultSampleText": "Borahae"
+    "defaultSampleText": "Borahae",
+    "imageUrl": "https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?auto=format&fit=crop&w=800&q=80"
   },
   {
     "id": "aesthetic-stickers-transparent",
     "name": "Aesthetic Stickers (Transparent)",
     "shortName": "Aesthetic Transparent Stickers",
     "category": "stickers",
-    "categories": ["Stickers"],
+    "categories": [
+      "Stickers"
+    ],
     "primaryCategory": "Stickers",
     "description": "Crystal-clear transparent vinyl stickers that blend seamlessly onto glass, phones, and water bottles.",
-    "specifications": ["Clear Transparent Vinyl", "Waterproof & Scratch-Resistant", "Pack of 8"],
-    "specs": ["Transparent vinyl", "Waterproof", "Blends into any surface"],
+    "specifications": [
+      "Clear Transparent Vinyl",
+      "Waterproof & Scratch-Resistant",
+      "Pack of 8"
+    ],
+    "specs": [
+      "Transparent vinyl",
+      "Waterproof",
+      "Blends into any surface"
+    ],
     "price": 129,
     "currency": "INR",
     "priceUnit": "pack",
@@ -648,11 +892,21 @@
     "name": "One Piece Stickers (Transparent)",
     "shortName": "One Piece Transparent Stickers",
     "category": "stickers",
-    "categories": ["Stickers"],
+    "categories": [
+      "Stickers"
+    ],
     "primaryCategory": "Stickers",
     "description": "High-durability clear vinyl anime stickers featuring the Straw Hat crew and iconic jolly rogers.",
-    "specifications": ["Clear Transparent Vinyl", "Waterproof & UV Protected", "Pack of 8"],
-    "specs": ["Transparent clear vinyl", "Waterproof", "Anime iconography"],
+    "specifications": [
+      "Clear Transparent Vinyl",
+      "Waterproof & UV Protected",
+      "Pack of 8"
+    ],
+    "specs": [
+      "Transparent clear vinyl",
+      "Waterproof",
+      "Anime iconography"
+    ],
     "price": 129,
     "currency": "INR",
     "priceUnit": "pack",
@@ -677,11 +931,22 @@
     "name": "Custom Stickers (Transparent)",
     "shortName": "Custom Transparent Stickers",
     "category": "stickers",
-    "categories": ["Stickers", "Personalised Gifts"],
+    "categories": [
+      "Stickers",
+      "Personalised Gifts"
+    ],
     "primaryCategory": "Stickers",
     "description": "Bespoke die-cut clear vinyl stickers manufactured directly from your logo, signature, or artwork.",
-    "specifications": ["Custom Clear Transparent Vinyl", "Waterproof outdoor grade", "Precision contour cut"],
-    "specs": ["Custom artwork file", "100% transparent vinyl", "Waterproof & dishwasher safe"],
+    "specifications": [
+      "Custom Clear Transparent Vinyl",
+      "Waterproof outdoor grade",
+      "Precision contour cut"
+    ],
+    "specs": [
+      "Custom artwork file",
+      "100% transparent vinyl",
+      "Waterproof & dishwasher safe"
+    ],
     "price": 199,
     "currency": "INR",
     "priceUnit": "pack",
@@ -691,7 +956,7 @@
     "moq": 1,
     "orderType": "consumer-ready",
     "isBulkOnly": false,
-    "image": "/assets/catalog/stickers/custom-transparent.jpg",
+    "image": "https://images.unsplash.com/photo-1586075010923-2dd4570fb338?auto=format&fit=crop&w=800&q=80",
     "imageType": "actual-product-photo",
     "shippingIncluded": false,
     "priceStatus": "provided",
@@ -699,18 +964,30 @@
     "customisationInfo": "Upload your vector or PNG artwork for bespoke clear printing.",
     "visualType": "sticker-sheet",
     "defaultAccent": "#6D2E58",
-    "defaultSampleText": "your logo here"
+    "defaultSampleText": "your logo here",
+    "imageUrl": "https://images.unsplash.com/photo-1586075010923-2dd4570fb338?auto=format&fit=crop&w=800&q=80"
   },
   {
     "id": "custom-stickers-paper",
     "name": "Custom Stickers (Paper-Based)",
     "shortName": "Custom Paper Stickers",
     "category": "stickers",
-    "categories": ["Stickers", "Personalised Gifts"],
+    "categories": [
+      "Stickers",
+      "Personalised Gifts"
+    ],
     "primaryCategory": "Stickers",
     "description": "Custom printed kiss-cut sticker sheet with your photos, pet portraits, quotes, or illustrations.",
-    "specifications": ["Custom Paper-Based Matte", "A5 Sheet Kiss-Cut", "High-res color reproduction"],
-    "specs": ["A5 custom sheet", "Precision kiss-cut", "Personal photos or art"],
+    "specifications": [
+      "Custom Paper-Based Matte",
+      "A5 Sheet Kiss-Cut",
+      "High-res color reproduction"
+    ],
+    "specs": [
+      "A5 custom sheet",
+      "Precision kiss-cut",
+      "Personal photos or art"
+    ],
     "price": 149,
     "currency": "INR",
     "priceUnit": "sheet",
@@ -735,11 +1012,22 @@
     "name": "Page Whisper Bookmark",
     "shortName": "Page Whisper",
     "category": "bookmarks",
-    "categories": ["Bookmarks & Stationery", "Personalised Gifts"],
+    "categories": [
+      "Bookmarks & Stationery",
+      "Personalised Gifts"
+    ],
     "primaryCategory": "Bookmarks & Stationery",
     "description": "Handcrafted luxury 350 GSM cotton bookmark finished with hand-knotted plum satin tassel and subtle foil touch.",
-    "specifications": ["350 GSM Cotton Cardstock", "Plum Satin Tassel", "Gold foil accents"],
-    "specs": ["350 GSM cotton stock", "Hand-knotted silk tassel", "Gold foil touch"],
+    "specifications": [
+      "350 GSM Cotton Cardstock",
+      "Plum Satin Tassel",
+      "Gold foil accents"
+    ],
+    "specs": [
+      "350 GSM cotton stock",
+      "Hand-knotted silk tassel",
+      "Gold foil touch"
+    ],
     "price": 299,
     "currency": "INR",
     "priceUnit": "piece",
@@ -749,7 +1037,7 @@
     "moq": 1,
     "orderType": "consumer-ready",
     "isBulkOnly": false,
-    "image": "/assets/catalog/bookmarks/page-whisper.jpg",
+    "image": "https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?auto=format&fit=crop&w=800&q=80",
     "imageType": "actual-product-photo",
     "shippingIncluded": false,
     "priceStatus": "provided",
@@ -757,18 +1045,29 @@
     "customisationInfo": "Personalise with your name, monogram or favorite line.",
     "visualType": "bookmark",
     "defaultAccent": "#6D2E58",
-    "defaultSampleText": "One more chapter"
+    "defaultSampleText": "One more chapter",
+    "imageUrl": "https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?auto=format&fit=crop&w=800&q=80"
   },
   {
     "id": "velour-mark",
     "name": "Velour Mark Bookmark",
     "shortName": "Velour Mark",
     "category": "bookmarks",
-    "categories": ["Bookmarks & Stationery"],
+    "categories": [
+      "Bookmarks & Stationery"
+    ],
     "primaryCategory": "Bookmarks & Stationery",
     "description": "Soft-touch velvet laminated bookmark featuring botanical line art and understated typography.",
-    "specifications": ["Velvet Touch Lamination", "Curved Aesthetic Corners", "Archival stock"],
-    "specs": ["Velvet touch lamination", "Curved corners", "Soft-matte finish"],
+    "specifications": [
+      "Velvet Touch Lamination",
+      "Curved Aesthetic Corners",
+      "Archival stock"
+    ],
+    "specs": [
+      "Velvet touch lamination",
+      "Curved corners",
+      "Soft-matte finish"
+    ],
     "price": 129,
     "currency": "INR",
     "priceUnit": "piece",
@@ -778,7 +1077,7 @@
     "moq": 1,
     "orderType": "consumer-ready",
     "isBulkOnly": false,
-    "image": "/assets/catalog/bookmarks/velour-mark.jpg",
+    "image": "https://images.unsplash.com/photo-1512820790803-83ca734da794?auto=format&fit=crop&w=800&q=80",
     "imageType": "actual-product-photo",
     "shippingIncluded": false,
     "priceStatus": "provided",
@@ -786,18 +1085,30 @@
     "customisationInfo": "Select background color and custom initial.",
     "visualType": "bookmark",
     "defaultAccent": "#C88DA0",
-    "defaultSampleText": "read slowly"
+    "defaultSampleText": "read slowly",
+    "imageUrl": "https://images.unsplash.com/photo-1512820790803-83ca734da794?auto=format&fit=crop&w=800&q=80"
   },
   {
     "id": "whispered-duo",
     "name": "Whispered Duo Bookmarks",
     "shortName": "Whispered Duo",
     "category": "bookmarks",
-    "categories": ["Bookmarks & Stationery", "Personalised Gifts"],
+    "categories": [
+      "Bookmarks & Stationery",
+      "Personalised Gifts"
+    ],
     "primaryCategory": "Bookmarks & Stationery",
     "description": "Pair of two matching luxury foiled bookmarks packaged in a wax-sealed envelope for gifting book lovers.",
-    "specifications": ["Pair of 2 Luxury Bookmarks", "Twin silk tassels", "Wax-sealed gift envelope"],
-    "specs": ["Set of 2 bookmarks", "Twin tassels", "Gift envelope included"],
+    "specifications": [
+      "Pair of 2 Luxury Bookmarks",
+      "Twin silk tassels",
+      "Wax-sealed gift envelope"
+    ],
+    "specs": [
+      "Set of 2 bookmarks",
+      "Twin tassels",
+      "Gift envelope included"
+    ],
     "price": 499,
     "currency": "INR",
     "priceUnit": "pair",
@@ -807,7 +1118,7 @@
     "moq": 1,
     "orderType": "consumer-ready",
     "isBulkOnly": false,
-    "image": "/assets/catalog/bookmarks/whispered-duo.jpg",
+    "image": "https://images.unsplash.com/photo-1476275466078-4007374efbbe?auto=format&fit=crop&w=800&q=80",
     "imageType": "actual-product-photo",
     "shippingIncluded": false,
     "priceStatus": "provided",
@@ -815,18 +1126,29 @@
     "customisationInfo": "Personalise both bookmarks with custom complimentary text.",
     "visualType": "bookmark",
     "defaultAccent": "#6D2E58",
-    "defaultSampleText": "together in stories"
+    "defaultSampleText": "together in stories",
+    "imageUrl": "https://images.unsplash.com/photo-1476275466078-4007374efbbe?auto=format&fit=crop&w=800&q=80"
   },
   {
     "id": "classic-matte-duo",
     "name": "Classic Matte Duo Bookmarks",
     "shortName": "Classic Matte Duo",
     "category": "bookmarks",
-    "categories": ["Bookmarks & Stationery"],
+    "categories": [
+      "Bookmarks & Stationery"
+    ],
     "primaryCategory": "Bookmarks & Stationery",
     "description": "Essential twin bookmark pack printed on heavyweight matte card with clean editorial layout.",
-    "specifications": ["Pair of 2 Bookmarks", "300 GSM Matte Card", "Minimalist layout"],
-    "specs": ["Pair of 2 bookmarks", "300 GSM matte card", "Minimalist studio quotes"],
+    "specifications": [
+      "Pair of 2 Bookmarks",
+      "300 GSM Matte Card",
+      "Minimalist layout"
+    ],
+    "specs": [
+      "Pair of 2 bookmarks",
+      "300 GSM matte card",
+      "Minimalist studio quotes"
+    ],
     "price": 99,
     "currency": "INR",
     "priceUnit": "pair",
@@ -836,7 +1158,7 @@
     "moq": 1,
     "orderType": "consumer-ready",
     "isBulkOnly": false,
-    "image": "/assets/catalog/bookmarks/classic-matte-duo.jpg",
+    "image": "https://images.unsplash.com/photo-1506880018603-83d5b814b5a6?auto=format&fit=crop&w=800&q=80",
     "imageType": "actual-product-photo",
     "shippingIncluded": false,
     "priceStatus": "provided",
@@ -844,18 +1166,29 @@
     "customisationInfo": "Choice of two literary quote cards.",
     "visualType": "bookmark",
     "defaultAccent": "#2E2A32",
-    "defaultSampleText": "still turning pages"
+    "defaultSampleText": "still turning pages",
+    "imageUrl": "https://images.unsplash.com/photo-1506880018603-83d5b814b5a6?auto=format&fit=crop&w=800&q=80"
   },
   {
     "id": "a3-matte-grande",
     "name": "A3 Matte – Grande Matte Edition Poster",
     "shortName": "A3 Grande Matte",
     "category": "posters",
-    "categories": ["Posters & Prints"],
+    "categories": [
+      "Posters & Prints"
+    ],
     "primaryCategory": "Posters & Prints",
     "description": "Expansive A3 exhibition wall poster on non-glare velvet matte card with museum-grade color saturation.",
-    "specifications": ["A3 Size (297×420mm)", "300 GSM Heavyweight Matte Card", "Archival dye inks"],
-    "specs": ["A3 size (297×420mm)", "300 GSM velvet matte", "Non-reflective gallery coat"],
+    "specifications": [
+      "A3 Size (297×420mm)",
+      "300 GSM Heavyweight Matte Card",
+      "Archival dye inks"
+    ],
+    "specs": [
+      "A3 size (297×420mm)",
+      "300 GSM velvet matte",
+      "Non-reflective gallery coat"
+    ],
     "price": 149,
     "currency": "INR",
     "priceUnit": "piece",
@@ -880,11 +1213,21 @@
     "name": "A4 Glossy – Vivid Gloss Edition Poster",
     "shortName": "A4 Vivid Gloss",
     "category": "posters",
-    "categories": ["Posters & Prints"],
+    "categories": [
+      "Posters & Prints"
+    ],
     "primaryCategory": "Posters & Prints",
     "description": "Standard A4 wall poster featuring radiant high-gloss coating that brings out intense photographic contrast.",
-    "specifications": ["A4 Size (210×297mm)", "250 GSM Vivid Gloss Photo Stock", "UV protective coat"],
-    "specs": ["A4 size (210×297mm)", "High-vivid gloss coat", "Deep rich contrast"],
+    "specifications": [
+      "A4 Size (210×297mm)",
+      "250 GSM Vivid Gloss Photo Stock",
+      "UV protective coat"
+    ],
+    "specs": [
+      "A4 size (210×297mm)",
+      "High-vivid gloss coat",
+      "Deep rich contrast"
+    ],
     "price": 149,
     "currency": "INR",
     "priceUnit": "piece",
@@ -909,11 +1252,21 @@
     "name": "A3 Glossy – Grande Gloss Edition Poster",
     "shortName": "A3 Grande Gloss",
     "category": "posters",
-    "categories": ["Posters & Prints"],
+    "categories": [
+      "Posters & Prints"
+    ],
     "primaryCategory": "Posters & Prints",
     "description": "Large-format A3 high-gloss statement poster with brilliant specular sheen and vibrant color pop.",
-    "specifications": ["A3 Size (297×420mm)", "250 GSM Vivid Gloss Photo Stock", "Edge-to-edge printing"],
-    "specs": ["A3 size (297×420mm)", "High-gloss photographic sheen", "Full bleed reproduction"],
+    "specifications": [
+      "A3 Size (297×420mm)",
+      "250 GSM Vivid Gloss Photo Stock",
+      "Edge-to-edge printing"
+    ],
+    "specs": [
+      "A3 size (297×420mm)",
+      "High-gloss photographic sheen",
+      "Full bleed reproduction"
+    ],
     "price": 199,
     "currency": "INR",
     "priceUnit": "piece",

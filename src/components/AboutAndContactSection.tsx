@@ -37,7 +37,7 @@ export const AboutAndContactSection: React.FC<AboutAndContactSectionProps> = ({
     <>
       {/* ABOUT US */}
       <section id="about" className={`py-20 lg:py-32 border-b border-current/10 transition-colors duration-300 ${
-        isDark ? 'bg-[#06080C] text-[#FAF6F0]' : 'bg-[#FAF6F0] text-[#161E24]'
+        isDark ? 'bg-[#1A161E] text-[#F8F4EA]' : 'bg-[#F8F4EA] text-[#2E2A32]'
       }`}>
         <div className="max-w-[1280px] mx-auto px-5 sm:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-center">
@@ -54,8 +54,8 @@ export const AboutAndContactSection: React.FC<AboutAndContactSectionProps> = ({
 
                 <div className={`w-56 sm:w-64 aspect-square rounded-3xl overflow-hidden flex items-center justify-center relative z-10 border transition-all ${
                   isDark
-                    ? 'bg-[#06080C] text-[#FAF6F0] border-white/10 shadow-[0_24px_48px_-20px_rgba(118,87,123,0.3)]'
-                    : 'bg-[#FAF6F0] text-[#161E24] border-[#76577B]/20 shadow-[0_24px_48px_-20px_rgba(118,87,123,0.15)]'
+                    ? 'bg-[#1A161E] text-[#F8F4EA] border-white/10 shadow-[0_24px_48px_-20px_rgba(118,87,123,0.3)]'
+                    : 'bg-[#F8F4EA] text-[#2E2A32] border-[#76577B]/20 shadow-[0_24px_48px_-20px_rgba(118,87,123,0.15)]'
                 }`}>
                   {!logoError ? (
                     <img
@@ -334,8 +334,8 @@ export const AboutAndContactSection: React.FC<AboutAndContactSectionProps> = ({
                   rel="noopener noreferrer"
                   className={`group rounded-2xl overflow-hidden border flex flex-col hover:-translate-y-1 transition-all ${
                     isDark
-                      ? 'border-white/10 bg-[#06080C] hover:border-white/20'
-                      : 'border-[#76577B]/15 bg-[#FAF6F0] hover:border-[#76577B]/30 shadow-md'
+                      ? 'border-white/10 bg-[#1A161E] hover:border-white/20'
+                      : 'border-[#76577B]/15 bg-[#F8F4EA] hover:border-[#76577B]/30 shadow-md'
                   }`}
                 >
                   <div className="aspect-[4/3] w-full overflow-hidden border-b border-inherit">
@@ -343,6 +343,7 @@ export const AboutAndContactSection: React.FC<AboutAndContactSectionProps> = ({
                       visualType={post.visualType}
                       accentColor={post.accent}
                       customText={post.sampleText}
+                      imageUrl={post.imageUrl}
                       alt={post.title}
                       mode="card"
                     />
