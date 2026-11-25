@@ -203,7 +203,7 @@
     "minOrderValue": 12600,
     "orderType": "bulk-only",
     "isBulkOnly": true,
-    "image": "/assets/catalog/corporate-merchandise/sipper-bottle.jpg",
+    "image": "/assets/catalog/corporate-merchandise/sipper-bottle-600ml.jpg",
     "imageType": "actual-product-photo",
     "shippingIncluded": false,
     "priceStatus": "provided",
@@ -211,7 +211,8 @@
     "customisationInfo": "Vibrant UV colour printing or precision laser mark.",
     "visualType": "sipper-bottle",
     "defaultAccent": "#2E2A32",
-    "defaultSampleText": "TEAM VELOCITY"
+    "defaultSampleText": "TEAM VELOCITY",
+    "imageUrl": "/assets/catalog/corporate-merchandise/sipper-bottle-600ml.jpg"
   },
   {
     "id": "custom-printed-sports-bottle",
@@ -245,7 +246,7 @@
     "minOrderValue": 12600,
     "orderType": "bulk-only",
     "isBulkOnly": true,
-    "image": "/assets/catalog/corporate-merchandise/sports-bottle.jpg",
+    "image": "/assets/catalog/corporate-merchandise/sports-bottle-750ml.jpg",
     "imageType": "actual-product-photo",
     "shippingIncluded": false,
     "priceStatus": "provided",
@@ -253,7 +254,8 @@
     "customisationInfo": "Permanent laser engraving or multi-colour UV rotary print.",
     "visualType": "sports-bottle",
     "defaultAccent": "#6D2E58",
-    "defaultSampleText": "SUMMIT 2026"
+    "defaultSampleText": "SUMMIT 2026",
+    "imageUrl": "/assets/catalog/corporate-merchandise/sports-bottle-750ml.jpg"
   },
   {
     "id": "matte-polaroids-5",
@@ -284,7 +286,7 @@
     "moq": 1,
     "orderType": "consumer-ready",
     "isBulkOnly": false,
-    "image": "/assets/catalog/polaroids/matte-5.jpg",
+    "image": "https://images.unsplash.com/photo-1526170375885-4d8ecf77b99f?auto=format&fit=crop&w=800&q=80",
     "imageType": "actual-product-photo",
     "shippingIncluded": false,
     "priceStatus": "provided",
@@ -292,7 +294,8 @@
     "customisationInfo": "Upload 5 photos with custom captions or dates.",
     "visualType": "polaroids",
     "defaultAccent": "#6D2E58",
-    "defaultSampleText": "golden days"
+    "defaultSampleText": "golden days",
+    "imageUrl": "https://images.unsplash.com/photo-1526170375885-4d8ecf77b99f?auto=format&fit=crop&w=800&q=80"
   },
   {
     "id": "matte-polaroids-8",
@@ -323,7 +326,7 @@
     "moq": 1,
     "orderType": "consumer-ready",
     "isBulkOnly": false,
-    "image": "/assets/catalog/polaroids/matte-8.jpg",
+    "image": "https://images.unsplash.com/photo-1516035069371-29a1b244cc32?auto=format&fit=crop&w=800&q=80",
     "imageType": "actual-product-photo",
     "shippingIncluded": false,
     "priceStatus": "provided",
@@ -331,7 +334,8 @@
     "customisationInfo": "Upload 8 photos with optional date stamps.",
     "visualType": "polaroids",
     "defaultAccent": "#6D2E58",
-    "defaultSampleText": "summer memories"
+    "defaultSampleText": "summer memories",
+    "imageUrl": "https://images.unsplash.com/photo-1516035069371-29a1b244cc32?auto=format&fit=crop&w=800&q=80"
   },
   {
     "id": "matte-polaroids-16",
@@ -362,7 +366,7 @@
     "moq": 1,
     "orderType": "consumer-ready",
     "isBulkOnly": false,
-    "image": "/assets/catalog/polaroids/matte-16.jpg",
+    "image": "https://images.unsplash.com/photo-1513519245088-0e12902e5a38?auto=format&fit=crop&w=800&q=80",
     "imageType": "actual-product-photo",
     "shippingIncluded": false,
     "priceStatus": "provided",
@@ -370,7 +374,8 @@
     "customisationInfo": "Upload 16 photos with custom message typesetting.",
     "visualType": "polaroids",
     "defaultAccent": "#6D2E58",
-    "defaultSampleText": "kalyan chapter"
+    "defaultSampleText": "kalyan chapter",
+    "imageUrl": "https://images.unsplash.com/photo-1513519245088-0e12902e5a38?auto=format&fit=crop&w=800&q=80"
   },
   {
     "id": "glossy-polaroids-5",
@@ -401,7 +406,7 @@
     "moq": 1,
     "orderType": "consumer-ready",
     "isBulkOnly": false,
-    "image": "/assets/catalog/polaroids/glossy-5.jpg",
+    "image": "https://images.unsplash.com/photo-1492691527719-9d1e07e534b4?auto=format&fit=crop&w=800&q=80",
     "imageType": "actual-product-photo",
     "shippingIncluded": false,
     "priceStatus": "provided",
@@ -409,7 +414,8 @@
     "customisationInfo": "Upload 5 photos for high-gloss photo reproduction.",
     "visualType": "polaroids",
     "defaultAccent": "#C88DA0",
-    "defaultSampleText": "city lights"
+    "defaultSampleText": "city lights",
+    "imageUrl": "https://images.unsplash.com/photo-1492691527719-9d1e07e534b4?auto=format&fit=crop&w=800&q=80"
   },
   {
     "id": "glossy-polaroids-8",
@@ -440,7 +446,7 @@
     "moq": 1,
     "orderType": "consumer-ready",
     "isBulkOnly": false,
-    "image": "/assets/catalog/polaroids/glossy-8.jpg",
+    "image": "https://images.unsplash.com/photo-1534447677768-be436bb09401?auto=format&fit=crop&w=800&q=80",
     "imageType": "actual-product-photo",
     "shippingIncluded": false,
     "priceStatus": "provided",
@@ -448,7 +454,8 @@
     "customisationInfo": "Upload 8 photos with custom captions.",
     "visualType": "polaroids",
     "defaultAccent": "#C88DA0",
-    "defaultSampleText": "sunshine days"
+    "defaultSampleText": "sunshine days",
+    "imageUrl": "https://images.unsplash.com/photo-1534447677768-be436bb09401?auto=format&fit=crop&w=800&q=80"
   },
   {
     "id": "glossy-polaroids-16",
@@ -479,7 +486,7 @@
     "moq": 1,
     "orderType": "consumer-ready",
     "isBulkOnly": false,
-    "image": "/assets/catalog/polaroids/glossy-16.jpg",
+    "image": "https://images.unsplash.com/photo-1509198397868-475647b2a1e5?auto=format&fit=crop&w=800&q=80",
     "imageType": "actual-product-photo",
     "shippingIncluded": false,
     "priceStatus": "provided",
@@ -487,7 +494,8 @@
     "customisationInfo": "Upload 16 photos with personalized captions.",
     "visualType": "polaroids",
     "defaultAccent": "#C88DA0",
-    "defaultSampleText": "the journey"
+    "defaultSampleText": "the journey",
+    "imageUrl": "https://images.unsplash.com/photo-1509198397868-475647b2a1e5?auto=format&fit=crop&w=800&q=80"
   },
   {
     "id": "kpop-group-pack",
@@ -519,7 +527,7 @@
     "moq": 1,
     "orderType": "consumer-ready",
     "isBulkOnly": false,
-    "image": "/assets/catalog/photo-products/kpop-pack.jpg",
+    "image": "https://images.unsplash.com/photo-1607604276583-eef5d076aa5f?auto=format&fit=crop&w=800&q=80",
     "imageType": "actual-product-photo",
     "shippingIncluded": false,
     "priceStatus": "provided",
@@ -527,7 +535,8 @@
     "customisationInfo": "Specify group, bias, or provide your custom photocard artwork.",
     "visualType": "photocards-posters",
     "defaultAccent": "#6D2E58",
-    "defaultSampleText": "IDOL EDITION"
+    "defaultSampleText": "IDOL EDITION",
+    "imageUrl": "https://images.unsplash.com/photo-1607604276583-eef5d076aa5f?auto=format&fit=crop&w=800&q=80"
   },
   {
     "id": "film-strips-3",
@@ -558,7 +567,7 @@
     "moq": 1,
     "orderType": "consumer-ready",
     "isBulkOnly": false,
-    "image": "/assets/catalog/photo-products/film-strips.jpg",
+    "image": "https://images.unsplash.com/photo-1586075010923-2dd4570fb338?auto=format&fit=crop&w=800&q=80",
     "imageType": "actual-product-photo",
     "shippingIncluded": false,
     "priceStatus": "provided",
@@ -566,7 +575,8 @@
     "customisationInfo": "Upload 9 photos (3 per strip) with your custom date codes.",
     "visualType": "photostrips-letters",
     "defaultAccent": "#2E2A32",
-    "defaultSampleText": "CINEMA 35MM"
+    "defaultSampleText": "CINEMA 35MM",
+    "imageUrl": "https://images.unsplash.com/photo-1586075010923-2dd4570fb338?auto=format&fit=crop&w=800&q=80"
   },
   {
     "id": "spotify-polaroids-3",
@@ -598,7 +608,7 @@
     "moq": 1,
     "orderType": "consumer-ready",
     "isBulkOnly": false,
-    "image": "/assets/catalog/photo-products/spotify-3.jpg",
+    "image": "https://images.unsplash.com/photo-1614680376593-902f749f7ffc?auto=format&fit=crop&w=800&q=80",
     "imageType": "actual-product-photo",
     "shippingIncluded": false,
     "priceStatus": "provided",
@@ -606,7 +616,8 @@
     "customisationInfo": "Provide 3 song URLs and 3 photos.",
     "visualType": "polaroids",
     "defaultAccent": "#25D366",
-    "defaultSampleText": "our song · 02:14"
+    "defaultSampleText": "our song · 02:14",
+    "imageUrl": "https://images.unsplash.com/photo-1614680376593-902f749f7ffc?auto=format&fit=crop&w=800&q=80"
   },
   {
     "id": "spotify-polaroids-5",
@@ -638,7 +649,7 @@
     "moq": 1,
     "orderType": "consumer-ready",
     "isBulkOnly": false,
-    "image": "/assets/catalog/photo-products/spotify-5.jpg",
+    "image": "https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?auto=format&fit=crop&w=800&q=80",
     "imageType": "actual-product-photo",
     "shippingIncluded": false,
     "priceStatus": "provided",
@@ -646,7 +657,8 @@
     "customisationInfo": "Provide 5 songs and 5 photos.",
     "visualType": "polaroids",
     "defaultAccent": "#25D366",
-    "defaultSampleText": "soundtrack of us"
+    "defaultSampleText": "soundtrack of us",
+    "imageUrl": "https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?auto=format&fit=crop&w=800&q=80"
   },
   {
     "id": "photobooth-strips-3",
@@ -678,7 +690,7 @@
     "moq": 1,
     "orderType": "consumer-ready",
     "isBulkOnly": false,
-    "image": "/assets/catalog/photo-products/photobooth-strips.jpg",
+    "image": "https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=800&q=80",
     "imageType": "actual-product-photo",
     "shippingIncluded": false,
     "priceStatus": "provided",
@@ -686,7 +698,8 @@
     "customisationInfo": "Upload 12 photos (4 per strip) with your bottom monogram.",
     "visualType": "photostrips-letters",
     "defaultAccent": "#6D2E58",
-    "defaultSampleText": "always & forever"
+    "defaultSampleText": "always & forever",
+    "imageUrl": "https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=800&q=80"
   },
   {
     "id": "goofy-cat-stickers",
@@ -877,7 +890,7 @@
     "moq": 1,
     "orderType": "consumer-ready",
     "isBulkOnly": false,
-    "image": "/assets/catalog/stickers/aesthetic-transparent.jpg",
+    "image": "https://images.unsplash.com/photo-1544816155-12df9643f363?auto=format&fit=crop&w=800&q=80",
     "imageType": "actual-product-photo",
     "shippingIncluded": false,
     "priceStatus": "provided",
@@ -885,7 +898,8 @@
     "customisationInfo": "Minimalist botanicals and typographic line art.",
     "visualType": "sticker-sheet",
     "defaultAccent": "#C88DA0",
-    "defaultSampleText": "clear dreams"
+    "defaultSampleText": "clear dreams",
+    "imageUrl": "https://images.unsplash.com/photo-1544816155-12df9643f363?auto=format&fit=crop&w=800&q=80"
   },
   {
     "id": "one-piece-stickers-transparent",
@@ -916,7 +930,7 @@
     "moq": 1,
     "orderType": "consumer-ready",
     "isBulkOnly": false,
-    "image": "/assets/catalog/stickers/one-piece-transparent.jpg",
+    "image": "https://images.unsplash.com/photo-1618336753974-aae8e04506aa?auto=format&fit=crop&w=800&q=80",
     "imageType": "actual-product-photo",
     "shippingIncluded": false,
     "priceStatus": "provided",
@@ -924,7 +938,8 @@
     "customisationInfo": "Curated One Piece pirate insignia pack.",
     "visualType": "sticker-sheet",
     "defaultAccent": "#2E2A32",
-    "defaultSampleText": "straw hat pack"
+    "defaultSampleText": "straw hat pack",
+    "imageUrl": "https://images.unsplash.com/photo-1618336753974-aae8e04506aa?auto=format&fit=crop&w=800&q=80"
   },
   {
     "id": "custom-stickers-transparent",
@@ -997,7 +1012,7 @@
     "moq": 1,
     "orderType": "consumer-ready",
     "isBulkOnly": false,
-    "image": "/assets/catalog/stickers/custom-paper.jpg",
+    "image": "https://images.unsplash.com/photo-1589829085413-56de8ae18c73?auto=format&fit=crop&w=800&q=80",
     "imageType": "actual-product-photo",
     "shippingIncluded": false,
     "priceStatus": "provided",
@@ -1005,7 +1020,8 @@
     "customisationInfo": "Upload your photos or illustrations for an A5 sticker sheet.",
     "visualType": "sticker-sheet",
     "defaultAccent": "#C88DA0",
-    "defaultSampleText": "bespoke pack"
+    "defaultSampleText": "bespoke pack",
+    "imageUrl": "https://images.unsplash.com/photo-1589829085413-56de8ae18c73?auto=format&fit=crop&w=800&q=80"
   },
   {
     "id": "page-whisper",
@@ -1198,7 +1214,7 @@
     "moq": 1,
     "orderType": "consumer-ready",
     "isBulkOnly": false,
-    "image": "/assets/catalog/posters/a3-matte.jpg",
+    "image": "https://images.unsplash.com/photo-1582561424760-0321d75e81fa?auto=format&fit=crop&w=800&q=80",
     "imageType": "actual-product-photo",
     "shippingIncluded": false,
     "priceStatus": "provided",
@@ -1206,7 +1222,8 @@
     "customisationInfo": "Upload your high-res photography or art.",
     "visualType": "photocards-posters",
     "defaultAccent": "#6D2E58",
-    "defaultSampleText": "GRANDE MATTE"
+    "defaultSampleText": "GRANDE MATTE",
+    "imageUrl": "https://images.unsplash.com/photo-1582561424760-0321d75e81fa?auto=format&fit=crop&w=800&q=80"
   },
   {
     "id": "a4-glossy-vivid",
@@ -1237,7 +1254,7 @@
     "moq": 1,
     "orderType": "consumer-ready",
     "isBulkOnly": false,
-    "image": "/assets/catalog/posters/a4-glossy.jpg",
+    "image": "https://images.unsplash.com/photo-1579783902614-a3fb3927b675?auto=format&fit=crop&w=800&q=80",
     "imageType": "actual-product-photo",
     "shippingIncluded": false,
     "priceStatus": "provided",
@@ -1245,7 +1262,8 @@
     "customisationInfo": "Upload your concert, film, or personal art.",
     "visualType": "photocards-posters",
     "defaultAccent": "#C88DA0",
-    "defaultSampleText": "VIVID GLOSS"
+    "defaultSampleText": "VIVID GLOSS",
+    "imageUrl": "https://images.unsplash.com/photo-1579783902614-a3fb3927b675?auto=format&fit=crop&w=800&q=80"
   },
   {
     "id": "a3-glossy-grande",
@@ -1276,7 +1294,7 @@
     "moq": 1,
     "orderType": "consumer-ready",
     "isBulkOnly": false,
-    "image": "/assets/catalog/posters/a3-glossy.jpg",
+    "image": "https://images.unsplash.com/photo-1577083552431-6e5fd01aa342?auto=format&fit=crop&w=800&q=80",
     "imageType": "actual-product-photo",
     "shippingIncluded": false,
     "priceStatus": "provided",
@@ -1284,6 +1302,7 @@
     "customisationInfo": "Upload your high-resolution custom artwork.",
     "visualType": "photocards-posters",
     "defaultAccent": "#C88DA0",
-    "defaultSampleText": "GRANDE GLOSS"
+    "defaultSampleText": "GRANDE GLOSS",
+    "imageUrl": "https://images.unsplash.com/photo-1577083552431-6e5fd01aa342?auto=format&fit=crop&w=800&q=80"
   }
 ]

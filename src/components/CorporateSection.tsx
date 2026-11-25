@@ -215,29 +215,46 @@ export const CorporateSection: React.FC<CorporateSectionProps> = ({
 
     setIsSubmitting(true);
     try {
-      const res = await fetch('/api/quotations', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          customerName,
-          contactNumber,
-          email,
-          products: selectedFormProducts,
-          quantity: Math.floor(parsedFormQty),
-          finish: formFinish,
-          requirements,
-          deliveryLocation,
-          artworkFileName,
-        }),
-      });
-      const data = await res.json();
-      if (!res.ok) {
-        setFormError(data.error || 'Could not generate quotation summary.');
-        return;
+      const qty = Math.floor(parsedFormQty);
+      let tierName = 'Standard Wholesale Tier (36–99 pcs)';
+      let discountFactor = 1.0;
+      if (qty >= 250) {
+        tierName = 'Enterprise Bulk Tier (250+ pcs)';
+        discountFactor = 0.85;
+      } else if (qty >= 100) {
+        tierName = 'Corporate Growth Tier (100–249 pcs)';
+        discountFactor = 0.92;
       }
-      setTicket(data.ticket as QuotationTicket);
+
+      const avgBase = 250;
+      const finishAdder = formFinish === 'Laser Engraving' ? 35 : formFinish === 'UV Print' ? 25 : 15;
+      const estimatedPerUnit = Math.round((avgBase + finishAdder) * discountFactor);
+      const totalLow = Math.round(estimatedPerUnit * qty * 0.95);
+      const totalHigh = Math.round(estimatedPerUnit * qty * 1.08);
+
+      const generatedTicket: QuotationTicket = {
+        ticketId: `AMORA-B2B-${Date.now().toString(36).toUpperCase()}`,
+        createdAt: new Date().toISOString(),
+        customerName: customerName.trim(),
+        contactNumber: contactNumber.trim(),
+        email: email.trim(),
+        products: selectedFormProducts,
+        quantity: qty,
+        finish: formFinish,
+        requirements: requirements.trim(),
+        deliveryLocation: deliveryLocation.trim(),
+        artworkFileName: artworkFileName ?? null,
+        tierName,
+        estimatedPerUnit,
+        estimatedTotalRange: {
+          low: totalLow,
+          high: totalHigh,
+        },
+      };
+
+      setTicket(generatedTicket);
     } catch {
-      setFormError('Network issue while generating your quotation ticket. Please try again.');
+      setFormError('Could not generate quotation summary. Please try again.');
     } finally {
       setIsSubmitting(false);
     }

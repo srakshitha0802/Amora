@@ -52,30 +52,40 @@ export const ShortlistDrawer: React.FC<ShortlistDrawerProps> = ({
     0
   );
 
-  const consolidatedBrief = [
-    `Hello Amora.co! Here is my consolidated Enquiry Cart enquiry:`,
-    '',
+  const purchaseWhatsAppMessage = [
+    `🛍️ *ORDER / PURCHASE REQUEST — AMORA.CO*`,
+    ``,
+    `Hello Amora Team! I would like to place an order for the following items from my cart:`,
+    `────────────────────────`,
     ...items.map((item, idx) => {
+      const lineTotal = item.unitPriceEstimate * item.quantity;
       const details = [
-        `${idx + 1}. ${item.name} — Qty: ${item.quantity} ${
-          item.isBulkOnly ? '(MOQ 36+ Corporate Bulk)' : '(Personal Keepsake / No MOQ)'
-        }`,
-        item.customText ? `   Text / Monogram: "${item.customText}"` : null,
-        item.accentColor ? `   Accent: ${item.accentColor}` : null,
-        item.finish ? `   Finish: ${item.finish}` : null,
-        item.artworkName ? `   Artwork File: ${item.artworkName}` : null,
-        item.notes ? `   Notes: ${item.notes}` : null,
+        `*${idx + 1}. ${item.name}*`,
+        `   • Quantity: ${item.quantity} ${item.isBulkOnly ? '(Corporate Bulk · MOQ 36+)' : '(Personal Keepsake)'}`,
+        `   • Unit Price: ₹${item.unitPriceEstimate.toLocaleString('en-IN')}`,
+        `   • Subtotal: ₹${lineTotal.toLocaleString('en-IN')}`,
+        item.customText ? `   • Custom Text: "${item.customText}"` : null,
+        item.accentColor ? `   • Accent Shade: ${item.accentColor}` : null,
+        item.finish ? `   • Finish: ${item.finish}` : null,
+        item.artworkName ? `   • Artwork Attached: ${item.artworkName}` : null,
+        item.notes ? `   • Special Notes: ${item.notes}` : null,
       ].filter(Boolean);
       return details.join('\n');
     }),
-    '',
-    `Estimated Studio Subtotal: ~₹${estimatedSubtotal.toLocaleString('en-IN')}`,
-    `Please confirm quotation, production schedule, and digital proofing!`,
+    `────────────────────────`,
+    `📦 *Total Products*: ${items.length} items (${items.reduce((s, i) => s + i.quantity, 0)} units)`,
+    `💰 *Estimated Order Value*: ₹${estimatedSubtotal.toLocaleString('en-IN')}`,
+    ``,
+    `📍 *Customer Details*:`,
+    `• Name: [Please provide your name]`,
+    `• Delivery City & Pincode: [Please provide delivery city/pincode]`,
+    ``,
+    `Please confirm quotation, production schedule, and payment details to proceed. Thank you!`,
   ].join('\n');
 
   const handleCopyAll = async () => {
     try {
-      await navigator.clipboard.writeText(consolidatedBrief);
+      await navigator.clipboard.writeText(purchaseWhatsAppMessage);
       setCopied(true);
       window.setTimeout(() => setCopied(false), 2000);
     } catch {
@@ -260,13 +270,13 @@ export const ShortlistDrawer: React.FC<ShortlistDrawerProps> = ({
             </div>
 
             <a
-              href={buildWhatsAppUrl(consolidatedBrief)}
+              href={buildWhatsAppUrl(purchaseWhatsAppMessage)}
               target="_blank"
               rel="noopener noreferrer"
-              className="w-full py-3 px-4 rounded-xl bg-[#6D2E58] text-[#F8F4EA] text-xs sm:text-sm font-semibold hover:bg-[#8E4474] transition-colors inline-flex items-center justify-center gap-2 shadow-lg"
+              className="w-full py-3.5 px-4 rounded-xl bg-[#25D366] text-[#0A2E14] hover:bg-[#20bd5a] text-xs sm:text-sm font-bold transition-all inline-flex items-center justify-center gap-2.5 shadow-xl hover:scale-[1.02] cursor-pointer"
             >
-              <MessageCircle className="w-4 h-4 text-[#25D366]" aria-hidden="true" />
-              <span>Send Enquiry via WhatsApp</span>
+              <MessageCircle className="w-4 h-4 fill-current" aria-hidden="true" />
+              <span>Purchase on WhatsApp (Submit Cart)</span>
             </a>
 
             <div className="grid grid-cols-1 gap-2">

@@ -12,12 +12,12 @@ interface CircularProductOrbitProps {
 
 // Curated 8 Signature Highlight Pieces for balanced 45-degree turntable layout
 const FEATURED_RUNWAY_IDS = [
-  'custom-printed-sipper-bottle-600ml',
+  'custom-printed-sipper-bottle',
   'custom-printed-coffee-mug',
   'custom-printed-keyboard-mat',
   'custom-printed-mousepad',
-  'pack-of-16-matte-polaroids',
-  'spotify-polaroids-set-of-3',
+  'matte-polaroids-16',
+  'spotify-polaroids-3',
   'page-whisper',
   'cool-laptop-stickers',
 ];

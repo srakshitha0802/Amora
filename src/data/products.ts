@@ -44,35 +44,35 @@ export const PRODUCT_IMAGES: Record<string, string> = {
   'custom-printed-round-mousepad': '/assets/catalog/corporate-merchandise/round-mousepad.jpg',
   'custom-printed-keyboard-mat': '/assets/catalog/corporate-merchandise/keyboard-mat.jpg',
   'custom-printed-coffee-mug': '/assets/catalog/corporate-merchandise/coffee-mug.jpg',
-  'custom-printed-sipper-bottle-600ml': '/assets/catalog/corporate-merchandise/sipper-bottle-600ml.jpg',
-  'custom-printed-sports-bottle-750ml': '/assets/catalog/corporate-merchandise/sports-bottle-750ml.jpg',
+  'custom-printed-sipper-bottle': '/assets/catalog/corporate-merchandise/sipper-bottle-600ml.jpg',
+  'custom-printed-sports-bottle': '/assets/catalog/corporate-merchandise/sports-bottle-750ml.jpg',
 
   // Matte Polaroids
-  'pack-of-5-matte-polaroids': 'https://images.unsplash.com/photo-1526170375885-4d8ecf77b99f?auto=format&fit=crop&w=800&q=80',
-  'pack-of-8-matte-polaroids': 'https://images.unsplash.com/photo-1516035069371-29a1b244cc32?auto=format&fit=crop&w=800&q=80',
-  'pack-of-16-matte-polaroids': 'https://images.unsplash.com/photo-1513519245088-0e12902e5a38?auto=format&fit=crop&w=800&q=80',
+  'matte-polaroids-5': 'https://images.unsplash.com/photo-1526170375885-4d8ecf77b99f?auto=format&fit=crop&w=800&q=80',
+  'matte-polaroids-8': 'https://images.unsplash.com/photo-1516035069371-29a1b244cc32?auto=format&fit=crop&w=800&q=80',
+  'matte-polaroids-16': 'https://images.unsplash.com/photo-1513519245088-0e12902e5a38?auto=format&fit=crop&w=800&q=80',
 
   // Glossy Polaroids
-  'pack-of-5-glossy-polaroids': 'https://images.unsplash.com/photo-1492691527719-9d1e07e534b4?auto=format&fit=crop&w=800&q=80',
-  'pack-of-8-glossy-polaroids': 'https://images.unsplash.com/photo-1534447677768-be436bb09401?auto=format&fit=crop&w=800&q=80',
-  'pack-of-16-glossy-polaroids': 'https://images.unsplash.com/photo-1509198397868-475647b2a1e5?auto=format&fit=crop&w=800&q=80',
+  'glossy-polaroids-5': 'https://images.unsplash.com/photo-1492691527719-9d1e07e534b4?auto=format&fit=crop&w=800&q=80',
+  'glossy-polaroids-8': 'https://images.unsplash.com/photo-1534447677768-be436bb09401?auto=format&fit=crop&w=800&q=80',
+  'glossy-polaroids-16': 'https://images.unsplash.com/photo-1509198397868-475647b2a1e5?auto=format&fit=crop&w=800&q=80',
 
   // Special Photo Products & Keepsakes
-  'k-pop-group-pack': 'https://images.unsplash.com/photo-1607604276583-eef5d076aa5f?auto=format&fit=crop&w=800&q=80',
-  'film-strips-set-of-3': 'https://images.unsplash.com/photo-1586075010923-2dd4570fb338?auto=format&fit=crop&w=800&q=80',
-  'spotify-polaroids-set-of-3': 'https://images.unsplash.com/photo-1614680376593-902f749f7ffc?auto=format&fit=crop&w=800&q=80',
-  'spotify-polaroids-set-of-5': 'https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?auto=format&fit=crop&w=800&q=80',
-  'photobooth-strips-set-of-3': 'https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=800&q=80',
+  'kpop-group-pack': 'https://images.unsplash.com/photo-1607604276583-eef5d076aa5f?auto=format&fit=crop&w=800&q=80',
+  'film-strips-3': 'https://images.unsplash.com/photo-1586075010923-2dd4570fb338?auto=format&fit=crop&w=800&q=80',
+  'spotify-polaroids-3': 'https://images.unsplash.com/photo-1614680376593-902f749f7ffc?auto=format&fit=crop&w=800&q=80',
+  'spotify-polaroids-5': 'https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?auto=format&fit=crop&w=800&q=80',
+  'photobooth-strips-3': 'https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=800&q=80',
 
   // Stickers
   'goofy-cat-stickers': 'https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?auto=format&fit=crop&w=800&q=80',
   'demon-slayer-stickers': 'https://images.unsplash.com/photo-1578632767115-351597cf2477?auto=format&fit=crop&w=800&q=80',
   'cool-laptop-stickers': 'https://images.unsplash.com/photo-1581291518655-9523c932edcf?auto=format&fit=crop&w=800&q=80',
   'bts-stickers': 'https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?auto=format&fit=crop&w=800&q=80',
-  'aesthetic-stickers': 'https://images.unsplash.com/photo-1544816155-12df9643f363?auto=format&fit=crop&w=800&q=80',
-  'one-piece-stickers': 'https://images.unsplash.com/photo-1618336753974-aae8e04506aa?auto=format&fit=crop&w=800&q=80',
+  'aesthetic-stickers-transparent': 'https://images.unsplash.com/photo-1544816155-12df9643f363?auto=format&fit=crop&w=800&q=80',
+  'one-piece-stickers-transparent': 'https://images.unsplash.com/photo-1618336753974-aae8e04506aa?auto=format&fit=crop&w=800&q=80',
   'custom-stickers-transparent': 'https://images.unsplash.com/photo-1586075010923-2dd4570fb338?auto=format&fit=crop&w=800&q=80',
-  'custom-stickers-paper-based': 'https://images.unsplash.com/photo-1589829085413-56de8ae18c73?auto=format&fit=crop&w=800&q=80',
+  'custom-stickers-paper': 'https://images.unsplash.com/photo-1589829085413-56de8ae18c73?auto=format&fit=crop&w=800&q=80',
 
   // Bookmarks & Reading Accessories
   'page-whisper': 'https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?auto=format&fit=crop&w=800&q=80',
@@ -81,9 +81,9 @@ export const PRODUCT_IMAGES: Record<string, string> = {
   'classic-matte-duo': 'https://images.unsplash.com/photo-1506880018603-83d5b814b5a6?auto=format&fit=crop&w=800&q=80',
 
   // Posters & Wall Art
-  'a4-glossy-vivid-gloss-edition': 'https://images.unsplash.com/photo-1579783902614-a3fb3927b675?auto=format&fit=crop&w=800&q=80',
-  'a3-matte-grande-matte-edition': 'https://images.unsplash.com/photo-1582561424760-0321d75e81fa?auto=format&fit=crop&w=800&q=80',
-  'a3-glossy-grande-gloss-edition': 'https://images.unsplash.com/photo-1577083552431-6e5fd01aa342?auto=format&fit=crop&w=800&q=80',
+  'a3-matte-grande': 'https://images.unsplash.com/photo-1582561424760-0321d75e81fa?auto=format&fit=crop&w=800&q=80',
+  'a4-glossy-vivid': 'https://images.unsplash.com/photo-1579783902614-a3fb3927b675?auto=format&fit=crop&w=800&q=80',
+  'a3-glossy-grande': 'https://images.unsplash.com/photo-1577083552431-6e5fd01aa342?auto=format&fit=crop&w=800&q=80',
 };
 
 export function getProductImage(productId: string): string {

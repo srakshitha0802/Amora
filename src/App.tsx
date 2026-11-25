@@ -19,7 +19,6 @@ import { CorporateSection } from './components/CorporateSection';
 import { AboutAndContactSection } from './components/AboutAndContactSection';
 import { CustomiserDrawer } from './components/CustomiserDrawer';
 import { ShortlistDrawer } from './components/ShortlistDrawer';
-import { StylistWidget } from './components/StylistWidget';
 
 const SHORTLIST_STORAGE_KEY = 'amora_shortlist_v2';
 const THEME_STORAGE_KEY = 'amora_theme_preference';
@@ -330,9 +329,6 @@ export default function App() {
         onClearAll={handleClearShortlist}
         onSendBulkToQuoteForm={handleSendBulkToQuoteForm}
       />
-
-      {/* Floating AI Gift & Merch Stylist (Gemini API) */}
-      <StylistWidget />
 
       {/* Mobile Sticky Bottom Quick-Action Bar */}
       <div className="md:hidden fixed bottom-0 inset-x-0 z-40 h-14 bg-[#F8F4EA]/95 backdrop-blur-md border-t border-[#6D2E58]/15 px-3 flex items-center gap-2.5">
