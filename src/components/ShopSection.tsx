@@ -1,5 +1,5 @@
 import React from 'react';
-import { Check, Plus, SlidersHorizontal } from 'lucide-react';
+import { Check, Plus, Sparkles } from 'lucide-react';
 import type { OrderMode, Product, ProductCategory } from '../types';
 import { CATEGORY_TABS } from '../data/products';
 import { ProductVisual } from './ProductVisual';
@@ -12,14 +12,61 @@ interface ShopSectionProps {
   onOrderModeChange: (mode: OrderMode) => void;
   onOpenCustomiser: (product: Product) => void;
   onQuickAddShortlist: (product: Product) => void;
+  onScrollToCorporate: () => void;
   shortlistedProductIds: Set<string>;
+  theme?: 'dark' | 'light';
 }
 
 const ORDER_MODES: Array<{ id: OrderMode; label: string }> = [
   { id: 'all', label: 'All Orders' },
-  { id: 'personal', label: 'Single / Personal Orders (No MOQ)' },
-  { id: 'bulk', label: 'Corporate Bulk Only (MOQ 30+)' },
+  { id: 'personal', label: 'Personal (No MOQ)' },
+  { id: 'bulk', label: 'Corporate (MOQ 30+)' },
 ];
+
+/* ─── 3D Tilt Card wrapper with Specular Spotlight ─── */
+function TiltCard({ children, className }: { children: React.ReactNode; className?: string }) {
+  const cardRef = React.useRef<HTMLDivElement>(null);
+  const [transform, setTransform] = React.useState('');
+  const [glowPosition, setGlowPosition] = React.useState({ x: 50, y: 50 });
+
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (!cardRef.current) return;
+    const rect = cardRef.current.getBoundingClientRect();
+    const x = (e.clientX - rect.left) / rect.width;
+    const y = (e.clientY - rect.top) / rect.height;
+    const rotateY = (x - 0.5) * 12;
+    const rotateX = (0.5 - y) * 10;
+    setTransform(`perspective(900px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.02)`);
+    setGlowPosition({ x: x * 100, y: y * 100 });
+  };
+
+  const handleMouseLeave = () => {
+    setTransform('perspective(900px) rotateX(0) rotateY(0) scale(1)');
+    setGlowPosition({ x: 50, y: 50 });
+  };
+
+  return (
+    <div
+      ref={cardRef}
+      className={`relative ${className || ''}`}
+      style={{
+        transform,
+        transition: 'transform 380ms cubic-bezier(0.16, 1, 0.3, 1)',
+        transformStyle: 'preserve-3d',
+      }}
+      onMouseMove={handleMouseMove}
+      onMouseLeave={handleMouseLeave}
+    >
+      <div
+        className="absolute inset-0 rounded-3xl pointer-events-none z-20 opacity-0 hover:opacity-100 transition-opacity duration-300"
+        style={{
+          background: `radial-gradient(circle at ${glowPosition.x}% ${glowPosition.y}%, rgba(227,164,174,0.18) 0%, transparent 60%)`,
+        }}
+      />
+      {children}
+    </div>
+  );
+}
 
 export const ShopSection: React.FC<ShopSectionProps> = ({
   products,
@@ -29,8 +76,12 @@ export const ShopSection: React.FC<ShopSectionProps> = ({
   onOrderModeChange,
   onOpenCustomiser,
   onQuickAddShortlist,
+  onScrollToCorporate,
   shortlistedProductIds,
+  theme = 'dark',
 }) => {
+  const isDark = theme === 'dark';
+
   const filteredProducts = React.useMemo(() => {
     return products.filter((product) => {
       const categoryMatch =
@@ -44,208 +95,162 @@ export const ShopSection: React.FC<ShopSectionProps> = ({
   }, [products, activeCategory, orderMode]);
 
   return (
-    <section id="shop" className="py-16 lg:py-24 bg-[#FDFBF7] border-b border-[#EBDCE4]">
-      <div className="max-w-[1280px] mx-auto px-5 sm:px-8">
-        {/* Section Header */}
-        <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-6 mb-10">
+    <section id="shop" className="py-24 lg:py-32 relative overflow-hidden border-t border-b transition-colors duration-300">
+      {/* Background ambient lighting */}
+      <div className="absolute top-1/3 right-10 w-[500px] h-[500px] rounded-full bg-[#E3A4AE]/10 blur-[140px] pointer-events-none" />
+      <div className="absolute bottom-10 left-10 w-[500px] h-[500px] rounded-full bg-[#76577B]/12 blur-[140px] pointer-events-none" />
+
+      <div className="max-w-[1380px] mx-auto px-6 sm:px-10 relative z-10">
+        {/* Header */}
+        <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-6 mb-14">
           <div className="max-w-2xl">
-            <p className="text-xs font-medium text-[#6E5D66] mb-2">
-              Studio Catalogue · 10 Signature Formats
-            </p>
-            <h2
-              className="font-editorial text-3xl sm:text-5xl font-semibold text-[#3B0D27] leading-tight"
-              style={{ textWrap: 'balance' }}
-            >
-              Personal keepsakes &amp; branded company essentials
-            </h2>
-          </div>
-          <p className="text-sm text-[#6E5D66] max-w-md leading-relaxed">
-            Personal prints start from a single unit with no minimums. Drinkware and desk
-            merchandise follow our strict <span className="font-semibold text-[#3B0D27]">30+ piece bulk policy</span>.
-          </p>
-        </div>
-
-        {/* Interactive Filter Controls */}
-        <div className="flex flex-col gap-4 pb-8 mb-10 border-b border-[#EBDCE4]">
-          {/* Primary Category Filter Tabs */}
-          <div className="flex items-center gap-2 overflow-x-auto pb-1">
-            {CATEGORY_TABS.map((tab) => {
-              const isActive = activeCategory === tab;
-              return (
-                <button
-                  key={tab}
-                  type="button"
-                  onClick={() => onCategoryChange(tab)}
-                  className={`px-4 py-2 text-xs sm:text-sm font-medium rounded-lg transition-colors whitespace-nowrap shrink-0 cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#3B0D27] ${
-                    isActive
-                      ? 'bg-[#3B0D27] text-[#FDFBF7]'
-                      : 'bg-[#FAF5EE] text-[#6E5D66] border border-[#EBDCE4] hover:text-[#3B0D27] hover:border-[#3B0D27]/30'
-                  }`}
-                >
-                  {tab}
-                </button>
-              );
-            })}
-          </div>
-
-          {/* Secondary Order Mode Toggle */}
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-            <div
-              role="group"
-              aria-label="Filter by minimum order quantity"
-              className="inline-flex flex-wrap items-center gap-1 p-1 rounded-xl bg-[#FAF5EE] border border-[#EBDCE4] w-fit"
-            >
-              {ORDER_MODES.map((mode) => {
-                const isSelected = orderMode === mode.id;
-                return (
-                  <button
-                    key={mode.id}
-                    type="button"
-                    onClick={() => onOrderModeChange(mode.id)}
-                    className={`px-3.5 py-2 text-xs font-medium rounded-lg transition-colors whitespace-nowrap shrink-0 cursor-pointer ${
-                      isSelected
-                        ? 'bg-[#FDFBF7] text-[#3B0D27] shadow-sm border border-[#EBDCE4]'
-                        : 'text-[#6E5D66] hover:text-[#3B0D27]'
-                    }`}
-                  >
-                    {mode.label}
-                  </button>
-                );
-              })}
+            <div className={`inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full liquid-glass text-xs font-semibold uppercase tracking-wider mb-4 ${
+              isDark ? 'border border-[#E3A4AE]/30 text-[#E3A4AE]' : 'border border-[#76577B]/25 text-[#76577B] shadow-sm'
+            }`}>
+              <Sparkles className="w-3.5 h-3.5 text-[#F3C69F]" />
+              Interactive 3D Product Catalogue
             </div>
-
-            <p className="text-xs text-[#6E5D66] tabular-nums">
-              Showing <span className="font-semibold text-[#3B0D27]">{filteredProducts.length}</span>{' '}
-              of {products.length} studio items
+            <h2 className="font-serif text-4xl sm:text-6xl font-normal tracking-tight leading-[1.05]">
+              Curated prints, keepsakes <br />
+              <em className="text-[#E3A4AE] italic font-normal">&amp; corporate merchandise.</em>
+            </h2>
+            <p className={`mt-4 text-base leading-relaxed ${isDark ? 'text-[#FAF6F0]/75' : 'text-[#424D55]'}`}>
+              Hover to tilt in real-time 3D. Personal keepsakes have zero minimum order; corporate items require a minimum of 30 pieces.
             </p>
+          </div>
+
+          {/* Order Mode Pill Toggle */}
+          <div className={`flex items-center gap-1.5 p-1.5 rounded-full border self-start lg:self-end ${
+            isDark ? 'liquid-glass border-white/15' : 'bg-white border-[#76577B]/20 shadow-sm'
+          }`}>
+            {ORDER_MODES.map((mode) => (
+              <button
+                key={mode.id}
+                type="button"
+                onClick={() => onOrderModeChange(mode.id)}
+                className={`px-4 py-2 text-xs font-semibold rounded-full transition-all cursor-pointer ${
+                  orderMode === mode.id
+                    ? isDark
+                      ? 'bg-white text-[#0B0E14] shadow-md scale-100'
+                      : 'bg-[#232E36] text-[#FAF6F0] shadow-md scale-100'
+                    : 'opacity-70 hover:opacity-100'
+                }`}
+              >
+                {mode.label}
+              </button>
+            ))}
           </div>
         </div>
 
-        {/* Product Grid */}
-        {filteredProducts.length === 0 ? (
-          <div className="rounded-2xl bg-[#FAF5EE] border border-[#EBDCE4] p-12 text-center">
-            <p className="font-editorial text-2xl text-[#3B0D27]">
-              No items match that exact combination
-            </p>
-            <p className="text-sm text-[#6E5D66] mt-2">
-              Corporate bulk products live under Merchandise &amp; Customised Products, while
-              No-MOQ keepsakes live under Prints &amp; Keepsakes and Stickers &amp; Photocards.
-            </p>
+        {/* Category Tabs */}
+        <div className="flex items-center gap-2 overflow-x-auto pb-4 mb-10 scrollbar-none">
+          {CATEGORY_TABS.map((cat) => (
             <button
+              key={cat}
               type="button"
-              onClick={() => {
-                onCategoryChange('All');
-                onOrderModeChange('all');
-              }}
-              className="mt-5 px-5 py-2.5 text-sm font-medium rounded-lg bg-[#3B0D27] text-[#FDFBF7] hover:bg-[#59163C] transition-colors cursor-pointer"
+              onClick={() => onCategoryChange(cat)}
+              className={`px-5 py-2.5 text-xs font-semibold rounded-full whitespace-nowrap transition-all cursor-pointer ${
+                activeCategory === cat
+                  ? isDark
+                    ? 'liquid-glass-plum text-white border border-[#E3A4AE]/60 shadow-lg'
+                    : 'bg-[#76577B] text-white border border-[#76577B] shadow-md'
+                  : isDark
+                    ? 'liquid-glass text-[#CBD5E1] hover:text-white border border-white/10'
+                    : 'bg-white text-[#424D55] hover:text-[#161E24] hover:bg-[#FAF6F0] border border-[#76577B]/20 shadow-xs'
+              }`}
             >
-              Reset Filters
+              {cat}
             </button>
-          </div>
-        ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-7">
-            {filteredProducts.map((product) => {
-              const isSaved = shortlistedProductIds.has(product.id);
-              return (
-                <article
-                  key={product.id}
-                  className="stationery-card rounded-2xl overflow-hidden flex flex-col"
-                >
-                  {/* Visual Product Stage (68% height focal area) */}
-                  <div className="relative aspect-[4/3] w-full overflow-hidden border-b border-[#EBDCE4]">
+          ))}
+        </div>
+
+        {/* Products Grid with 3D Tilt */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+          {filteredProducts.map((product) => {
+            const isShortlisted = shortlistedProductIds.has(product.id);
+
+            return (
+              <TiltCard
+                key={product.id}
+                className={`rounded-3xl p-5 border flex flex-col justify-between group shadow-xl transition-all duration-300 ${
+                  isDark
+                    ? 'liquid-glass border-white/10 hover:border-[#E3A4AE]/40'
+                    : 'bg-white border-[#76577B]/15 hover:border-[#76577B]/35 shadow-sm'
+                }`}
+              >
+                <div>
+                  {/* Top Badge */}
+                  <div className="flex items-center justify-between gap-2 mb-3">
+                    <span
+                      className={`text-[10px] font-semibold tracking-wider uppercase px-2.5 py-1 rounded-full ${
+                        product.isBulkOnly
+                          ? 'bg-[#F3C69F]/20 text-[#F3C69F] border border-[#F3C69F]/30'
+                          : 'bg-[#E3A4AE]/20 text-[#E3A4AE] border border-[#E3A4AE]/30'
+                      }`}
+                    >
+                      {product.isBulkOnly ? 'MOQ: 30+ Pieces' : 'No Minimum Order'}
+                    </span>
+                    <span className="font-serif text-sm font-semibold">
+                      {product.priceLabel}
+                    </span>
+                  </div>
+
+                  {/* 3D Visual Mockup */}
+                  <div className="aspect-[4/3] rounded-2xl overflow-hidden bg-black/20 border border-current/10 flex items-center justify-center p-3 mb-4 group-hover:scale-[1.02] transition-transform duration-300">
                     <ProductVisual
                       visualType={product.visualType}
                       accentColor={product.defaultAccent}
                       customText={product.defaultSampleText}
-                      imageUrl={product.imageUrl}
-                      alt={product.name}
-                      mode="card"
                     />
-                    {product.isBulkOnly && (
-                      <div className="absolute top-3 left-3 z-20 px-3 py-1 rounded-md bg-[#3B0D27] text-[#FDFBF7] text-[11px] font-semibold tracking-wide shadow-sm">
-                        MOQ: 30+ Pieces
-                      </div>
-                    )}
                   </div>
 
-                  {/* Clean Editorial Metadata & Actions */}
-                  <div className="p-6 flex flex-col flex-1 justify-between gap-5">
-                    <div>
-                      <div className="flex items-center justify-between gap-2 text-xs text-[#6E5D66] mb-1.5">
-                        <span>{product.primaryCategory}</span>
-                        <span aria-hidden="true">·</span>
-                        <span className="font-medium text-[#3B0D27]">
-                          {product.isBulkOnly ? 'Corporate Bulk Only' : 'No MOQ · From 1 pc'}
-                        </span>
-                      </div>
+                  {/* Title & Description */}
+                  <h3 className="font-serif text-xl font-semibold mb-1.5 group-hover:text-[#E3A4AE] transition-colors">
+                    {product.name}
+                  </h3>
+                  <p className={`text-xs leading-relaxed line-clamp-2 mb-4 ${
+                    isDark ? 'text-[#FAF6F0]/65' : 'text-[#424D55]'
+                  }`}>
+                    {product.description}
+                  </p>
+                </div>
 
-                      <h3 className="font-editorial text-2xl font-semibold text-[#3B0D27] leading-snug">
-                        {product.name}
-                      </h3>
+                {/* Card Actions */}
+                <div className="flex items-center gap-2 pt-3 border-t border-current/10">
+                  <button
+                    type="button"
+                    onClick={() => onOpenCustomiser(product)}
+                    className={`flex-1 py-2.5 px-3 text-xs font-semibold rounded-xl transition-transform hover:scale-[1.02] text-center cursor-pointer shadow-sm ${
+                      isDark
+                        ? 'bg-white text-[#0B0E14] hover:bg-[#FAF6F0]'
+                        : 'bg-[#232E36] text-[#FAF6F0] hover:bg-[#3A4750]'
+                    }`}
+                  >
+                    Customise &amp; Preview
+                  </button>
 
-                      <p className="text-sm text-[#6E5D66] mt-2 leading-relaxed">
-                        {product.description}
-                      </p>
-
-                      <div className="flex flex-wrap items-center gap-x-2 gap-y-1 mt-3 text-xs text-[#6E5D66]">
-                        {product.specs.slice(1).map((spec, idx) => (
-                          <React.Fragment key={spec}>
-                            {idx > 0 && <span aria-hidden="true">·</span>}
-                            <span>{spec}</span>
-                          </React.Fragment>
-                        ))}
-                      </div>
-                    </div>
-
-                    <div className="pt-4 border-t border-[#EBDCE4]">
-                      <div className="flex items-baseline justify-between mb-4">
-                        <span className="text-base font-semibold text-[#3B0D27] tabular-nums">
-                          {product.priceLabel}
-                        </span>
-                        <span className="text-xs text-[#6E5D66]">{product.unitLabel}</span>
-                      </div>
-
-                      <div className="flex items-center gap-2.5">
-                        <button
-                          type="button"
-                          onClick={() => onOpenCustomiser(product)}
-                          className="flex-1 inline-flex items-center justify-center gap-2 px-4 py-2.5 text-xs sm:text-sm font-medium rounded-lg bg-[#3B0D27] text-[#FDFBF7] hover:bg-[#59163C] transition-colors whitespace-nowrap cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#3B0D27]"
-                        >
-                          <SlidersHorizontal className="w-3.5 h-3.5" aria-hidden="true" />
-                          Personalise &amp; Enquire
-                        </button>
-
-                        <button
-                          type="button"
-                          onClick={() => onQuickAddShortlist(product)}
-                          aria-label={`Add ${product.name} to quote tray`}
-                          className={`inline-flex items-center justify-center gap-1.5 px-3.5 py-2.5 text-xs sm:text-sm font-medium rounded-lg border transition-colors whitespace-nowrap shrink-0 cursor-pointer ${
-                            isSaved
-                              ? 'bg-[#FCE7F3] text-[#3B0D27] border-[#E0B8CC]'
-                              : 'bg-[#FAF5EE] text-[#3B0D27] border-[#EBDCE4] hover:bg-[#FCE7F3]/70'
-                          }`}
-                        >
-                          {isSaved ? (
-                            <>
-                              <Check className="w-3.5 h-3.5" aria-hidden="true" />
-                              Saved
-                            </>
-                          ) : (
-                            <>
-                              <Plus className="w-3.5 h-3.5" aria-hidden="true" />
-                              Shortlist
-                            </>
-                          )}
-                        </button>
-                      </div>
-                    </div>
-                  </div>
-                </article>
-              );
-            })}
-          </div>
-        )}
+                  <button
+                    type="button"
+                    onClick={() => onQuickAddShortlist(product)}
+                    className={`p-2.5 rounded-xl border transition-all cursor-pointer flex items-center justify-center ${
+                      isShortlisted
+                        ? 'bg-[#E3A4AE] text-[#0B0E14] border-[#E3A4AE]'
+                        : isDark
+                        ? 'liquid-glass text-white/80 hover:text-white border-white/15'
+                        : 'bg-[#FAF6F0] text-[#76577B] hover:bg-white border-[#76577B]/20'
+                    }`}
+                    title={isShortlisted ? 'In Quote Tray' : 'Add to Quote Tray'}
+                  >
+                    {isShortlisted ? <Check className="w-4 h-4" /> : <Plus className="w-4 h-4" />}
+                  </button>
+                </div>
+              </TiltCard>
+            );
+          })}
+        </div>
       </div>
     </section>
   );
 };
+
+export default ShopSection;

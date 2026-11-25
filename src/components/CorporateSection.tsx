@@ -10,13 +10,11 @@ import {
   X,
 } from 'lucide-react';
 import {
-  API_BASE_URL,
   BULK_PRODUCTS,
   CORPORATE_PILLARS,
   PRINTING_FINISHES,
   buildWhatsAppUrl,
 } from '../data/products';
-import { buildLocalQuotationTicket } from '../utils/quotation';
 import type {
   CorporatePrefill,
   PrintingFinishId,
@@ -27,6 +25,7 @@ import type {
 interface CorporateSectionProps {
   prefill: CorporatePrefill | null;
   onAddKitToShortlist: (items: Omit<ShortlistItem, 'id'>[]) => void;
+  theme?: 'dark' | 'light';
 }
 
 const BULK_PRODUCT_OPTIONS = [
@@ -44,6 +43,7 @@ function formatInr(amount: number): string {
 export const CorporateSection: React.FC<CorporateSectionProps> = ({
   prefill,
   onAddKitToShortlist,
+  theme = 'dark',
 }) => {
   // Interactive Corporate Kit Estimator State
   const [selectedKitIds, setSelectedKitIds] = React.useState<string[]>([
@@ -212,37 +212,22 @@ export const CorporateSection: React.FC<CorporateSectionProps> = ({
     }
 
     setIsSubmitting(true);
-    const requestPayload = {
-      customerName,
-      contactNumber,
-      email,
-      products: selectedFormProducts,
-      quantity: Math.floor(parsedFormQty),
-      finish: formFinish,
-      requirements,
-      deliveryLocation,
-      artworkFileName,
-    };
-
     try {
-      const res = await fetch(`${API_BASE_URL}/api/quotations`, {
+      const res = await fetch('/api/quotations', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(requestPayload),
+        body: JSON.stringify({
+          customerName,
+          contactNumber,
+          email,
+          products: selectedFormProducts,
+          quantity: Math.floor(parsedFormQty),
+          finish: formFinish,
+          requirements,
+          deliveryLocation,
+          artworkFileName,
+        }),
       });
-      const contentType = res.headers.get('content-type') || '';
-
-      // Static hosts (e.g. GitHub Pages) return 404/405 or HTML instead of JSON API
-      if (res.status === 404 || res.status === 405 || !contentType.includes('application/json')) {
-        const local = buildLocalQuotationTicket(requestPayload);
-        if (local.error || !local.ticket) {
-          setFormError(local.error || 'Could not generate quotation summary.');
-          return;
-        }
-        setTicket(local.ticket);
-        return;
-      }
-
       const data = await res.json();
       if (!res.ok) {
         setFormError(data.error || 'Could not generate quotation summary.');
@@ -250,15 +235,7 @@ export const CorporateSection: React.FC<CorporateSectionProps> = ({
       }
       setTicket(data.ticket as QuotationTicket);
     } catch {
-      // Static GitHub Pages fallback when no API server is attached
-      const local = buildLocalQuotationTicket(requestPayload);
-      if (local.ticket) {
-        setTicket(local.ticket);
-      } else {
-        setFormError(
-          local.error || 'Network issue while generating your quotation ticket. Please try again.'
-        );
-      }
+      setFormError('Network issue while generating your quotation ticket. Please try again.');
     } finally {
       setIsSubmitting(false);
     }
@@ -311,24 +288,32 @@ export const CorporateSection: React.FC<CorporateSectionProps> = ({
     URL.revokeObjectURL(url);
   };
 
+  const isDark = theme === 'dark';
+
   return (
-    <section id="corporate" className="py-16 lg:py-24 bg-[#FAF5EE] border-b border-[#EBDCE4]">
+    <section id="corporate" className={`py-16 lg:py-24 border-b border-current/10 transition-colors duration-300 ${
+      isDark ? 'bg-[#06080C] text-[#FAF6F0]' : 'bg-[#FAF6F0] text-[#161E24]'
+    }`}>
       <div className="max-w-[1280px] mx-auto px-5 sm:px-8">
         {/* B2B Intro Header */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-end mb-12">
           <div className="lg:col-span-7">
-            <p className="text-xs font-medium text-[#6E5D66] mb-2">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold uppercase tracking-wider mb-4 bg-[#76577B]/10 text-[#76577B] border border-[#76577B]/20">
               Corporate &amp; Businesses Portal · Strict MOQ 30+ Units
-            </p>
+            </div>
             <h2
-              className="font-editorial text-3xl sm:text-5xl font-semibold text-[#3B0D27] leading-tight"
+              className={`font-serif text-3xl sm:text-5xl font-semibold leading-tight ${
+                isDark ? 'text-[#FAF6F0]' : 'text-[#161E24]'
+              }`}
               style={{ textWrap: 'balance' }}
             >
               Executive merchandise designed like a boutique gift
             </h2>
           </div>
           <div className="lg:col-span-5">
-            <p className="text-sm sm:text-[15px] text-[#6E5D66] leading-relaxed">
+            <p className={`text-sm sm:text-[15px] leading-relaxed ${
+              isDark ? 'text-[#CBD5E1]' : 'text-[#424D55]'
+            }`}>
               We partner with HR teams, founders, and brand managers across Thane, Mumbai, and
               pan-India to craft company-branded welcome kits and appreciation gifts that employees
               actually keep on their desks.
@@ -341,16 +326,26 @@ export const CorporateSection: React.FC<CorporateSectionProps> = ({
           {CORPORATE_PILLARS.map((pillar) => (
             <div
               key={pillar.number}
-              className="rounded-2xl bg-[#FDFBF7] border border-[#EBDCE4] p-6 flex flex-col justify-between"
+              className={`rounded-2xl p-6 flex flex-col justify-between border transition-all ${
+                isDark
+                  ? 'liquid-glass border-white/10'
+                  : 'bg-white border-[#76577B]/20 shadow-md'
+              }`}
             >
               <div>
-                <span className="text-xs font-semibold text-[#6E5D66] tabular-nums">
+                <span className={`text-xs font-semibold tabular-nums ${
+                  isDark ? 'text-[#E3A4AE]' : 'text-[#76577B]'
+                }`}>
                   {pillar.number}.
                 </span>
-                <h3 className="font-editorial text-2xl font-semibold text-[#3B0D27] mt-2 leading-snug">
+                <h3 className={`font-serif text-2xl font-semibold mt-2 leading-snug ${
+                  isDark ? 'text-[#FAF6F0]' : 'text-[#161E24]'
+                }`}>
                   {pillar.title}
                 </h3>
-                <p className="text-sm text-[#6E5D66] mt-2.5 leading-relaxed">
+                <p className={`text-sm mt-2.5 leading-relaxed ${
+                  isDark ? 'text-[#CBD5E1]' : 'text-[#424D55]'
+                }`}>
                   {pillar.description}
                 </p>
               </div>
@@ -359,24 +354,36 @@ export const CorporateSection: React.FC<CorporateSectionProps> = ({
         </div>
 
         {/* Interactive Corporate Kit Estimator */}
-        <div className="rounded-2xl bg-[#FDFBF7] border border-[#EBDCE4] overflow-hidden mb-14">
+        <div className={`rounded-2xl overflow-hidden mb-14 border transition-all ${
+          isDark
+            ? 'liquid-glass border-white/10'
+            : 'bg-white border-[#76577B]/20 shadow-xl'
+        }`}>
           <div className="grid grid-cols-1 lg:grid-cols-12">
             {/* Left Configurator Controls */}
-            <div className="lg:col-span-7 p-6 sm:p-8 lg:p-10 border-b lg:border-b-0 lg:border-r border-[#EBDCE4]">
-              <p className="text-xs font-medium text-[#6E5D66] mb-1">
+            <div className={`lg:col-span-7 p-6 sm:p-8 lg:p-10 border-b lg:border-b-0 lg:border-r ${
+              isDark ? 'border-white/10' : 'border-[#76577B]/15'
+            }`}>
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold uppercase tracking-wider mb-2 bg-[#76577B]/10 text-[#76577B]">
                 Interactive B2B Configurator
-              </p>
-              <h3 className="font-editorial text-3xl font-semibold text-[#3B0D27]">
+              </div>
+              <h3 className={`font-serif text-3xl font-semibold ${
+                isDark ? 'text-[#FAF6F0]' : 'text-[#161E24]'
+              }`}>
                 Corporate Kit Estimator
               </h3>
-              <p className="text-sm text-[#6E5D66] mt-1.5">
+              <p className={`text-sm mt-1.5 ${
+                isDark ? 'text-[#CBD5E1]' : 'text-[#424D55]'
+              }`}>
                 Combine any of our 4 bulk merchandise essentials, set your team size (30+ minimum),
                 and preview instant volume tier guidance.
               </p>
 
               {/* Step 1: Select Bulk Items */}
               <div className="mt-7">
-                <span className="block text-xs font-semibold text-[#3B0D27] mb-3">
+                <span className={`block text-xs font-semibold uppercase tracking-wider mb-3 ${
+                  isDark ? 'text-[#FAF6F0]' : 'text-[#161E24]'
+                }`}>
                   1. Select items for your kit (MOQ 30+ each)
                 </span>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
@@ -387,23 +394,33 @@ export const CorporateSection: React.FC<CorporateSectionProps> = ({
                         key={product.id}
                         type="button"
                         onClick={() => toggleKitItem(product.id)}
-                        className={`text-left p-4 rounded-xl border transition-colors cursor-pointer flex items-start justify-between gap-3 ${
+                        className={`text-left p-4 rounded-xl border transition-all cursor-pointer flex items-start justify-between gap-3 ${
                           checked
-                            ? 'bg-[#FCE7F3]/55 border-[#3B0D27]'
-                            : 'bg-[#FAF5EE]/60 border-[#EBDCE4] hover:border-[#3B0D27]/40'
+                            ? (isDark
+                                ? 'bg-[#76577B]/30 border-[#E3A4AE] text-white shadow-md'
+                                : 'bg-[#76577B]/10 border-[#76577B] text-[#161E24] shadow-sm')
+                            : (isDark
+                                ? 'bg-white/5 border-white/10 text-[#CBD5E1] hover:border-white/20'
+                                : 'bg-[#FAF6F0] border-[#76577B]/15 text-[#424D55] hover:border-[#76577B]/30')
                         }`}
                       >
                         <div>
-                          <p className="text-sm font-semibold text-[#3B0D27]">{product.shortName}</p>
-                          <p className="text-xs text-[#6E5D66] mt-0.5 tabular-nums">
+                          <p className={`text-sm font-semibold ${
+                            checked
+                              ? (isDark ? 'text-white' : 'text-[#161E24]')
+                              : (isDark ? 'text-[#FAF6F0]' : 'text-[#161E24]')
+                          }`}>{product.shortName}</p>
+                          <p className={`text-xs mt-0.5 tabular-nums ${
+                            isDark ? 'text-[#CBD5E1]' : 'text-[#64748B]'
+                          }`}>
                             Base ~{formatInr(product.unitPriceEstimate)} / pc
                           </p>
                         </div>
                         <span
-                          className={`w-5 h-5 rounded-md flex items-center justify-center shrink-0 mt-0.5 border ${
+                          className={`w-5 h-5 rounded-md flex items-center justify-center shrink-0 mt-0.5 border transition-colors ${
                             checked
-                              ? 'bg-[#3B0D27] border-[#3B0D27] text-[#FDFBF7]'
-                              : 'bg-white border-[#D6C2CD]'
+                              ? 'bg-[#76577B] border-[#76577B] text-white'
+                              : (isDark ? 'bg-black/30 border-white/20' : 'bg-white border-[#76577B]/20')
                           }`}
                         >
                           {checked && <Check className="w-3.5 h-3.5" aria-hidden="true" />}
@@ -419,11 +436,15 @@ export const CorporateSection: React.FC<CorporateSectionProps> = ({
                 <div className="flex items-center justify-between gap-4 mb-2">
                   <label
                     htmlFor="estimator-team-size"
-                    className="text-xs font-semibold text-[#3B0D27]"
+                    className={`text-xs font-semibold uppercase tracking-wider ${
+                      isDark ? 'text-[#FAF6F0]' : 'text-[#161E24]'
+                    }`}
                   >
                     2. Team size / quantity (Minimum 30 units)
                   </label>
-                  <span className="text-xs font-semibold text-[#3B0D27] tabular-nums">
+                  <span className={`text-xs font-bold tabular-nums px-2.5 py-0.5 rounded-full ${
+                    isDark ? 'bg-white/10 text-[#FAF6F0]' : 'bg-[#76577B]/10 text-[#76577B]'
+                  }`}>
                     {effectiveTeamSize} kits
                   </span>
                 </div>
@@ -436,7 +457,7 @@ export const CorporateSection: React.FC<CorporateSectionProps> = ({
                     value={Math.min(500, Math.max(30, effectiveTeamSize))}
                     onChange={(e) => setTeamSizeInput(e.target.value)}
                     aria-label="Team size slider"
-                    className="flex-1 accent-[#3B0D27] cursor-pointer"
+                    className="flex-1 accent-[#76577B] cursor-pointer"
                   />
                   <input
                     id="estimator-team-size"
@@ -444,11 +465,15 @@ export const CorporateSection: React.FC<CorporateSectionProps> = ({
                     min={1}
                     value={teamSizeInput}
                     onChange={(e) => setTeamSizeInput(e.target.value)}
-                    className="w-24 px-3 py-2 text-sm font-semibold tabular-nums rounded-lg border border-[#EBDCE4] bg-[#FAF5EE] text-[#3B0D27] focus:outline-none focus:border-[#3B0D27]"
+                    className={`w-24 px-3 py-2 text-sm font-semibold tabular-nums rounded-lg border focus:outline-none focus:border-[#76577B] ${
+                      isDark
+                        ? 'bg-black/40 border-white/20 text-white'
+                        : 'bg-[#FAF6F0] border-[#76577B]/30 text-[#161E24]'
+                    }`}
                   />
                 </div>
                 {isEstimatorBelowMoq && (
-                  <p className="mt-2 inline-flex items-center gap-1.5 text-xs font-medium text-[#8C1D40]">
+                  <p className="mt-2 inline-flex items-center gap-1.5 text-xs font-semibold text-[#8C1D40]">
                     <AlertCircle className="w-3.5 h-3.5 shrink-0" aria-hidden="true" />
                     Corporate merchandise carries a strict 30-piece MOQ. Estimate below is anchored to 30 kits.
                   </p>
@@ -457,7 +482,9 @@ export const CorporateSection: React.FC<CorporateSectionProps> = ({
 
               {/* Step 3: Printing Finish */}
               <div className="mt-7">
-                <span className="block text-xs font-semibold text-[#3B0D27] mb-3">
+                <span className={`block text-xs font-semibold uppercase tracking-wider mb-3 ${
+                  isDark ? 'text-[#FAF6F0]' : 'text-[#161E24]'
+                }`}>
                   3. Choose printing finish
                 </span>
                 <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5">
@@ -468,10 +495,14 @@ export const CorporateSection: React.FC<CorporateSectionProps> = ({
                         key={finish.id}
                         type="button"
                         onClick={() => setSelectedFinishId(finish.id)}
-                        className={`px-3 py-2.5 text-xs font-medium rounded-lg border transition-colors cursor-pointer text-center whitespace-nowrap ${
+                        className={`px-3 py-2.5 text-xs font-medium rounded-lg border transition-all cursor-pointer text-center whitespace-nowrap ${
                           isSelected
-                            ? 'bg-[#3B0D27] text-[#FDFBF7] border-[#3B0D27]'
-                            : 'bg-[#FAF5EE] text-[#3B0D27] border-[#EBDCE4] hover:border-[#3B0D27]/40'
+                            ? (isDark
+                                ? 'bg-[#76577B] text-white border-[#E3A4AE]/50 shadow-md'
+                                : 'bg-[#76577B] text-white border-[#76577B] shadow-sm')
+                            : (isDark
+                                ? 'bg-white/5 text-[#CBD5E1] border-white/10 hover:border-white/25'
+                                : 'bg-[#FAF6F0] text-[#424D55] border-[#76577B]/20 hover:border-[#76577B]/40')
                         }`}
                       >
                         {finish.name}
@@ -479,56 +510,72 @@ export const CorporateSection: React.FC<CorporateSectionProps> = ({
                     );
                   })}
                 </div>
-                <p className="text-xs text-[#6E5D66] mt-2.5">
-                  <span className="font-semibold text-[#3B0D27]">{activeFinish.name}:</span>{' '}
+                <p className={`text-xs mt-2.5 ${isDark ? 'text-[#CBD5E1]' : 'text-[#64748B]'}`}>
+                  <span className={`font-semibold ${isDark ? 'text-[#FAF6F0]' : 'text-[#161E24]'}`}>{activeFinish.name}:</span>{' '}
                   {activeFinish.bestFor} — {activeFinish.note}
                 </p>
               </div>
             </div>
 
             {/* Right Live Bulk Tier Guidance Panel */}
-            <div className="lg:col-span-5 bg-[#3B0D27] text-[#FDFBF7] p-6 sm:p-8 lg:p-10 flex flex-col justify-between">
+            <div className={`lg:col-span-5 p-6 sm:p-8 lg:p-10 flex flex-col justify-between ${
+              isDark ? 'bg-[#0B0E14] text-[#FAF6F0]' : 'bg-[#F5F0E8] text-[#161E24]'
+            }`}>
               <div>
-                <div className="flex items-center justify-between gap-2 text-xs text-[#F9D8E6]/85 pb-4 border-b border-[#FDFBF7]/15">
+                <div className={`flex items-center justify-between gap-2 text-xs pb-4 border-b font-medium ${
+                  isDark ? 'text-[#E3A4AE] border-white/10' : 'text-[#76577B] border-[#76577B]/20'
+                }`}>
                   <span>Instant Bulk Tier Guidance</span>
-                  <span className="tabular-nums">{estimatorSummary.tier.discountLabel}</span>
+                  <span className="tabular-nums font-semibold">{estimatorSummary.tier.discountLabel}</span>
                 </div>
 
-                <h4 className="font-editorial text-3xl font-semibold mt-5">
+                <h4 className={`font-serif text-3xl font-semibold mt-5 ${
+                  isDark ? 'text-[#FAF6F0]' : 'text-[#161E24]'
+                }`}>
                   {estimatorSummary.tier.name}
                 </h4>
 
                 <dl className="mt-6 space-y-3 text-sm">
                   <div className="flex justify-between gap-4">
-                    <dt className="text-[#F9D8E6]/80">Selected Items</dt>
-                    <dd className="text-right font-medium">
+                    <dt className={isDark ? 'text-[#CBD5E1]' : 'text-[#64748B]'}>Selected Items</dt>
+                    <dd className={`text-right font-medium ${isDark ? 'text-[#FAF6F0]' : 'text-[#161E24]'}`}>
                       {estimatorSummary.selectedProducts.map((p) => p.shortName).join(' + ')}
                     </dd>
                   </div>
                   <div className="flex justify-between gap-4">
-                    <dt className="text-[#F9D8E6]/80">Printing Finish</dt>
-                    <dd className="text-right font-medium">{activeFinish.name}</dd>
+                    <dt className={isDark ? 'text-[#CBD5E1]' : 'text-[#64748B]'}>Printing Finish</dt>
+                    <dd className={`text-right font-medium ${isDark ? 'text-[#FAF6F0]' : 'text-[#161E24]'}`}>{activeFinish.name}</dd>
                   </div>
                   <div className="flex justify-between gap-4">
-                    <dt className="text-[#F9D8E6]/80">Order Volume</dt>
-                    <dd className="text-right font-medium tabular-nums">
+                    <dt className={isDark ? 'text-[#CBD5E1]' : 'text-[#64748B]'}>Order Volume</dt>
+                    <dd className={`text-right font-medium tabular-nums ${isDark ? 'text-[#FAF6F0]' : 'text-[#161E24]'}`}>
                       {effectiveTeamSize} complete kits
                     </dd>
                   </div>
-                  <div className="flex justify-between gap-4 pt-3 border-t border-[#FDFBF7]/15">
-                    <dt className="text-[#F9D8E6]/80">Indicative Rate / Kit</dt>
-                    <dd className="text-right text-lg font-semibold tabular-nums">
+                  <div className={`flex justify-between gap-4 pt-3 border-t ${
+                    isDark ? 'border-white/10' : 'border-[#76577B]/20'
+                  }`}>
+                    <dt className={isDark ? 'text-[#CBD5E1]' : 'text-[#64748B]'}>Indicative Rate / Kit</dt>
+                    <dd className={`text-right text-lg font-bold tabular-nums ${isDark ? 'text-[#FAF6F0]' : 'text-[#161E24]'}`}>
                       ~{formatInr(estimatorSummary.perKit)}
                     </dd>
                   </div>
                 </dl>
 
-                <div className="mt-6 rounded-xl bg-[#FDFBF7]/10 p-5">
-                  <p className="text-xs text-[#F9D8E6]/85">Estimated Project Budget Range</p>
-                  <p className="font-editorial text-3xl sm:text-4xl font-semibold mt-1 tabular-nums">
+                <div className={`mt-6 rounded-xl p-5 border ${
+                  isDark
+                    ? 'bg-white/5 border-white/10'
+                    : 'bg-white border-[#76577B]/20 shadow-sm'
+                }`}>
+                  <p className={`text-xs font-medium ${isDark ? 'text-[#E3A4AE]' : 'text-[#76577B]'}`}>
+                    Estimated Project Budget Range
+                  </p>
+                  <p className={`font-serif text-3xl sm:text-4xl font-semibold mt-1 tabular-nums ${
+                    isDark ? 'text-[#FAF6F0]' : 'text-[#161E24]'
+                  }`}>
                     {formatInr(estimatorSummary.totalLow)} – {formatInr(estimatorSummary.totalHigh)}
                   </p>
-                  <p className="text-[11px] text-[#F9D8E6]/75 mt-2 leading-relaxed">
+                  <p className={`text-[11px] mt-2 leading-relaxed ${isDark ? 'text-[#CBD5E1]' : 'text-[#64748B]'}`}>
                     Indicative studio estimate excluding GST &amp; shipping. Exact pricing confirmed
                     after logo &amp; packaging proof review.
                   </p>
@@ -539,18 +586,22 @@ export const CorporateSection: React.FC<CorporateSectionProps> = ({
                 <button
                   type="button"
                   onClick={handleLoadKitIntoForm}
-                  className="w-full py-3 px-4 rounded-lg bg-[#FCE7F3] text-[#3B0D27] text-sm font-semibold hover:bg-[#F9D8E6] transition-colors cursor-pointer"
+                  className="w-full py-3 px-4 rounded-xl liquid-glass-plum text-white text-sm font-semibold hover:opacity-95 transition-all shadow-md cursor-pointer border border-[#E3A4AE]/40"
                 >
                   Request Official Quote for This Kit
                 </button>
                 <button
                   type="button"
                   onClick={handleSaveKitToShortlist}
-                  className="w-full py-2.5 px-4 rounded-lg border border-[#FDFBF7]/25 text-[#FDFBF7] text-xs sm:text-sm font-medium hover:bg-[#FDFBF7]/10 transition-colors inline-flex items-center justify-center gap-1.5 cursor-pointer"
+                  className={`w-full py-2.5 px-4 rounded-xl text-xs sm:text-sm font-medium transition-all inline-flex items-center justify-center gap-1.5 cursor-pointer border ${
+                    isDark
+                      ? 'border-white/20 text-[#FAF6F0] hover:bg-white/10'
+                      : 'border-[#76577B]/25 text-[#161E24] bg-white hover:bg-[#FAF6F0] shadow-xs'
+                  }`}
                 >
                   {kitAddedFeedback ? (
                     <>
-                      <Check className="w-4 h-4" aria-hidden="true" />
+                      <Check className="w-4 h-4 text-[#25D366]" aria-hidden="true" />
                       Kit Added to Quote Tray
                     </>
                   ) : (
@@ -568,18 +619,26 @@ export const CorporateSection: React.FC<CorporateSectionProps> = ({
         {/* Smart B2B Bulk Quotation Form */}
         <div
           id="bulk-quote-form"
-          className="scroll-mt-24 rounded-2xl bg-[#FDFBF7] border border-[#EBDCE4] p-6 sm:p-8 lg:p-10"
+          className={`scroll-mt-24 rounded-2xl p-6 sm:p-8 lg:p-10 border transition-all ${
+            isDark
+              ? 'liquid-glass border-white/10'
+              : 'bg-white border-[#76577B]/20 shadow-xl'
+          }`}
         >
-          <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 pb-6 mb-8 border-b border-[#EBDCE4]">
+          <div className={`flex flex-col md:flex-row md:items-end justify-between gap-4 pb-6 mb-8 border-b ${
+            isDark ? 'border-white/10' : 'border-[#76577B]/15'
+          }`}>
             <div>
-              <p className="text-xs font-medium text-[#6E5D66] mb-1">
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold uppercase tracking-wider mb-2 bg-[#76577B]/10 text-[#76577B]">
                 Direct B2B Desk · Kalyan Studio
-              </p>
-              <h3 className="font-editorial text-3xl sm:text-4xl font-semibold text-[#3B0D27]">
+              </div>
+              <h3 className={`font-serif text-3xl sm:text-4xl font-semibold ${
+                isDark ? 'text-[#FAF6F0]' : 'text-[#161E24]'
+              }`}>
                 Smart Bulk Quotation Brief
               </h3>
             </div>
-            <p className="text-xs sm:text-sm text-[#6E5D66] max-w-md">
+            <p className={`text-xs sm:text-sm max-w-md ${isDark ? 'text-[#CBD5E1]' : 'text-[#424D55]'}`}>
               Submit your brief to generate an instant downloadable Quotation Summary Ticket and
               one-click WhatsApp handoff.
             </p>
@@ -589,7 +648,9 @@ export const CorporateSection: React.FC<CorporateSectionProps> = ({
             <form onSubmit={handleFormSubmit} className="lg:col-span-7 space-y-5">
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
-                  <label htmlFor="b2b-name" className="block text-xs font-semibold text-[#3B0D27] mb-1.5">
+                  <label htmlFor="b2b-name" className={`block text-xs font-semibold uppercase tracking-wider mb-1.5 ${
+                    isDark ? 'text-[#FAF6F0]' : 'text-[#161E24]'
+                  }`}>
                     Customer / Company Name *
                   </label>
                   <input
@@ -599,11 +660,17 @@ export const CorporateSection: React.FC<CorporateSectionProps> = ({
                     value={customerName}
                     onChange={(e) => setCustomerName(e.target.value)}
                     placeholder="e.g. Riya Deshmukh · Verve Tech"
-                    className="w-full px-3.5 py-2.5 text-sm rounded-lg border border-[#EBDCE4] bg-[#FAF5EE]/50 text-[#3B0D27] placeholder:text-[#6E5D66]/65 focus:outline-none focus:border-[#3B0D27]"
+                    className={`w-full px-3.5 py-2.5 text-sm rounded-lg border focus:outline-none focus:border-[#76577B] transition-colors ${
+                      isDark
+                        ? 'bg-black/40 border-white/15 text-white placeholder-white/30'
+                        : 'bg-[#FAF6F0] border-[#76577B]/25 text-[#161E24] placeholder-[#424D55]/50'
+                    }`}
                   />
                 </div>
                 <div>
-                  <label htmlFor="b2b-phone" className="block text-xs font-semibold text-[#3B0D27] mb-1.5">
+                  <label htmlFor="b2b-phone" className={`block text-xs font-semibold uppercase tracking-wider mb-1.5 ${
+                    isDark ? 'text-[#FAF6F0]' : 'text-[#161E24]'
+                  }`}>
                     Contact Number (WhatsApp preferred) *
                   </label>
                   <input
@@ -613,14 +680,20 @@ export const CorporateSection: React.FC<CorporateSectionProps> = ({
                     value={contactNumber}
                     onChange={(e) => setContactNumber(e.target.value)}
                     placeholder="+91 98XXX XXXXX"
-                    className="w-full px-3.5 py-2.5 text-sm rounded-lg border border-[#EBDCE4] bg-[#FAF5EE]/50 text-[#3B0D27] placeholder:text-[#6E5D66]/65 focus:outline-none focus:border-[#3B0D27]"
+                    className={`w-full px-3.5 py-2.5 text-sm rounded-lg border focus:outline-none focus:border-[#76577B] transition-colors ${
+                      isDark
+                        ? 'bg-black/40 border-white/15 text-white placeholder-white/30'
+                        : 'bg-[#FAF6F0] border-[#76577B]/25 text-[#161E24] placeholder-[#424D55]/50'
+                    }`}
                   />
                 </div>
               </div>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
-                  <label htmlFor="b2b-email" className="block text-xs font-semibold text-[#3B0D27] mb-1.5">
+                  <label htmlFor="b2b-email" className={`block text-xs font-semibold uppercase tracking-wider mb-1.5 ${
+                    isDark ? 'text-[#FAF6F0]' : 'text-[#161E24]'
+                  }`}>
                     Work Email Address *
                   </label>
                   <input
@@ -630,11 +703,17 @@ export const CorporateSection: React.FC<CorporateSectionProps> = ({
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     placeholder="procurement@company.com"
-                    className="w-full px-3.5 py-2.5 text-sm rounded-lg border border-[#EBDCE4] bg-[#FAF5EE]/50 text-[#3B0D27] placeholder:text-[#6E5D66]/65 focus:outline-none focus:border-[#3B0D27]"
+                    className={`w-full px-3.5 py-2.5 text-sm rounded-lg border focus:outline-none focus:border-[#76577B] transition-colors ${
+                      isDark
+                        ? 'bg-black/40 border-white/15 text-white placeholder-white/30'
+                        : 'bg-[#FAF6F0] border-[#76577B]/25 text-[#161E24] placeholder-[#424D55]/50'
+                    }`}
                   />
                 </div>
                 <div>
-                  <label htmlFor="b2b-location" className="block text-xs font-semibold text-[#3B0D27] mb-1.5">
+                  <label htmlFor="b2b-location" className={`block text-xs font-semibold uppercase tracking-wider mb-1.5 ${
+                    isDark ? 'text-[#FAF6F0]' : 'text-[#161E24]'
+                  }`}>
                     Delivery Location (City / Pincode) *
                   </label>
                   <input
@@ -644,14 +723,20 @@ export const CorporateSection: React.FC<CorporateSectionProps> = ({
                     value={deliveryLocation}
                     onChange={(e) => setDeliveryLocation(e.target.value)}
                     placeholder="e.g. Thane West / Mumbai 400051"
-                    className="w-full px-3.5 py-2.5 text-sm rounded-lg border border-[#EBDCE4] bg-[#FAF5EE]/50 text-[#3B0D27] placeholder:text-[#6E5D66]/65 focus:outline-none focus:border-[#3B0D27]"
+                    className={`w-full px-3.5 py-2.5 text-sm rounded-lg border focus:outline-none focus:border-[#76577B] transition-colors ${
+                      isDark
+                        ? 'bg-black/40 border-white/15 text-white placeholder-white/30'
+                        : 'bg-[#FAF6F0] border-[#76577B]/25 text-[#161E24] placeholder-[#424D55]/50'
+                    }`}
                   />
                 </div>
               </div>
 
               {/* Multi-select Products Required */}
               <div>
-                <span className="block text-xs font-semibold text-[#3B0D27] mb-2">
+                <span className={`block text-xs font-semibold uppercase tracking-wider mb-2 ${
+                  isDark ? 'text-[#FAF6F0]' : 'text-[#161E24]'
+                }`}>
                   Products Required (Select all that apply) *
                 </span>
                 <div className="flex flex-wrap gap-2">
@@ -662,10 +747,14 @@ export const CorporateSection: React.FC<CorporateSectionProps> = ({
                         key={option}
                         type="button"
                         onClick={() => toggleFormProduct(option)}
-                        className={`px-3.5 py-2 text-xs font-medium rounded-lg border transition-colors cursor-pointer ${
+                        className={`px-3.5 py-2 text-xs font-medium rounded-lg border transition-all cursor-pointer ${
                           active
-                            ? 'bg-[#3B0D27] text-[#FDFBF7] border-[#3B0D27]'
-                            : 'bg-[#FAF5EE] text-[#3B0D27] border-[#EBDCE4] hover:border-[#3B0D27]/40'
+                            ? (isDark
+                                ? 'bg-[#76577B] text-white border-[#E3A4AE]/50 shadow-md'
+                                : 'bg-[#76577B] text-white border-[#76577B] shadow-sm')
+                            : (isDark
+                                ? 'bg-white/5 text-[#CBD5E1] border-white/10 hover:border-white/25'
+                                : 'bg-[#FAF6F0] text-[#424D55] border-[#76577B]/20 hover:border-[#76577B]/40')
                         }`}
                       >
                         {option}
@@ -678,7 +767,9 @@ export const CorporateSection: React.FC<CorporateSectionProps> = ({
               {/* Quantity & Printing Finish */}
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
-                  <label htmlFor="b2b-qty" className="block text-xs font-semibold text-[#3B0D27] mb-1.5">
+                  <label htmlFor="b2b-qty" className={`block text-xs font-semibold uppercase tracking-wider mb-1.5 ${
+                    isDark ? 'text-[#FAF6F0]' : 'text-[#161E24]'
+                  }`}>
                     Quantity Required (Strict MOQ: 30+) *
                   </label>
                   <input
@@ -688,14 +779,16 @@ export const CorporateSection: React.FC<CorporateSectionProps> = ({
                     required
                     value={quantityInput}
                     onChange={(e) => setQuantityInput(e.target.value)}
-                    className={`w-full px-3.5 py-2.5 text-sm font-semibold tabular-nums rounded-lg border bg-[#FAF5EE]/50 text-[#3B0D27] focus:outline-none ${
+                    className={`w-full px-3.5 py-2.5 text-sm font-semibold tabular-nums rounded-lg border focus:outline-none transition-colors ${
                       isFormBelowMoq
-                        ? 'border-[#B4234B] focus:border-[#B4234B]'
-                        : 'border-[#EBDCE4] focus:border-[#3B0D27]'
+                        ? 'border-[#B4234B] bg-[#B4234B]/10 text-[#8C1D40]'
+                        : (isDark
+                            ? 'bg-black/40 border-white/15 text-white focus:border-[#76577B]'
+                            : 'bg-[#FAF6F0] border-[#76577B]/25 text-[#161E24] focus:border-[#76577B]')
                     }`}
                   />
                   {isFormBelowMoq && (
-                    <p className="mt-1.5 inline-flex items-start gap-1.5 text-xs font-medium text-[#8C1D40]">
+                    <p className="mt-1.5 inline-flex items-start gap-1.5 text-xs font-semibold text-[#8C1D40]">
                       <AlertCircle className="w-3.5 h-3.5 shrink-0 mt-0.5" aria-hidden="true" />
                       Quantity must be at least 30 pieces for corporate merchandise. For smaller
                       orders, explore our No-MOQ keepsakes.
@@ -704,28 +797,38 @@ export const CorporateSection: React.FC<CorporateSectionProps> = ({
                 </div>
 
                 <div>
-                  <label htmlFor="b2b-finish" className="block text-xs font-semibold text-[#3B0D27] mb-1.5">
+                  <label htmlFor="b2b-finish" className={`block text-xs font-semibold uppercase tracking-wider mb-1.5 ${
+                    isDark ? 'text-[#FAF6F0]' : 'text-[#161E24]'
+                  }`}>
                     Preferred Printing Finish
                   </label>
                   <select
                     id="b2b-finish"
                     value={formFinish}
                     onChange={(e) => setFormFinish(e.target.value)}
-                    className="w-full px-3.5 py-2.5 text-sm rounded-lg border border-[#EBDCE4] bg-[#FAF5EE]/50 text-[#3B0D27] focus:outline-none focus:border-[#3B0D27]"
+                    className={`w-full px-3.5 py-2.5 text-sm rounded-lg border focus:outline-none focus:border-[#76577B] transition-colors ${
+                      isDark
+                        ? 'bg-black/40 border-white/15 text-white'
+                        : 'bg-[#FAF6F0] border-[#76577B]/25 text-[#161E24]'
+                    }`}
                   >
                     {PRINTING_FINISHES.map((finish) => (
-                      <option key={finish.id} value={finish.name}>
+                      <option key={finish.id} value={finish.name} className={isDark ? 'bg-[#0B0E14] text-white' : 'bg-white text-[#161E24]'}>
                         {finish.name}
                       </option>
                     ))}
-                    <option value="Studio Recommendation">Not sure — Recommend best finish</option>
+                    <option value="Studio Recommendation" className={isDark ? 'bg-[#0B0E14] text-white' : 'bg-white text-[#161E24]'}>
+                      Not sure — Recommend best finish
+                    </option>
                   </select>
                 </div>
               </div>
 
               {/* Customisation & Printing Requirements */}
               <div>
-                <label htmlFor="b2b-notes" className="block text-xs font-semibold text-[#3B0D27] mb-1.5">
+                <label htmlFor="b2b-notes" className={`block text-xs font-semibold uppercase tracking-wider mb-1.5 ${
+                  isDark ? 'text-[#FAF6F0]' : 'text-[#161E24]'
+                }`}>
                   Customisation &amp; Printing Requirements
                 </label>
                 <textarea
@@ -734,18 +837,28 @@ export const CorporateSection: React.FC<CorporateSectionProps> = ({
                   value={requirements}
                   onChange={(e) => setRequirements(e.target.value)}
                   placeholder="Share brand hex colours, logo placement, individual name personalisation, or target delivery date..."
-                  className="w-full px-3.5 py-2.5 text-sm rounded-lg border border-[#EBDCE4] bg-[#FAF5EE]/50 text-[#3B0D27] placeholder:text-[#6E5D66]/65 focus:outline-none focus:border-[#3B0D27]"
+                  className={`w-full px-3.5 py-2.5 text-sm rounded-lg border focus:outline-none focus:border-[#76577B] transition-colors ${
+                    isDark
+                      ? 'bg-black/40 border-white/15 text-white placeholder-white/30'
+                      : 'bg-[#FAF6F0] border-[#76577B]/25 text-[#161E24] placeholder-[#424D55]/50'
+                  }`}
                 />
               </div>
 
               {/* Logo / Artwork File Upload */}
               <div>
-                <span className="block text-xs font-semibold text-[#3B0D27] mb-1.5">
+                <span className={`block text-xs font-semibold uppercase tracking-wider mb-1.5 ${
+                  isDark ? 'text-[#FAF6F0]' : 'text-[#161E24]'
+                }`}>
                   Logo / Artwork File Upload (PNG, SVG, JPG, PDF)
                 </span>
                 <div className="flex flex-wrap items-center gap-3">
-                  <label className="inline-flex items-center gap-2 px-4 py-2.5 rounded-lg border border-dashed border-[#C7AEBC] bg-[#FAF5EE] text-xs sm:text-sm font-medium text-[#3B0D27] hover:bg-[#FCE7F3]/50 transition-colors cursor-pointer">
-                    <FileUp className="w-4 h-4" aria-hidden="true" />
+                  <label className={`inline-flex items-center gap-2 px-4 py-2.5 rounded-lg border border-dashed text-xs sm:text-sm font-medium transition-colors cursor-pointer ${
+                    isDark
+                      ? 'border-white/25 bg-white/5 text-[#FAF6F0] hover:bg-white/10'
+                      : 'border-[#76577B]/30 bg-[#FAF6F0] text-[#161E24] hover:bg-[#76577B]/10'
+                  }`}>
+                    <FileUp className="w-4 h-4 text-[#76577B]" aria-hidden="true" />
                     Choose Artwork File
                     <input
                       type="file"
@@ -756,22 +869,26 @@ export const CorporateSection: React.FC<CorporateSectionProps> = ({
                   </label>
 
                   {artworkFileName && (
-                    <div className="flex items-center gap-2.5 px-3 py-1.5 rounded-lg bg-[#FCE7F3]/60 border border-[#EBDCE4]">
+                    <div className={`flex items-center gap-2.5 px-3 py-1.5 rounded-lg border ${
+                      isDark
+                        ? 'bg-white/10 border-white/15 text-white'
+                        : 'bg-[#76577B]/10 border-[#76577B]/20 text-[#161E24]'
+                    }`}>
                       {artworkPreviewUrl && (
                         <img
                           src={artworkPreviewUrl}
                           alt="Uploaded logo thumbnail"
-                          className="w-7 h-7 rounded object-contain bg-white border border-[#EBDCE4]"
+                          className="w-7 h-7 rounded object-contain bg-white/10 border border-current/20"
                         />
                       )}
-                      <span className="text-xs font-medium text-[#3B0D27] max-w-[180px] truncate">
+                      <span className="text-xs font-medium max-w-[180px] truncate">
                         {artworkFileName}
                       </span>
                       <button
                         type="button"
                         onClick={clearArtwork}
                         aria-label="Remove artwork file"
-                        className="text-[#6E5D66] hover:text-[#3B0D27] cursor-pointer"
+                        className="opacity-75 hover:opacity-100 cursor-pointer"
                       >
                         <X className="w-3.5 h-3.5" aria-hidden="true" />
                       </button>
@@ -783,7 +900,7 @@ export const CorporateSection: React.FC<CorporateSectionProps> = ({
               {formError && (
                 <div
                   role="alert"
-                  className="rounded-lg bg-[#FCE7F3] border border-[#D497B2] px-4 py-3 text-xs sm:text-sm font-medium text-[#3B0D27] flex items-center gap-2"
+                  className="rounded-lg bg-[#B4234B]/15 border border-[#B4234B]/30 px-4 py-3 text-xs sm:text-sm font-medium text-[#8C1D40] flex items-center gap-2"
                 >
                   <AlertCircle className="w-4 h-4 shrink-0 text-[#8C1D40]" aria-hidden="true" />
                   <span>{formError}</span>
@@ -793,7 +910,7 @@ export const CorporateSection: React.FC<CorporateSectionProps> = ({
               <button
                 type="submit"
                 disabled={isSubmitting || isFormBelowMoq}
-                className="w-full sm:w-auto px-7 py-3 rounded-lg bg-[#3B0D27] text-[#FDFBF7] text-sm font-semibold hover:bg-[#59163C] disabled:opacity-50 disabled:cursor-not-allowed transition-colors cursor-pointer"
+                className="w-full sm:w-auto px-8 py-3.5 rounded-xl liquid-glass-plum text-white text-sm font-semibold hover:opacity-95 disabled:opacity-50 disabled:cursor-not-allowed transition-all shadow-md cursor-pointer border border-[#E3A4AE]/40"
               >
                 {isSubmitting ? 'Generating Quotation Ticket...' : 'Generate Quotation Summary Ticket'}
               </button>
@@ -802,66 +919,82 @@ export const CorporateSection: React.FC<CorporateSectionProps> = ({
             {/* Right Column: Official Quotation Summary Ticket */}
             <div className="lg:col-span-5 flex flex-col">
               {ticket ? (
-                <div className="rounded-2xl bg-[#FAF5EE] border border-[#3B0D27]/30 p-6 flex flex-col justify-between h-full">
+                <div className={`rounded-2xl p-6 flex flex-col justify-between h-full border ${
+                  isDark
+                    ? 'liquid-glass border-white/15'
+                    : 'bg-[#FAF6F0] border-[#76577B]/20 shadow-md text-[#161E24]'
+                }`}>
                   <div>
-                    <div className="flex items-center justify-between gap-2 pb-4 border-b border-[#EBDCE4]">
+                    <div className={`flex items-center justify-between gap-2 pb-4 border-b ${
+                      isDark ? 'border-white/10' : 'border-[#76577B]/15'
+                    }`}>
                       <div>
-                        <p className="text-xs font-semibold text-[#3B0D27]">
+                        <p className={`text-xs font-semibold ${isDark ? 'text-[#FAF6F0]' : 'text-[#161E24]'}`}>
                           Official Quotation Summary Ticket
                         </p>
-                        <p className="font-mono text-sm font-semibold text-[#3B0D27] mt-0.5 tabular-nums">
+                        <p className={`font-mono text-sm font-semibold mt-0.5 tabular-nums ${
+                          isDark ? 'text-[#E3A4AE]' : 'text-[#76577B]'
+                        }`}>
                           {ticket.ticketId}
                         </p>
                       </div>
-                      <span className="text-xs font-medium text-[#6E5D66]">MOQ Verified</span>
+                      <span className="text-xs font-semibold px-2.5 py-0.5 rounded-full bg-[#25D366]/15 text-[#25D366]">
+                        MOQ Verified
+                      </span>
                     </div>
 
                     <dl className="mt-4 space-y-2.5 text-xs sm:text-sm">
                       <div className="flex justify-between gap-3">
-                        <dt className="text-[#6E5D66]">Client</dt>
-                        <dd className="font-medium text-[#3B0D27] text-right">{ticket.customerName}</dd>
+                        <dt className={isDark ? 'text-[#CBD5E1]' : 'text-[#64748B]'}>Client</dt>
+                        <dd className={`font-medium text-right ${isDark ? 'text-white' : 'text-[#161E24]'}`}>{ticket.customerName}</dd>
                       </div>
                       <div className="flex justify-between gap-3">
-                        <dt className="text-[#6E5D66]">Contact</dt>
-                        <dd className="font-medium text-[#3B0D27] text-right tabular-nums">
+                        <dt className={isDark ? 'text-[#CBD5E1]' : 'text-[#64748B]'}>Contact</dt>
+                        <dd className={`font-medium text-right tabular-nums ${isDark ? 'text-white' : 'text-[#161E24]'}`}>
                           {ticket.contactNumber}
                         </dd>
                       </div>
                       <div className="flex justify-between gap-3">
-                        <dt className="text-[#6E5D66]">Products</dt>
-                        <dd className="font-medium text-[#3B0D27] text-right">
+                        <dt className={isDark ? 'text-[#CBD5E1]' : 'text-[#64748B]'}>Products</dt>
+                        <dd className={`font-medium text-right ${isDark ? 'text-white' : 'text-[#161E24]'}`}>
                           {ticket.products.join(', ')}
                         </dd>
                       </div>
                       <div className="flex justify-between gap-3">
-                        <dt className="text-[#6E5D66]">Volume &amp; Finish</dt>
-                        <dd className="font-medium text-[#3B0D27] text-right tabular-nums">
+                        <dt className={isDark ? 'text-[#CBD5E1]' : 'text-[#64748B]'}>Volume &amp; Finish</dt>
+                        <dd className={`font-medium text-right tabular-nums ${isDark ? 'text-white' : 'text-[#161E24]'}`}>
                           {ticket.quantity} pcs · {ticket.finish}
                         </dd>
                       </div>
                       <div className="flex justify-between gap-3">
-                        <dt className="text-[#6E5D66]">Delivery</dt>
-                        <dd className="font-medium text-[#3B0D27] text-right">
+                        <dt className={isDark ? 'text-[#CBD5E1]' : 'text-[#64748B]'}>Delivery</dt>
+                        <dd className={`font-medium text-right ${isDark ? 'text-white' : 'text-[#161E24]'}`}>
                           {ticket.deliveryLocation}
                         </dd>
                       </div>
                       {ticket.artworkFileName && (
                         <div className="flex justify-between gap-3">
-                          <dt className="text-[#6E5D66]">Artwork</dt>
-                          <dd className="font-medium text-[#3B0D27] text-right truncate max-w-[180px]">
+                          <dt className={isDark ? 'text-[#CBD5E1]' : 'text-[#64748B]'}>Artwork</dt>
+                          <dd className={`font-medium text-right truncate max-w-[180px] ${isDark ? 'text-white' : 'text-[#161E24]'}`}>
                             {ticket.artworkFileName}
                           </dd>
                         </div>
                       )}
                     </dl>
 
-                    <div className="mt-5 rounded-xl bg-[#FDFBF7] border border-[#EBDCE4] p-4">
-                      <p className="text-xs text-[#6E5D66]">{ticket.tierName}</p>
-                      <p className="font-editorial text-2xl font-semibold text-[#3B0D27] mt-0.5 tabular-nums">
+                    <div className={`mt-5 rounded-xl p-4 border ${
+                      isDark
+                        ? 'bg-white/5 border-white/10'
+                        : 'bg-white border-[#76577B]/20 shadow-xs'
+                    }`}>
+                      <p className={`text-xs font-semibold ${isDark ? 'text-[#E3A4AE]' : 'text-[#76577B]'}`}>{ticket.tierName}</p>
+                      <p className={`font-serif text-2xl font-semibold mt-0.5 tabular-nums ${
+                        isDark ? 'text-white' : 'text-[#161E24]'
+                      }`}>
                         {formatInr(ticket.estimatedTotalRange.low)} –{' '}
                         {formatInr(ticket.estimatedTotalRange.high)}
                       </p>
-                      <p className="text-[11px] text-[#6E5D66] mt-1">
+                      <p className={`text-[11px] mt-1 ${isDark ? 'text-[#CBD5E1]' : 'text-[#64748B]'}`}>
                         Estimated ~{formatInr(ticket.estimatedPerUnit)} per set · Final quote sent
                         within 1 business day.
                       </p>
@@ -873,7 +1006,7 @@ export const CorporateSection: React.FC<CorporateSectionProps> = ({
                       href={buildWhatsAppUrl(buildTicketPlainText(ticket))}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="w-full py-3 px-4 rounded-lg bg-[#3B0D27] text-[#FDFBF7] text-sm font-semibold hover:bg-[#59163C] transition-colors inline-flex items-center justify-center gap-2"
+                      className="w-full py-3 px-4 rounded-xl bg-[#25D366] text-white text-sm font-semibold hover:bg-[#20ba59] transition-all inline-flex items-center justify-center gap-2 shadow-md shadow-[#25D366]/25"
                     >
                       <MessageCircle className="w-4 h-4" aria-hidden="true" />
                       Send Brief via WhatsApp
@@ -882,11 +1015,15 @@ export const CorporateSection: React.FC<CorporateSectionProps> = ({
                       <button
                         type="button"
                         onClick={handleCopyTicket}
-                        className="py-2.5 px-3 rounded-lg border border-[#EBDCE4] bg-[#FDFBF7] text-xs font-medium text-[#3B0D27] hover:bg-[#FCE7F3]/60 transition-colors inline-flex items-center justify-center gap-1.5 cursor-pointer"
+                        className={`py-2.5 px-3 rounded-lg border text-xs font-medium transition-all inline-flex items-center justify-center gap-1.5 cursor-pointer ${
+                          isDark
+                            ? 'border-white/15 bg-white/5 text-[#FAF6F0] hover:bg-white/10'
+                            : 'border-[#76577B]/20 bg-white text-[#161E24] hover:bg-[#FAF6F0] shadow-xs'
+                        }`}
                       >
                         {copiedTicket ? (
                           <>
-                            <Check className="w-3.5 h-3.5" aria-hidden="true" />
+                            <Check className="w-3.5 h-3.5 text-[#25D366]" aria-hidden="true" />
                             Copied
                           </>
                         ) : (
@@ -899,7 +1036,11 @@ export const CorporateSection: React.FC<CorporateSectionProps> = ({
                       <button
                         type="button"
                         onClick={handleDownloadTicket}
-                        className="py-2.5 px-3 rounded-lg border border-[#EBDCE4] bg-[#FDFBF7] text-xs font-medium text-[#3B0D27] hover:bg-[#FCE7F3]/60 transition-colors inline-flex items-center justify-center gap-1.5 cursor-pointer"
+                        className={`py-2.5 px-3 rounded-lg border text-xs font-medium transition-all inline-flex items-center justify-center gap-1.5 cursor-pointer ${
+                          isDark
+                            ? 'border-white/15 bg-white/5 text-[#FAF6F0] hover:bg-white/10'
+                            : 'border-[#76577B]/20 bg-white text-[#161E24] hover:bg-[#FAF6F0] shadow-xs'
+                        }`}
                       >
                         <Download className="w-3.5 h-3.5" aria-hidden="true" />
                         Download .txt
@@ -908,32 +1049,38 @@ export const CorporateSection: React.FC<CorporateSectionProps> = ({
                   </div>
                 </div>
               ) : (
-                <div className="rounded-2xl bg-[#FAF5EE] border border-[#EBDCE4] p-7 flex flex-col justify-between h-full">
+                <div className={`rounded-2xl p-7 flex flex-col justify-between h-full border ${
+                  isDark
+                    ? 'liquid-glass border-white/10 text-[#FAF6F0]'
+                    : 'bg-[#FAF6F0] border-[#76577B]/20 text-[#161E24] shadow-md'
+                }`}>
                   <div>
-                    <p className="text-xs font-semibold text-[#3B0D27] mb-2">
-                      How our B2B workflow works
-                    </p>
-                    <h4 className="font-editorial text-2xl font-semibold text-[#3B0D27]">
+                    <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold uppercase tracking-wider mb-3 bg-[#76577B]/10 text-[#76577B]">
+                      Studio Workflow
+                    </div>
+                    <h4 className={`font-serif text-2xl font-semibold ${isDark ? 'text-white' : 'text-[#161E24]'}`}>
                       From artwork proof to doorstep delivery
                     </h4>
-                    <ol className="mt-5 space-y-4 text-sm text-[#6E5D66]">
+                    <ol className={`mt-5 space-y-4 text-sm ${isDark ? 'text-[#CBD5E1]' : 'text-[#424D55]'}`}>
                       <li>
-                        <span className="font-semibold text-[#3B0D27]">01. Brief &amp; Ticket —</span>{' '}
+                        <span className={`font-semibold ${isDark ? 'text-white' : 'text-[#161E24]'}`}>01. Brief &amp; Ticket —</span>{' '}
                         Complete the quotation form to generate your structured reference ticket.
                       </li>
                       <li>
-                        <span className="font-semibold text-[#3B0D27]">02. Digital Proofing —</span>{' '}
+                        <span className={`font-semibold ${isDark ? 'text-white' : 'text-[#161E24]'}`}>02. Digital Proofing —</span>{' '}
                         Our Kalyan studio prepares colour-calibrated mockups before a single piece is
                         printed.
                       </li>
                       <li>
-                        <span className="font-semibold text-[#3B0D27]">03. Dispatch &amp; Boxing —</span>{' '}
+                        <span className={`font-semibold ${isDark ? 'text-white' : 'text-[#161E24]'}`}>03. Dispatch &amp; Boxing —</span>{' '}
                         Individually packed kits shipped across Mumbai, Thane, Pune, and pan-India.
                       </li>
                     </ol>
                   </div>
 
-                  <div className="mt-6 pt-5 border-t border-[#EBDCE4] text-xs text-[#6E5D66]">
+                  <div className={`mt-6 pt-5 border-t text-xs ${
+                    isDark ? 'border-white/10 text-[#CBD5E1]' : 'border-[#76577B]/15 text-[#64748B]'
+                  }`}>
                     Need faster turnaround for an upcoming event or offsite? Share your target date
                     in the requirements box above.
                   </div>

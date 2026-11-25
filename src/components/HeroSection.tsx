@@ -34,7 +34,7 @@ const FEATURED_CATEGORIES: Array<{
     title: 'Corporate Drinkware',
     subtitle: 'Insulated bottles & studio ceramic mugs',
     policy: 'MOQ: 30+ Pieces',
-    category: 'Merchandise',
+    category: 'Corporate Merchandise (MOQ 30+)',
     mode: 'bulk',
   },
   {

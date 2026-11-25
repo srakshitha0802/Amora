@@ -1,5 +1,6 @@
 import React from 'react';
-import { FileText, MessageCircle, ShoppingBag } from 'lucide-react';
+import Lenis from 'lenis';
+import { FileText, MessageCircle } from 'lucide-react';
 import type {
   CorporatePrefill,
   OrderMode,
@@ -8,7 +9,11 @@ import type {
   ShortlistItem,
 } from './types';
 import { PRODUCTS, buildWhatsAppUrl } from './data/products';
-import { HeroSection } from './components/HeroSection';
+import { Navbar } from './components/Navbar';
+import { ParticleHero } from './components/ParticleHero';
+import { CircularProductOrbit } from './components/CircularProductOrbit';
+import { FeaturedSection } from './components/FeaturedSection';
+import { KeepsakeShowcase } from './components/KeepsakeShowcase';
 import { ShopSection } from './components/ShopSection';
 import { CorporateSection } from './components/CorporateSection';
 import { AboutAndContactSection } from './components/AboutAndContactSection';
@@ -16,7 +21,8 @@ import { CustomiserDrawer } from './components/CustomiserDrawer';
 import { ShortlistDrawer } from './components/ShortlistDrawer';
 import { StylistWidget } from './components/StylistWidget';
 
-const SHORTLIST_STORAGE_KEY = 'amora_shortlist_v1';
+const SHORTLIST_STORAGE_KEY = 'amora_shortlist_v2';
+const THEME_STORAGE_KEY = 'amora_theme_preference';
 
 function loadInitialShortlist(): ShortlistItem[] {
   try {
@@ -37,6 +43,54 @@ export default function App() {
   const [shortlist, setShortlist] = React.useState<ShortlistItem[]>(loadInitialShortlist);
   const [corporatePrefill, setCorporatePrefill] = React.useState<CorporatePrefill | null>(null);
   const [toastText, setToastText] = React.useState<string | null>(null);
+
+  // Dual Theme Engine (Dark & Light Mode)
+  const [theme, setTheme] = React.useState<'dark' | 'light'>(() => {
+    try {
+      const saved = window.localStorage.getItem(THEME_STORAGE_KEY);
+      return saved === 'light' ? 'light' : 'dark';
+    } catch {
+      return 'dark';
+    }
+  });
+
+  React.useEffect(() => {
+    try {
+      window.localStorage.setItem(THEME_STORAGE_KEY, theme);
+    } catch {}
+    if (theme === 'light') {
+      document.documentElement.classList.add('light');
+      document.documentElement.classList.remove('dark');
+    } else {
+      document.documentElement.classList.add('dark');
+      document.documentElement.classList.remove('light');
+    }
+  }, [theme]);
+
+  const toggleTheme = () => {
+    setTheme((prev) => (prev === 'dark' ? 'light' : 'dark'));
+  };
+
+  // Initialize Lenis Smooth Scroll
+  React.useEffect(() => {
+    const lenis = new Lenis({
+      duration: 1.15,
+      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+      smoothWheel: true,
+    });
+
+    let animationFrameId: number;
+    function raf(time: number) {
+      lenis.raf(time);
+      animationFrameId = requestAnimationFrame(raf);
+    }
+    animationFrameId = requestAnimationFrame(raf);
+
+    return () => {
+      cancelAnimationFrame(animationFrameId);
+      lenis.destroy();
+    };
+  }, []);
 
   React.useEffect(() => {
     try {
@@ -59,9 +113,7 @@ export default function App() {
   };
 
   const handleExplorePersonal = () => {
-    setActiveCategory('All');
-    setOrderMode('personal');
-    scrollToSection('shop');
+    scrollToSection('keepsakes');
   };
 
   const handleExploreCorporate = () => {
@@ -178,80 +230,54 @@ export default function App() {
   );
 
   return (
-    <div className="min-h-screen bg-[#FDFBF7] text-[#3B0D27]">
-      {/* Strict 3-Zone Top Navigation Bar */}
-      <header className="sticky top-0 z-30 bg-[#FDFBF7]/95 backdrop-blur-sm border-b border-[#EBDCE4]">
-        <div className="max-w-[1280px] mx-auto px-5 sm:px-8 h-16 flex items-center justify-between gap-8">
-          {/* Zone 1: Single-line Brand Wordmark */}
-          <a
-            href="#home"
-            className="font-editorial text-2xl sm:text-[28px] font-semibold tracking-tight text-[#3B0D27] whitespace-nowrap shrink-0"
-          >
-            amora.co
-          </a>
+    <div
+      className={`min-h-screen relative selection:bg-[#76577B] selection:text-[#FAF6F0] transition-colors duration-300 ${
+        theme === 'dark' ? 'bg-[#06080C] text-[#FAF6F0]' : 'bg-[#F5F1EB] text-[#161E24]'
+      }`}
+    >
+      {/* Floating Glassmorphic Pill Navbar */}
+      <Navbar
+        onNavigate={scrollToSection}
+        shortlistCount={shortlist.length}
+        onOpenShortlist={() => setIsShortlistOpen(true)}
+        theme={theme}
+        onToggleTheme={toggleTheme}
+      />
 
-          {/* Zone 2: 5 Concise Single-Line Text Navigation Links */}
-          <nav
-            aria-label="Primary navigation"
-            className="hidden md:flex items-center gap-7 text-sm font-medium text-[#6E5D66]"
-          >
-            <a
-              href="#shop"
-              className="hover:text-[#3B0D27] transition-colors whitespace-nowrap shrink-0"
-            >
-              Shop
-            </a>
-            <a
-              href="#corporate"
-              className="hover:text-[#3B0D27] transition-colors whitespace-nowrap shrink-0"
-            >
-              Corporate
-            </a>
-            <a
-              href="#bulk-quote-form"
-              className="hover:text-[#3B0D27] transition-colors whitespace-nowrap shrink-0"
-            >
-              Bulk Quote
-            </a>
-            <a
-              href="#about"
-              className="hover:text-[#3B0D27] transition-colors whitespace-nowrap shrink-0"
-            >
-              About
-            </a>
-            <a
-              href="#contact"
-              className="hover:text-[#3B0D27] transition-colors whitespace-nowrap shrink-0"
-            >
-              Contact
-            </a>
-          </nav>
-
-          {/* Zone 3: 1 Primary Action */}
-          <div className="flex items-center shrink-0">
-            <button
-              type="button"
-              onClick={() => setIsShortlistOpen(true)}
-              className="inline-flex items-center gap-2 px-4 py-2 text-xs sm:text-sm font-medium rounded-lg bg-[#3B0D27] text-[#FDFBF7] hover:bg-[#59163C] transition-colors whitespace-nowrap shrink-0 cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#3B0D27]"
-            >
-              <ShoppingBag className="w-4 h-4" aria-hidden="true" />
-              <span>Quote Tray</span>
-              {shortlist.length > 0 && (
-                <span className="tabular-nums text-[#F9D8E6]">({shortlist.length})</span>
-              )}
-            </button>
-          </div>
-        </div>
-      </header>
-
-      {/* Main Single-Page Experience */}
+      {/* Main Single-Page 3D Experience */}
       <main>
-        <HeroSection
+        {/* 1. Signature 3D Particle Hero with Rotating Amora Yin-Yang Emblem */}
+        <ParticleHero
+          onExplorePersonal={handleExplorePersonal}
+          onExploreCorporate={handleExploreCorporate}
+          theme={theme}
+        />
+
+        {/* 2. Interactive 3D Circular Orbit Runway (Requested Ring Carousel) */}
+        <div id="orbit-showcase" className="border-t border-b border-current/10">
+          <CircularProductOrbit
+            products={PRODUCTS}
+            onCustomiseProduct={setCustomisingProduct}
+            theme={theme}
+          />
+        </div>
+
+        {/* 3. Brand Positioning & Featured Categories Bento Grid + B2C/B2B Split */}
+        <FeaturedSection
           onExplorePersonal={handleExplorePersonal}
           onExploreCorporate={handleExploreCorporate}
           onJumpToCategory={handleJumpToCategory}
+          theme={theme}
         />
 
+        {/* 4. Dedicated Track A: Personalised Prints & Keepsakes (No MOQ) Showcase */}
+        <KeepsakeShowcase
+          products={PRODUCTS}
+          onCustomiseProduct={setCustomisingProduct}
+          theme={theme}
+        />
+
+        {/* 5. Complete Filterable Shop with 3D Tilt Cards */}
         <ShopSection
           products={PRODUCTS}
           activeCategory={activeCategory}
@@ -260,29 +286,34 @@ export default function App() {
           onOrderModeChange={setOrderMode}
           onOpenCustomiser={setCustomisingProduct}
           onQuickAddShortlist={handleQuickAddProduct}
+          onScrollToCorporate={() => scrollToSection('corporate')}
           shortlistedProductIds={shortlistedProductIds}
+          theme={theme}
         />
 
+        {/* 6. Dedicated Track B: Corporate B2B Studio & Bulk Quotation Form (Strict MOQ 30+) */}
         <CorporateSection
           prefill={corporatePrefill}
           onAddKitToShortlist={handleAddKitToShortlist}
+          theme={theme}
         />
 
-        <AboutAndContactSection />
+        {/* 7. About Us (Achintya Gurba / Kalyan Studio) & Contact / Instagram Lookbook */}
+        <AboutAndContactSection theme={theme} />
       </main>
 
-      {/* Subtle Shortlist Toast Notification */}
+      {/* Shortlist Toast Notification */}
       {toastText && (
         <div
           role="status"
           aria-live="polite"
-          className="fixed left-1/2 -translate-x-1/2 bottom-20 md:bottom-6 z-40 px-4 py-2.5 rounded-lg bg-[#3B0D27] text-[#FDFBF7] text-xs sm:text-sm font-medium shadow-lg border border-[#59163C] whitespace-nowrap"
+          className="fixed left-1/2 -translate-x-1/2 bottom-20 md:bottom-6 z-50 px-5 py-3 rounded-full bg-[#232E36] text-[#FAF6F0] text-xs sm:text-sm font-medium shadow-2xl border border-[#76577B]/20 whitespace-nowrap animate-fade-in-up"
         >
           {toastText}
         </div>
       )}
 
-      {/* Slide-Over Live Product Customisation & Mockup Previewer */}
+      {/* Slide-Over Live Product Customiser Drawer */}
       <CustomiserDrawer
         product={customisingProduct}
         onClose={() => setCustomisingProduct(null)}
@@ -303,23 +334,23 @@ export default function App() {
       {/* Floating AI Gift & Merch Stylist (Gemini API) */}
       <StylistWidget />
 
-      {/* Mobile Sticky Bottom Quick-Action Bar (Compact 56px, <= 15% mobile cap) */}
-      <div className="md:hidden fixed bottom-0 inset-x-0 z-30 h-14 bg-[#FDFBF7]/95 backdrop-blur-sm border-t border-[#EBDCE4] px-3 flex items-center gap-2.5">
+      {/* Mobile Sticky Bottom Quick-Action Bar */}
+      <div className="md:hidden fixed bottom-0 inset-x-0 z-40 h-14 glass border-t border-[#76577B]/12 px-3 flex items-center gap-2.5">
         <a
           href={quickWhatsAppUrl}
           target="_blank"
           rel="noopener noreferrer"
-          className="flex-1 h-10 rounded-lg bg-[#3B0D27] text-[#FDFBF7] text-xs font-semibold inline-flex items-center justify-center gap-1.5 whitespace-nowrap"
+          className="flex-1 h-10 rounded-xl bg-[#232E36] text-[#FAF6F0] text-xs font-semibold inline-flex items-center justify-center gap-1.5 whitespace-nowrap shadow-sm"
         >
-          <MessageCircle className="w-4 h-4" aria-hidden="true" />
+          <MessageCircle className="w-4 h-4 text-[#25D366]" aria-hidden="true" />
           WhatsApp
         </a>
         <button
           type="button"
           onClick={() => scrollToSection('bulk-quote-form')}
-          className="flex-1 h-10 rounded-lg bg-[#FCE7F3] text-[#3B0D27] border border-[#EBDCE4] text-xs font-semibold inline-flex items-center justify-center gap-1.5 whitespace-nowrap cursor-pointer"
+          className="flex-1 h-10 rounded-xl bg-[#E3A4AE]/20 text-[#232E36] border border-[#E3A4AE]/30 text-xs font-semibold inline-flex items-center justify-center gap-1.5 whitespace-nowrap cursor-pointer"
         >
-          <FileText className="w-4 h-4" aria-hidden="true" />
+          <FileText className="w-4 h-4 text-[#76577B]" aria-hidden="true" />
           Bulk Quote
         </button>
       </div>

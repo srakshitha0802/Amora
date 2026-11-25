@@ -1,51 +1,218 @@
+@import url('https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,600&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap');
 @import "tailwindcss";
 
 @theme {
-  --font-serif: "Cormorant Garamond", Georgia, serif;
+  --font-serif: "Instrument Serif", Georgia, serif;
+  --font-editorial: "Cormorant Garamond", Georgia, serif;
   --font-sans: "Plus Jakarta Sans", -apple-system, BlinkMacSystemFont, sans-serif;
 
-  --color-ivory: #FDFBF7;
-  --color-cream: #FAF5EE;
-  --color-blush: #FCE7F3;
-  --color-blush-deep: #F9D8E6;
-  --color-plum: #3B0D27;
-  --color-plum-hover: #59163C;
-  --color-taupe: #6E5D66;
-  --color-line: #EBDCE4;
+  /* Brand Core Tokens */
+  --color-plum: #76577B;
+  --color-plum-light: #9A72A0;
+  --color-plum-glow: #8E6C94;
+  
+  --color-blush: #E3A4AE;
+  --color-blush-light: #F7B5BF;
+  
+  --color-ivory: #FAF6F0;
+  --color-cream: #F5F0E8;
+  
+  --color-charcoal: #161E24;
+  --color-rose-gold: #E8998D;
+  --color-champagne: #F3C69F;
+}
+
+:root {
+  --bg-canvas: #06080C;
+  --bg-elevated: #0B0E14;
+  --text-primary: #FAF6F0;
+  --text-secondary: #CBD5E1;
+  --text-muted: #94A3B8;
+  --border-subtle: rgba(255, 255, 255, 0.12);
+  --glass-bg: rgba(255, 255, 255, 0.03);
+  --glass-border-gradient: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.45) 0%,
+    rgba(255, 255, 255, 0.15) 20%,
+    rgba(255, 255, 255, 0) 40%,
+    rgba(255, 255, 255, 0) 60%,
+    rgba(255, 255, 255, 0.15) 80%,
+    rgba(255, 255, 255, 0.45) 100%
+  );
+}
+
+.light {
+  --bg-canvas: #F5F1EB;
+  --bg-elevated: #FFFFFF;
+  --text-primary: #161E24;
+  --text-secondary: #424D55;
+  --text-muted: #64748B;
+  --border-subtle: rgba(118, 87, 123, 0.18);
+  --glass-bg: rgba(255, 255, 255, 0.82);
+  --glass-border-gradient: linear-gradient(
+    180deg,
+    rgba(118, 87, 123, 0.35) 0%,
+    rgba(227, 164, 174, 0.25) 20%,
+    rgba(118, 87, 123, 0.08) 50%,
+    rgba(227, 164, 174, 0.25) 80%,
+    rgba(118, 87, 123, 0.35) 100%
+  );
 }
 
 @layer base {
+  html, body {
+    overflow-x: hidden;
+    max-width: 100vw;
+  }
+
   html {
     font-family: var(--font-sans);
-    background-color: #FDFBF7;
-    color: #3B0D27;
+    background-color: var(--bg-canvas);
+    color: var(--text-primary);
     scroll-behavior: smooth;
+    transition: background-color 300ms ease, color 300ms ease;
   }
 
-  h1, h2, h3, .font-editorial {
+  h1, h2, h3, h4 {
     font-family: var(--font-serif);
+    color: var(--text-primary);
+  }
+
+  /* Lenis Smooth Scroll */
+  html.lenis, html.lenis body {
+    height: auto;
+  }
+
+  .lenis.lenis-smooth {
+    scroll-behavior: auto !important;
+  }
+
+  .lenis.lenis-smooth [data-lenis-prevent] {
+    overscroll-behavior: contain;
+  }
+
+  .lenis.lenis-stopped {
+    overflow: hidden;
   }
 }
 
-/* Tactile fine stationery paper grain overlay */
+@layer components {
+  /* Reusable Liquid Glass adapting to theme */
+  .liquid-glass {
+    background: var(--glass-bg);
+    background-blend-mode: luminosity;
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border: none;
+    box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.15);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .liquid-glass::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    padding: 1.4px;
+    background: var(--glass-border-gradient);
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    pointer-events: none;
+  }
+
+  /* Tinted Plum Liquid Glass */
+  .liquid-glass-plum {
+    background: rgba(118, 87, 123, 0.22);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 20px 40px -15px rgba(118, 87, 123, 0.3), inset 0 1px 1px rgba(247, 181, 191, 0.3);
+  }
+
+  .light .liquid-glass-plum {
+    background: #76577B;
+    color: #FFFFFF;
+    box-shadow: 0 12px 28px -8px rgba(118, 87, 123, 0.35);
+  }
+
+  .liquid-glass-plum::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    padding: 1.2px;
+    background: linear-gradient(
+      180deg,
+      rgba(247, 181, 191, 0.6) 0%,
+      rgba(154, 114, 160, 0.3) 30%,
+      rgba(118, 87, 123, 0) 60%,
+      rgba(243, 198, 159, 0.45) 100%
+    );
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    pointer-events: none;
+  }
+
+  /* Dynamic Card Surface matching theme */
+  .theme-card {
+    background: var(--bg-elevated);
+    border: 1px solid var(--border-subtle);
+    color: var(--text-primary);
+    transition: all 300ms cubic-bezier(0.16, 1, 0.3, 1);
+  }
+}
+
+/* 3D Circular Orbit Cylinder Styles */
+.orbit-cylinder-stage {
+  perspective: 1800px;
+  perspective-origin: 50% 50%;
+  transform-style: preserve-3d;
+}
+
+.orbit-cylinder-ring {
+  transform-style: preserve-3d;
+  will-change: transform;
+}
+
+.orbit-card-item {
+  transform-style: preserve-3d;
+  backface-visibility: visible;
+  will-change: transform, opacity, filter;
+  transition: filter 300ms ease, opacity 300ms ease;
+}
+
+/* 3D tilt card */
+.tilt-card {
+  transform-style: preserve-3d;
+  perspective: 1000px;
+  transition: transform 300ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Paper grain overlay */
 .paper-grain {
-  background-image: radial-gradient(rgba(59, 13, 39, 0.03) 1px, transparent 0);
-  background-size: 22px 22px;
+  background-image: radial-gradient(rgba(118, 87, 123, 0.05) 1px, transparent 0);
+  background-size: 24px 24px;
 }
 
-.stationery-card {
-  background-color: #FDFBF7;
-  border: 1px solid #EBDCE4;
-  transition: transform 180ms cubic-bezier(0.16, 1, 0.3, 1), box-shadow 180ms cubic-bezier(0.16, 1, 0.3, 1);
+/* Floating animation */
+@keyframes float-subtle {
+  0%, 100% { transform: translateY(0px) rotate(0deg); }
+  50% { transform: translateY(-8px) rotate(0.8deg); }
 }
 
-.stationery-card:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 14px 30px -12px rgba(59, 13, 39, 0.11);
+.animate-float-subtle {
+  animation: float-subtle 6s ease-in-out infinite;
+}
+
+canvas {
+  touch-action: none;
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .stationery-card,
   * {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;

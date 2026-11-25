@@ -1,6 +1,5 @@
 import React from 'react';
-import { AlertCircle, MessageCircle, MessageSquareHeart, Send, X } from 'lucide-react';
-import { API_BASE_URL, buildWhatsAppUrl } from '../data/products';
+import { AlertCircle, MessageSquareHeart, Send, X } from 'lucide-react';
 
 interface StylistMessage {
   id: string;
@@ -56,7 +55,7 @@ export const StylistWidget: React.FC = () => {
     setIsLoading(true);
 
     try {
-      const res = await fetch(`${API_BASE_URL}/api/stylist`, {
+      const res = await fetch('/api/stylist', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -64,15 +63,6 @@ export const StylistWidget: React.FC = () => {
           history: historyForApi,
         }),
       });
-      const contentType = res.headers.get('content-type') || '';
-
-      if (res.status === 404 || res.status === 405 || !contentType.includes('application/json')) {
-        setErrorMsg(
-          'Live AI Stylist requires the Amora backend server (configure VITE_API_BASE_URL for GitHub Pages). You can chat directly with our studio on WhatsApp below.'
-        );
-        return;
-      }
-
       const data = await res.json();
 
       if (!res.ok) {
@@ -91,9 +81,7 @@ export const StylistWidget: React.FC = () => {
         },
       ]);
     } catch {
-      setErrorMsg(
-        'Could not connect to the AI Stylist backend. You can still message our Kalyan studio directly on WhatsApp below.'
-      );
+      setErrorMsg('Unable to reach the Amora Gift & Merch Stylist right now.');
     } finally {
       setIsLoading(false);
     }
@@ -110,15 +98,15 @@ export const StylistWidget: React.FC = () => {
         <div
           role="dialog"
           aria-label="Amora Gift and Merch Stylist"
-          className="mb-3 w-[calc(100vw-2rem)] sm:w-[390px] max-h-[72vh] rounded-2xl bg-[#FDFBF7] border border-[#EBDCE4] shadow-[0_24px_48px_-16px_rgba(59,13,39,0.28)] flex flex-col overflow-hidden"
+          className="mb-3 w-[calc(100vw-2rem)] sm:w-[390px] max-h-[72vh] rounded-2xl bg-[#0B0E14] text-[#FAF6F0] border border-white/10 shadow-[0_24px_48px_-16px_rgba(59,13,39,0.28)] flex flex-col overflow-hidden"
         >
           {/* Header */}
-          <div className="px-5 py-4 bg-[#3B0D27] text-[#FDFBF7] flex items-center justify-between gap-3">
+          <div className="px-5 py-4 bg-[#232E36] text-[#FAF6F0] flex items-center justify-between gap-3">
             <div>
-              <p className="font-editorial text-xl font-semibold leading-tight">
+              <p className="font-serif text-xl font-semibold leading-tight">
                 Amora Gift &amp; Merch Stylist
               </p>
-              <p className="text-[11px] text-[#F9D8E6]/85 mt-0.5">
+              <p className="text-[11px] text-[#E3A4AE]/85 mt-0.5">
                 Personal gifting ideas &amp; corporate kit planning (MOQ 30+)
               </p>
             </div>
@@ -126,14 +114,14 @@ export const StylistWidget: React.FC = () => {
               type="button"
               onClick={() => setIsOpen(false)}
               aria-label="Close Gift Stylist"
-              className="w-8 h-8 rounded-lg bg-[#FDFBF7]/10 hover:bg-[#FDFBF7]/20 flex items-center justify-center text-[#FDFBF7] transition-colors cursor-pointer"
+              className="w-8 h-8 rounded-lg bg-[#0B0E14] text-[#FAF6F0]/10 hover:bg-[#0B0E14] text-[#FAF6F0]/20 flex items-center justify-center text-[#FAF6F0] transition-colors cursor-pointer"
             >
               <X className="w-4 h-4" aria-hidden="true" />
             </button>
           </div>
 
           {/* Conversation Stream */}
-          <div className="flex-1 overflow-y-auto p-4 space-y-3 bg-[#FAF5EE]/60">
+          <div className="flex-1 overflow-y-auto p-4 space-y-3 bg-[#F5F0E8]/60">
             {messages.map((msg) => (
               <div
                 key={msg.id}
@@ -142,8 +130,8 @@ export const StylistWidget: React.FC = () => {
                 <div
                   className={`max-w-[85%] rounded-2xl px-4 py-2.5 text-xs sm:text-[13px] leading-relaxed whitespace-pre-wrap ${
                     msg.role === 'user'
-                      ? 'bg-[#3B0D27] text-[#FDFBF7] rounded-br-sm'
-                      : 'bg-[#FDFBF7] text-[#3B0D27] border border-[#EBDCE4] rounded-bl-sm'
+                      ? 'bg-[#232E36] text-[#FAF6F0] rounded-br-sm'
+                      : 'bg-[#0B0E14] text-[#FAF6F0] text-[#FAF6F0] border border-white/10 rounded-bl-sm'
                   }`}
                 >
                   {msg.text}
@@ -153,7 +141,7 @@ export const StylistWidget: React.FC = () => {
 
             {isLoading && (
               <div className="flex justify-start">
-                <div className="rounded-2xl rounded-bl-sm bg-[#FDFBF7] border border-[#EBDCE4] px-4 py-2.5 text-xs text-[#6E5D66]">
+                <div className="rounded-2xl rounded-bl-sm bg-[#0B0E14] text-[#FAF6F0] border border-white/10 px-4 py-2.5 text-xs text-[#FAF6F0]/70">
                   Curating recommendations...
                 </div>
               </div>
@@ -162,40 +150,24 @@ export const StylistWidget: React.FC = () => {
             {errorMsg && (
               <div
                 role="alert"
-                className="rounded-xl bg-[#FCE7F3] border border-[#DFB2C7] px-3.5 py-2.5 text-xs text-[#3B0D27] space-y-2"
+                className="rounded-xl bg-[#E3A4AE/20] border border-[#DFB2C7] px-3.5 py-2.5 text-xs text-[#FAF6F0] flex items-start gap-2"
               >
-                <div className="flex items-start gap-2">
-                  <AlertCircle className="w-4 h-4 shrink-0 text-[#8C1D40] mt-0.5" aria-hidden="true" />
-                  <span>{errorMsg}</span>
-                </div>
-                <a
-                  href={buildWhatsAppUrl(
-                    `Hello Amora.co! I was browsing your store and had a question: ${
-                      messages.filter((m) => m.role === 'user').slice(-1)[0]?.text ??
-                      'Looking for gifting & merch advice'
-                    }`
-                  )}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#3B0D27] text-[#FDFBF7] text-[11px] font-medium hover:bg-[#59163C] transition-colors"
-                >
-                  <MessageCircle className="w-3.5 h-3.5" aria-hidden="true" />
-                  Ask Amora Studio on WhatsApp
-                </a>
+                <AlertCircle className="w-4 h-4 shrink-0 text-[#8C1D40] mt-0.5" aria-hidden="true" />
+                <span>{errorMsg}</span>
               </div>
             )}
 
             {/* Quick Starter Chips on first open */}
             {messages.length === 1 && !isLoading && (
               <div className="pt-2 space-y-1.5">
-                <p className="text-[11px] font-medium text-[#6E5D66]">Try asking:</p>
+                <p className="text-[11px] font-medium text-[#FAF6F0]/70">Try asking:</p>
                 <div className="flex flex-col gap-1.5">
                   {STARTER_PROMPTS.map((prompt) => (
                     <button
                       key={prompt}
                       type="button"
                       onClick={() => void sendMessage(prompt)}
-                      className="text-left text-xs px-3 py-2 rounded-lg bg-[#FDFBF7] border border-[#EBDCE4] text-[#3B0D27] hover:bg-[#FCE7F3]/70 transition-colors cursor-pointer"
+                      className="text-left text-xs px-3 py-2 rounded-lg bg-[#0B0E14] text-[#FAF6F0] border border-white/10 text-[#FAF6F0] hover:bg-[#E3A4AE/20]/70 transition-colors cursor-pointer"
                     >
                       {prompt}
                     </button>
@@ -210,7 +182,7 @@ export const StylistWidget: React.FC = () => {
           {/* Input Bar */}
           <form
             onSubmit={handleSubmit}
-            className="p-3 border-t border-[#EBDCE4] bg-[#FDFBF7] flex items-center gap-2"
+            className="p-3 border-t border-white/10 bg-[#0B0E14] text-[#FAF6F0] flex items-center gap-2"
           >
             <input
               type="text"
@@ -218,13 +190,13 @@ export const StylistWidget: React.FC = () => {
               onChange={(e) => setInput(e.target.value)}
               placeholder="Ask about gifts, budgets, or 30+ kits..."
               disabled={isLoading}
-              className="flex-1 px-3.5 py-2 text-xs sm:text-sm rounded-lg border border-[#EBDCE4] bg-[#FAF5EE]/60 text-[#3B0D27] placeholder:text-[#6E5D66]/70 focus:outline-none focus:border-[#3B0D27]"
+              className="flex-1 px-3.5 py-2 text-xs sm:text-sm rounded-lg border border-white/10 bg-[#F5F0E8]/60 text-[#FAF6F0] placeholder:text-[#FAF6F0]/70/70 focus:outline-none focus:border-[#232E36]"
             />
             <button
               type="submit"
               disabled={isLoading || !input.trim()}
               aria-label="Send message to stylist"
-              className="w-10 h-10 rounded-lg bg-[#3B0D27] text-[#FDFBF7] hover:bg-[#59163C] disabled:opacity-45 flex items-center justify-center shrink-0 transition-colors cursor-pointer"
+              className="w-10 h-10 rounded-lg bg-[#232E36] text-[#FAF6F0] hover:bg-[#76577B] disabled:opacity-45 flex items-center justify-center shrink-0 transition-colors cursor-pointer"
             >
               <Send className="w-4 h-4" aria-hidden="true" />
             </button>
@@ -236,9 +208,9 @@ export const StylistWidget: React.FC = () => {
       <button
         type="button"
         onClick={() => setIsOpen((prev) => !prev)}
-        className="inline-flex items-center gap-2.5 px-4 py-3 rounded-full bg-[#3B0D27] text-[#FDFBF7] shadow-[0_14px_30px_-8px_rgba(59,13,39,0.45)] hover:bg-[#59163C] transition-transform hover:-translate-y-0.5 text-xs sm:text-sm font-medium whitespace-nowrap cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#3B0D27]"
+        className="inline-flex items-center gap-2.5 px-4 py-3 rounded-full bg-[#232E36] text-[#FAF6F0] shadow-[0_14px_30px_-8px_rgba(59,13,39,0.45)] hover:bg-[#76577B] transition-transform hover:-translate-y-0.5 text-xs sm:text-sm font-medium whitespace-nowrap cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#232E36]"
       >
-        <MessageSquareHeart className="w-4 h-4 text-[#F9D8E6]" aria-hidden="true" />
+        <MessageSquareHeart className="w-4 h-4 text-[#E3A4AE]" aria-hidden="true" />
         <span>Amora Gift &amp; Merch Stylist</span>
       </button>
     </div>

@@ -1,13 +1,10 @@
 import type { PrintingFinish, Product, ProductCategory } from '../types';
 
-const BASE_URL = import.meta.env.BASE_URL || '/';
-
-export const BRAND_LOGO_URL = `${BASE_URL}assets/aistudio/PHOTO-2026-11-21-11-46-55_ece32d0a.jpg`;
-export const API_BASE_URL = (import.meta.env.VITE_API_BASE_URL || '').replace(/\/+$/, '');
+export const BRAND_LOGO_URL = '/assets/aistudio/PHOTO-2026-11-21-11-46-55_ece32d0a.jpg';
 export const INSTAGRAM_URL = 'https://www.instagram.com/amora.co._?dmpr=eDcycW4yZm1qNzM%3D';
 export const INSTAGRAM_HANDLE = '@amora.co._';
-export const STUDIO_EMAIL = 'hello@amora.co.in';
-export const WHATSAPP_NUMBER = '919820046281';
+export const STUDIO_EMAIL = 'amora.copap@gmail.com';
+export const WHATSAPP_NUMBER = '919819442335';
 
 export function buildWhatsAppUrl(message: string): string {
   return `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
@@ -17,17 +14,17 @@ export const CATEGORY_TABS: ProductCategory[] = [
   'All',
   'Prints & Keepsakes',
   'Stickers & Photocards',
-  'Merchandise',
+  'Corporate Merchandise (MOQ 30+)',
   'Customised Products',
 ];
 
 export const ACCENT_SWATCHES = [
-  { name: 'Deep Plum', hex: '#3B0D27' },
-  { name: 'Blush Rose', hex: '#E6A4B8' },
-  { name: 'Warm Ivory', hex: '#F3E9DC' },
-  { name: 'Slate Ink', hex: '#28313E' },
-  { name: 'Eucalyptus', hex: '#5D7366' },
-  { name: 'Champagne', hex: '#C69F6B' },
+  { name: 'Lavender Plum', hex: '#76577B' },
+  { name: 'Blush Rose', hex: '#E3A4AE' },
+  { name: 'Warm Ivory', hex: '#FAF6F0' },
+  { name: 'Deep Charcoal', hex: '#232E36' },
+  { name: 'Rose Gold', hex: '#E8998D' },
+  { name: 'Champagne', hex: '#F3C69F' },
 ];
 
 export const PRODUCTS: Product[] = [
@@ -46,7 +43,7 @@ export const PRODUCTS: Product[] = [
       'Gallery-grade archival matte prints mounted in warm timber or frosted acrylic frames with bespoke typographic borders.',
     specs: ['No Minimum Order', '300 GSM archival matte', 'Tabletop & wall ready'],
     visualType: 'photo-frame',
-    defaultAccent: '#3B0D27',
+    defaultAccent: '#76577B',
     defaultSampleText: 'Kalyan · Monsoon 2026',
   },
   {
@@ -64,7 +61,7 @@ export const PRODUCTS: Product[] = [
       'Tactile 350 GSM cotton-textured bookmarks finished with silk tassels, pressed florals, or your favourite passage.',
     specs: ['No Minimum Order', '350 GSM textured card', 'Optional satin tassel'],
     visualType: 'bookmark',
-    defaultAccent: '#3B0D27',
+    defaultAccent: '#76577B',
     defaultSampleText: 'One more chapter',
   },
   {
@@ -82,7 +79,7 @@ export const PRODUCTS: Product[] = [
       'Richly saturated matte and silk-laminated wall posters and rounded-corner collector photocards printed to order.',
     specs: ['No Minimum Order', 'Velvet matte lamination', 'A4 / A3 / Pocket sizes'],
     visualType: 'photocards-posters',
-    defaultAccent: '#28313E',
+    defaultAccent: '#232E36',
     defaultSampleText: 'GOLDEN HOUR EDITION',
   },
   {
@@ -100,7 +97,7 @@ export const PRODUCTS: Product[] = [
       'Classic thick-border instant-style photo prints with custom captions, date stamps, and warm film tonal calibration.',
     specs: ['No Minimum Order', 'Set of 10 or 20 prints', 'Custom bottom captions'],
     visualType: 'polaroids',
-    defaultAccent: '#3B0D27',
+    defaultAccent: '#76577B',
     defaultSampleText: 'Sunday coffee & slow mornings',
   },
   {
@@ -118,7 +115,7 @@ export const PRODUCTS: Product[] = [
       'Waterproof, kiss-cut matte vinyl sticker sheets featuring your illustrations, inside jokes, monograms, or brand icons.',
     specs: ['No Minimum Order', 'Waterproof matte vinyl', 'Precision kiss-cut'],
     visualType: 'sticker-sheet',
-    defaultAccent: '#E6A4B8',
+    defaultAccent: '#E3A4AE',
     defaultSampleText: 'amora studio pack',
   },
   {
@@ -136,79 +133,79 @@ export const PRODUCTS: Product[] = [
       'Nostalgic 4-frame photo booth strips tucked alongside a custom typeset keepsake letter in a blush wax-sealed envelope.',
     specs: ['No Minimum Order', '4-frame strip + envelope', 'Custom message typesetting'],
     visualType: 'photostrips-letters',
-    defaultAccent: '#3B0D27',
+    defaultAccent: '#76577B',
     defaultSampleText: 'For the days worth keeping',
   },
   {
     id: 'water-bottles',
     name: 'Custom Printed Water Bottles',
     shortName: 'Water Bottles',
-    categories: ['Merchandise', 'Customised Products'],
-    primaryCategory: 'Merchandise',
+    categories: ['Corporate Merchandise (MOQ 30+)', 'Customised Products'],
+    primaryCategory: 'Corporate Merchandise (MOQ 30+)',
     isBulkOnly: true,
     moq: 30,
-    priceLabel: 'From ₹390 / pc',
+    priceLabel: 'Custom Corporate Quote',
     unitPriceEstimate: 460,
-    unitLabel: 'per unit (30+ MOQ)',
+    unitLabel: 'MOQ: 30+ pcs',
     description:
       'Double-wall vacuum insulated stainless bottles in matte executive finishes with precision UV printing or laser engraving.',
     specs: ['MOQ: 30+ Pieces', '750ml insulated matte steel', 'UV Print / Laser Engraving'],
     visualType: 'water-bottle',
-    defaultAccent: '#3B0D27',
+    defaultAccent: '#232E36',
     defaultSampleText: 'ACME STUDIO',
   },
   {
     id: 'mugs',
     name: 'Custom Printed Mugs',
     shortName: 'Printed Mugs',
-    categories: ['Merchandise', 'Customised Products'],
-    primaryCategory: 'Merchandise',
+    categories: ['Corporate Merchandise (MOQ 30+)', 'Customised Products'],
+    primaryCategory: 'Corporate Merchandise (MOQ 30+)',
     isBulkOnly: true,
     moq: 30,
-    priceLabel: 'From ₹220 / pc',
+    priceLabel: 'Custom Corporate Quote',
     unitPriceEstimate: 265,
-    unitLabel: 'per unit (30+ MOQ)',
+    unitLabel: 'MOQ: 30+ pcs',
     description:
       'Heavyweight 330ml studio ceramic mugs engineered for sharp logo reproduction, pantone-matched wraps, and daily desk durability.',
     specs: ['MOQ: 30+ Pieces', '330ml dishwasher-safe ceramic', 'Sublimation / Screen Print'],
     visualType: 'mug',
-    defaultAccent: '#3B0D27',
+    defaultAccent: '#232E36',
     defaultSampleText: 'WELCOME ABOARD',
   },
   {
     id: 'mousepads',
     name: 'Custom Printed Mousepads',
     shortName: 'Mousepads',
-    categories: ['Merchandise'],
-    primaryCategory: 'Merchandise',
+    categories: ['Corporate Merchandise (MOQ 30+)'],
+    primaryCategory: 'Corporate Merchandise (MOQ 30+)',
     isBulkOnly: true,
     moq: 30,
-    priceLabel: 'From ₹160 / pc',
+    priceLabel: 'Custom Corporate Quote',
     unitPriceEstimate: 195,
-    unitLabel: 'per unit (30+ MOQ)',
+    unitLabel: 'MOQ: 30+ pcs',
     description:
       'Low-friction micro-weave desk mousepads with anti-fray stitched borders and edge-to-edge full-colour company branding.',
     specs: ['MOQ: 30+ Pieces', '3mm anti-slip rubber base', 'Stitched edge sublimation'],
     visualType: 'mousepad',
-    defaultAccent: '#28313E',
+    defaultAccent: '#232E36',
     defaultSampleText: 'BUILT TOGETHER',
   },
   {
     id: 'keyboard-mats',
     name: 'Custom Printed Keyboard Mats',
     shortName: 'Keyboard Mats',
-    categories: ['Merchandise', 'Customised Products'],
-    primaryCategory: 'Merchandise',
+    categories: ['Corporate Merchandise (MOQ 30+)', 'Customised Products'],
+    primaryCategory: 'Corporate Merchandise (MOQ 30+)',
     isBulkOnly: true,
     moq: 30,
-    priceLabel: 'From ₹420 / pc',
+    priceLabel: 'Custom Corporate Quote',
     unitPriceEstimate: 495,
-    unitLabel: 'per unit (30+ MOQ)',
+    unitLabel: 'MOQ: 30+ pcs',
     description:
       'Expansive 800×300mm workspace mats that anchor onboarding kits with crisp typographic layouts, subtle grids, or brand artwork.',
     specs: ['MOQ: 30+ Pieces', '800×300mm stitched desk mat', 'Edge-to-edge dye sublimation'],
     visualType: 'keyboard-mat',
-    defaultAccent: '#3B0D27',
+    defaultAccent: '#232E36',
     defaultSampleText: 'DESIGNED FOR FOCUS',
   },
 ];
@@ -280,7 +277,7 @@ export const INSTAGRAM_LOOKBOOK = [
     caption: 'Warm matte borders & custom date notes — ordered as a single gift.',
     category: 'No MOQ',
     visualType: 'polaroids' as const,
-    accent: '#3B0D27',
+    accent: '#76577B',
     sampleText: 'Rainy evenings · Kalyan',
   },
   {
@@ -289,7 +286,7 @@ export const INSTAGRAM_LOOKBOOK = [
     caption: '65 matte plum bottles & stitched keyboard mats dispatched to Mumbai.',
     category: 'Corporate 65 pcs',
     visualType: 'water-bottle' as const,
-    accent: '#3B0D27',
+    accent: '#232E36',
     sampleText: 'NORTHSTAR LABS',
   },
   {
@@ -298,7 +295,7 @@ export const INSTAGRAM_LOOKBOOK = [
     caption: '350 GSM cotton stock with hand-knotted plum satin tassels.',
     category: 'Personal Gift',
     visualType: 'bookmark' as const,
-    accent: '#5D7366',
+    accent: '#76577B',
     sampleText: 'Read slowly, keep well',
   },
   {
@@ -307,7 +304,7 @@ export const INSTAGRAM_LOOKBOOK = [
     caption: 'Anniversary memory strips paired with textured letter envelopes.',
     category: 'Keepsake Suite',
     visualType: 'photostrips-letters' as const,
-    accent: '#3B0D27',
+    accent: '#76577B',
     sampleText: 'Three years & counting',
   },
   {
@@ -316,7 +313,7 @@ export const INSTAGRAM_LOOKBOOK = [
     caption: '120 minimalist cream & plum desk mugs for an architecture firm.',
     category: 'Corporate 120 pcs',
     visualType: 'mug' as const,
-    accent: '#28313E',
+    accent: '#232E36',
     sampleText: 'ATELIER K',
   },
   {
@@ -325,7 +322,7 @@ export const INSTAGRAM_LOOKBOOK = [
     caption: 'Kiss-cut matte laptop & journal stickers from our Kalyan desk.',
     category: 'Stickers',
     visualType: 'sticker-sheet' as const,
-    accent: '#E6A4B8',
+    accent: '#E3A4AE',
     sampleText: 'pretty things',
   },
 ];

@@ -2,7 +2,7 @@ export type ProductCategory =
   | 'All'
   | 'Prints & Keepsakes'
   | 'Stickers & Photocards'
-  | 'Merchandise'
+  | 'Corporate Merchandise (MOQ 30+)'
   | 'Customised Products';
 
 export type OrderMode = 'all' | 'personal' | 'bulk';
@@ -35,7 +35,6 @@ export interface Product {
   visualType: ProductVisualType;
   defaultAccent: string;
   defaultSampleText: string;
-  /** Optional real product photo URL to swap in effortlessly later */
   imageUrl?: string;
 }
 

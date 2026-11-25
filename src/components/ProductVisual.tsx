@@ -19,7 +19,7 @@ interface ProductVisualProps {
  */
 export const ProductVisual: React.FC<ProductVisualProps> = ({
   visualType,
-  accentColor = '#3B0D27',
+  accentColor = '#232E36',
   customText = '',
   uploadedImage = null,
   fontStyle = 'serif',
@@ -31,7 +31,7 @@ export const ProductVisual: React.FC<ProductVisualProps> = ({
 
   if (imageUrl && !imgFailed && mode === 'card') {
     return (
-      <div className="relative w-full h-full overflow-hidden bg-[#FAF5EE]">
+      <div className="relative w-full h-full overflow-hidden bg-[#F5F0E8]">
         <img
           src={imageUrl}
           alt={alt}
@@ -43,14 +43,14 @@ export const ProductVisual: React.FC<ProductVisualProps> = ({
     );
   }
 
-  const textFontClass = fontStyle === 'serif' ? 'font-editorial italic' : 'font-sans tracking-wide';
+  const textFontClass = fontStyle === 'serif' ? 'font-serif italic' : 'font-sans tracking-wide';
   const displayCaption = customText.trim() || 'amora.co';
   const isStudio = mode === 'studio';
 
   return (
     <div
       className={`relative w-full h-full overflow-hidden select-none flex items-center justify-center ${
-        isStudio ? 'bg-[#FAF5EE] p-6 sm:p-8' : 'bg-[#FAF5EE] p-5'
+        isStudio ? 'bg-[#F5F0E8] p-6 sm:p-8' : 'bg-[#F5F0E8] p-5'
       }`}
     >
       {/* Subtle studio lighting radial backdrop */}
@@ -78,13 +78,13 @@ export const ProductVisual: React.FC<ProductVisualProps> = ({
       {visualType === 'photo-frame' && (
         <div className="relative z-10 flex items-center justify-center">
           <div
-            className={`relative bg-[#FDFBF7] shadow-[0_18px_36px_-14px_rgba(59,13,39,0.28)] transition-transform duration-200 ${
+            className={`relative bg-[#FAF6F0] shadow-[0_18px_36px_-14px_rgba(59,13,39,0.28)] transition-transform duration-200 ${
               isStudio ? 'w-56 sm:w-64 p-3.5' : 'w-40 p-2.5'
             }`}
             style={{ border: `8px solid ${accentColor}`, borderRadius: '4px' }}
           >
-            <div className="bg-[#FAF5EE] p-3 border border-[#EBDCE4]">
-              <div className="relative aspect-[4/5] overflow-hidden bg-gradient-to-br from-[#FCE7F3] via-[#F5E6DC] to-[#E6D4DF] flex items-center justify-center">
+            <div className="bg-[#F5F0E8] p-3 border border-[#76577B/15]">
+              <div className="relative aspect-[4/5] overflow-hidden bg-gradient-to-br from-[#E3A4AE/20] via-[#F5E6DC] to-[#E6D4DF] flex items-center justify-center">
                 {uploadedImage ? (
                   <img
                     src={uploadedImage}
@@ -94,15 +94,15 @@ export const ProductVisual: React.FC<ProductVisualProps> = ({
                 ) : (
                   <svg viewBox="0 0 160 200" className="w-full h-full" aria-hidden="true">
                     <rect width="160" height="200" fill="#F7ECE4" />
-                    <circle cx="118" cy="48" r="24" fill="#F9D8E6" />
+                    <circle cx="118" cy="48" r="24" fill="#E3A4AE" />
                     <path d="M0 154 Q45 112 92 142 T160 130 L160 200 L0 200 Z" fill="#C9A2B4" opacity="0.55" />
                     <path d="M0 168 Q62 132 114 156 T160 150 L160 200 L0 200 Z" fill={accentColor} opacity="0.72" />
-                    <path d="M44 138 C46 105 64 82 78 66 C74 96 64 118 52 138 Z" fill="#FDFBF7" opacity="0.75" />
+                    <path d="M44 138 C46 105 64 82 78 66 C74 96 64 118 52 138 Z" fill="#FAF6F0" opacity="0.75" />
                   </svg>
                 )}
               </div>
               <p
-                className={`mt-2.5 text-center truncate text-[#3B0D27] ${textFontClass} ${
+                className={`mt-2.5 text-center truncate text-[#232E36] ${textFontClass} ${
                   isStudio ? 'text-sm' : 'text-[11px]'
                 }`}
               >
@@ -123,12 +123,12 @@ export const ProductVisual: React.FC<ProductVisualProps> = ({
               style={{ backgroundColor: accentColor }}
             />
             <div
-              className={`relative rounded-[14px] bg-[#FDFBF7] border border-[#EBDCE4] shadow-[0_18px_34px_-12px_rgba(59,13,39,0.24)] overflow-hidden flex flex-col items-center justify-between ${
+              className={`relative rounded-[14px] bg-[#FAF6F0] border border-[#76577B/15] shadow-[0_18px_34px_-12px_rgba(59,13,39,0.24)] overflow-hidden flex flex-col items-center justify-between ${
                 isStudio ? 'w-32 h-72 px-4 py-5' : 'w-24 h-52 px-3 py-4'
               }`}
             >
               {/* Punch hole */}
-              <div className="w-3 h-3 rounded-full bg-[#FAF5EE] border border-[#DFC9D5] shrink-0" />
+              <div className="w-3 h-3 rounded-full bg-[#F5F0E8] border border-[#DFC9D5] shrink-0" />
               {/* Top artwork window */}
               <div
                 className="w-full flex-1 my-3 rounded-[8px] overflow-hidden relative flex items-center justify-center"
@@ -159,13 +159,13 @@ export const ProductVisual: React.FC<ProductVisualProps> = ({
                       fill={accentColor}
                       opacity="0.7"
                     />
-                    <circle cx="40" cy="24" r="7" fill="#F9D8E6" />
+                    <circle cx="40" cy="24" r="7" fill="#E3A4AE" />
                     <circle cx="40" cy="24" r="3" fill={accentColor} />
                   </svg>
                 )}
               </div>
               <p
-                className={`w-full text-center leading-tight line-clamp-2 text-[#3B0D27] ${textFontClass} ${
+                className={`w-full text-center leading-tight line-clamp-2 text-[#232E36] ${textFontClass} ${
                   isStudio ? 'text-xs' : 'text-[10px]'
                 }`}
               >
@@ -181,7 +181,7 @@ export const ProductVisual: React.FC<ProductVisualProps> = ({
         <div className="relative z-10 flex items-end justify-center gap-3">
           {/* Wall Poster */}
           <div
-            className={`relative bg-[#FDFBF7] border border-[#EBDCE4] shadow-[0_16px_32px_-14px_rgba(59,13,39,0.22)] p-2.5 flex flex-col ${
+            className={`relative bg-[#FAF6F0] border border-[#76577B/15] shadow-[0_16px_32px_-14px_rgba(59,13,39,0.22)] p-2.5 flex flex-col ${
               isStudio ? 'w-44 h-60' : 'w-32 h-44'
             }`}
           >
@@ -198,14 +198,14 @@ export const ProductVisual: React.FC<ProductVisualProps> = ({
               ) : (
                 <svg viewBox="0 0 120 150" className="w-full h-full" aria-hidden="true">
                   <rect width="120" height="150" fill={accentColor} />
-                  <circle cx="60" cy="64" r="34" fill="#F9D8E6" opacity="0.9" />
-                  <path d="M18 118 Q60 88 102 118" stroke="#FDFBF7" strokeWidth="1.5" fill="none" />
-                  <circle cx="60" cy="64" r="14" fill="#FDFBF7" opacity="0.45" />
+                  <circle cx="60" cy="64" r="34" fill="#E3A4AE" opacity="0.9" />
+                  <path d="M18 118 Q60 88 102 118" stroke="#FAF6F0" strokeWidth="1.5" fill="none" />
+                  <circle cx="60" cy="64" r="14" fill="#FAF6F0" opacity="0.45" />
                 </svg>
               )}
             </div>
             <p
-              className={`mt-2 text-center truncate text-[#3B0D27] ${textFontClass} ${
+              className={`mt-2 text-center truncate text-[#232E36] ${textFontClass} ${
                 isStudio ? 'text-xs' : 'text-[9px]'
               }`}
             >
@@ -214,11 +214,11 @@ export const ProductVisual: React.FC<ProductVisualProps> = ({
           </div>
           {/* Rounded Photocard overlapping */}
           <div
-            className={`relative -ml-7 mb-2 bg-[#FDFBF7] rounded-[10px] border border-[#EBDCE4] shadow-[0_14px_26px_-10px_rgba(59,13,39,0.26)] p-1.5 rotate-3 ${
+            className={`relative -ml-7 mb-2 bg-[#FAF6F0] rounded-[10px] border border-[#76577B/15] shadow-[0_14px_26px_-10px_rgba(59,13,39,0.26)] p-1.5 rotate-3 ${
               isStudio ? 'w-24 h-34' : 'w-16 h-24'
             }`}
           >
-            <div className="w-full h-full rounded-[6px] overflow-hidden bg-[#FCE7F3] flex items-center justify-center">
+            <div className="w-full h-full rounded-[6px] overflow-hidden bg-[#E3A4AE/20] flex items-center justify-center">
               {uploadedImage ? (
                 <img
                   src={uploadedImage}
@@ -229,14 +229,14 @@ export const ProductVisual: React.FC<ProductVisualProps> = ({
                 <div
                   className="w-full h-full flex flex-col items-center justify-center p-2 text-center"
                   style={{
-                    background: `linear-gradient(155deg, #FCE7F3 0%, ${accentColor}30 100%)`,
+                    background: `linear-gradient(155deg, #E3A4AE/20 0%, ${accentColor}30 100%)`,
                   }}
                 >
                   <div
                     className="w-6 h-6 rounded-full mb-1.5"
                     style={{ backgroundColor: accentColor, opacity: 0.8 }}
                   />
-                  <span className="text-[8px] font-medium text-[#3B0D27] leading-tight">
+                  <span className="text-[8px] font-medium text-[#232E36] leading-tight">
                     Velvet Matte
                   </span>
                 </div>
@@ -251,15 +251,15 @@ export const ProductVisual: React.FC<ProductVisualProps> = ({
         <div className="relative z-10 flex items-center justify-center">
           {/* Background tilted polaroid */}
           <div
-            className={`absolute bg-[#FDFBF7] border border-[#EBDCE4] shadow-md -rotate-6 -translate-x-7 translate-y-1 p-2 pb-6 ${
+            className={`absolute bg-[#FAF6F0] border border-[#76577B/15] shadow-md -rotate-6 -translate-x-7 translate-y-1 p-2 pb-6 ${
               isStudio ? 'w-44 h-56' : 'w-32 h-40'
             }`}
           >
-            <div className="w-full h-full bg-gradient-to-tr from-[#F9D8E6] via-[#FAF0E6] to-[#E9D7E2]" />
+            <div className="w-full h-full bg-gradient-to-tr from-[#E3A4AE] via-[#FAF0E6] to-[#E9D7E2]" />
           </div>
           {/* Foreground primary polaroid */}
           <div
-            className={`relative bg-[#FDFBF7] border border-[#EBDCE4] shadow-[0_20px_38px_-14px_rgba(59,13,39,0.25)] rotate-2 p-2.5 flex flex-col ${
+            className={`relative bg-[#FAF6F0] border border-[#76577B/15] shadow-[0_20px_38px_-14px_rgba(59,13,39,0.25)] rotate-2 p-2.5 flex flex-col ${
               isStudio ? 'w-52 h-64 pb-4' : 'w-36 h-44 pb-3'
             }`}
           >
@@ -273,7 +273,7 @@ export const ProductVisual: React.FC<ProductVisualProps> = ({
               ) : (
                 <svg viewBox="0 0 140 140" className="w-full h-full" aria-hidden="true">
                   <rect width="140" height="140" fill="#F6E5EE" />
-                  <circle cx="96" cy="40" r="22" fill="#FDFBF7" opacity="0.85" />
+                  <circle cx="96" cy="40" r="22" fill="#FAF6F0" opacity="0.85" />
                   <path d="M0 102 Q36 74 74 92 T140 84 L140 140 L0 140 Z" fill={accentColor} opacity="0.58" />
                   <path d="M0 116 Q56 92 104 112 T140 106 L140 140 L0 140 Z" fill={accentColor} opacity="0.82" />
                 </svg>
@@ -283,7 +283,7 @@ export const ProductVisual: React.FC<ProductVisualProps> = ({
               </span>
             </div>
             <p
-              className={`mt-2.5 text-center truncate text-[#3B0D27] ${textFontClass} ${
+              className={`mt-2.5 text-center truncate text-[#232E36] ${textFontClass} ${
                 isStudio ? 'text-base' : 'text-xs'
               }`}
             >
@@ -297,13 +297,13 @@ export const ProductVisual: React.FC<ProductVisualProps> = ({
       {visualType === 'sticker-sheet' && (
         <div className="relative z-10 flex items-center justify-center">
           <div
-            className={`relative rounded-[12px] bg-[#FDFBF7] border border-[#EBDCE4] shadow-[0_18px_36px_-14px_rgba(59,13,39,0.2)] p-3.5 ${
+            className={`relative rounded-[12px] bg-[#FAF6F0] border border-[#76577B/15] shadow-[0_18px_36px_-14px_rgba(59,13,39,0.2)] p-3.5 ${
               isStudio ? 'w-56 h-68' : 'w-40 h-48'
             }`}
           >
             <div className="flex items-center justify-between border-b border-[#F1E4EB] pb-1.5 mb-2.5">
-              <span className="text-[9px] font-medium text-[#6E5D66] truncate">{displayCaption}</span>
-              <span className="text-[8px] text-[#6E5D66]">A5 Matte</span>
+              <span className="text-[9px] font-medium text-[#8A7F85] truncate">{displayCaption}</span>
+              <span className="text-[8px] text-[#8A7F85]">A5 Matte</span>
             </div>
             <div className="grid grid-cols-2 gap-2.5 h-[calc(100%-28px)]">
               <div
@@ -313,25 +313,25 @@ export const ProductVisual: React.FC<ProductVisualProps> = ({
                 {uploadedImage ? (
                   <img src={uploadedImage} alt="Sticker motif" className="w-full h-full object-cover rounded-full" />
                 ) : (
-                  <span className="font-editorial italic text-xs text-white">amora</span>
+                  <span className="font-serif italic text-xs text-white">amora</span>
                 )}
               </div>
-              <div className="rounded-[12px] border-2 border-white shadow-sm bg-[#FCE7F3] flex items-center justify-center p-1.5">
+              <div className="rounded-[12px] border-2 border-white shadow-sm bg-[#E3A4AE/20] flex items-center justify-center p-1.5">
                 {uploadedImage ? (
                   <img src={uploadedImage} alt="Sticker tile" className="w-full h-full object-cover rounded-[8px]" />
                 ) : (
                   <svg viewBox="0 0 40 40" className="w-8 h-8" aria-hidden="true">
                     <path
                       d="M20 33 C10 25 6 19 6 14 C6 9.5 9.5 6.5 13.5 6.5 C16.3 6.5 18.6 8 20 10.2 C21.4 8 23.7 6.5 26.5 6.5 C30.5 6.5 34 9.5 34 14 C34 19 30 25 20 33 Z"
-                      fill="#3B0D27"
+                      fill="#232E36"
                     />
                   </svg>
                 )}
               </div>
-              <div className="col-span-2 rounded-[10px] border-2 border-white shadow-sm bg-[#FAF5EE] flex items-center justify-center px-2">
+              <div className="col-span-2 rounded-[10px] border-2 border-white shadow-sm bg-[#F5F0E8] flex items-center justify-center px-2">
                 <span
                   className={`truncate text-center ${textFontClass} ${isStudio ? 'text-sm' : 'text-[11px]'}`}
-                  style={{ color: '#3B0D27' }}
+                  style={{ color: '#232E36' }}
                 >
                   {displayCaption}
                 </span>
@@ -346,7 +346,7 @@ export const ProductVisual: React.FC<ProductVisualProps> = ({
         <div className="relative z-10 flex items-center justify-center">
           {/* Blush letter envelope */}
           <div
-            className={`relative rounded-[8px] bg-[#FCE7F3] border border-[#E8CAD9] shadow-md -rotate-3 flex flex-col justify-end p-3 ${
+            className={`relative rounded-[8px] bg-[#E3A4AE/20] border border-[#E8CAD9] shadow-md -rotate-3 flex flex-col justify-end p-3 ${
               isStudio ? 'w-48 h-36 -mr-6' : 'w-34 h-26 -mr-5'
             }`}
           >
@@ -355,19 +355,19 @@ export const ProductVisual: React.FC<ProductVisualProps> = ({
               className="absolute top-0 left-0 w-full"
               aria-hidden="true"
             >
-              <path d="M0 0 L90 52 L180 0" fill="#F9D8E6" stroke="#E5C0D2" strokeWidth="1" />
+              <path d="M0 0 L90 52 L180 0" fill="#E3A4AE" stroke="#E5C0D2" strokeWidth="1" />
             </svg>
             <div
               className="w-6 h-6 rounded-full mx-auto mb-2 shadow-sm border border-white/50"
               style={{ backgroundColor: accentColor }}
             />
-            <p className={`text-center truncate text-[#3B0D27] ${textFontClass} text-[10px]`}>
+            <p className={`text-center truncate text-[#232E36] ${textFontClass} text-[10px]`}>
               {displayCaption}
             </p>
           </div>
           {/* 4-frame photostrip */}
           <div
-            className={`relative z-10 bg-[#FDFBF7] border border-[#EBDCE4] shadow-[0_18px_32px_-12px_rgba(59,13,39,0.28)] rotate-3 p-1.5 flex flex-col gap-1.5 ${
+            className={`relative z-10 bg-[#FAF6F0] border border-[#76577B/15] shadow-[0_18px_32px_-12px_rgba(59,13,39,0.28)] rotate-3 p-1.5 flex flex-col gap-1.5 ${
               isStudio ? 'w-20 h-60' : 'w-14 h-44'
             }`}
           >
@@ -396,14 +396,14 @@ export const ProductVisual: React.FC<ProductVisualProps> = ({
                     style={{
                       background:
                         frameIdx % 2 === 0
-                          ? `linear-gradient(135deg, #FCE7F3, ${accentColor}55)`
+                          ? `linear-gradient(135deg, #E3A4AE/20, ${accentColor}55)`
                           : `linear-gradient(135deg, ${accentColor}40, #F5E6DC)`,
                     }}
                   />
                 )}
               </div>
             ))}
-            <span className="text-[7px] text-center tracking-widest text-[#6E5D66] uppercase">
+            <span className="text-[7px] text-center tracking-widest text-[#8A7F85] uppercase">
               amora
             </span>
           </div>
@@ -445,12 +445,12 @@ export const ProductVisual: React.FC<ProductVisualProps> = ({
                     />
                   </div>
                 ) : (
-                  <div className="w-8 h-8 rounded-full border border-[#F9D8E6]/70 flex items-center justify-center">
-                    <div className="w-3.5 h-3.5 rounded-full bg-[#F9D8E6]/85" />
+                  <div className="w-8 h-8 rounded-full border border-[#E3A4AE]/70 flex items-center justify-center">
+                    <div className="w-3.5 h-3.5 rounded-full bg-[#E3A4AE]/85" />
                   </div>
                 )}
                 <span
-                  className={`text-center leading-tight max-w-full truncate px-1 text-[#FDFBF7] ${textFontClass} ${
+                  className={`text-center leading-tight max-w-full truncate px-1 text-[#FAF6F0] ${textFontClass} ${
                     isStudio ? 'text-xs' : 'text-[9px]'
                   }`}
                 >
@@ -468,7 +468,7 @@ export const ProductVisual: React.FC<ProductVisualProps> = ({
           <div className="relative flex items-center">
             {/* Ceramic Mug Body */}
             <div
-              className={`relative rounded-t-[6px] rounded-b-[18px] bg-gradient-to-r from-[#F4EDE6] via-[#FDFBF7] to-[#EAE0D7] border border-[#E5D7DC] shadow-[0_20px_34px_-14px_rgba(59,13,39,0.24)] flex flex-col items-center justify-center px-4 overflow-hidden ${
+              className={`relative rounded-t-[6px] rounded-b-[18px] bg-gradient-to-r from-[#F4EDE6] via-[#FAF6F0] to-[#EAE0D7] border border-[#E5D7DC] shadow-[0_20px_34px_-14px_rgba(59,13,39,0.24)] flex flex-col items-center justify-center px-4 overflow-hidden ${
                 isStudio ? 'w-44 h-44' : 'w-32 h-32'
               }`}
             >
@@ -489,7 +489,7 @@ export const ProductVisual: React.FC<ProductVisualProps> = ({
                   </div>
                 ) : (
                   <div
-                    className="w-9 h-9 rounded-full flex items-center justify-center text-[#FDFBF7] font-editorial text-lg"
+                    className="w-9 h-9 rounded-full flex items-center justify-center text-[#FAF6F0] font-serif text-lg"
                     style={{ backgroundColor: accentColor }}
                   >
                     a
@@ -532,7 +532,7 @@ export const ProductVisual: React.FC<ProductVisualProps> = ({
               className="absolute inset-0 opacity-15 pointer-events-none"
               style={{
                 backgroundImage:
-                  'radial-gradient(#FDFBF7 0.75px, transparent 0.75px)',
+                  'radial-gradient(#FAF6F0 0.75px, transparent 0.75px)',
                 backgroundSize: '10px 10px',
               }}
             />
@@ -542,15 +542,15 @@ export const ProductVisual: React.FC<ProductVisualProps> = ({
                   <img src={uploadedImage} alt="Mousepad logo" className="w-full h-full object-contain" />
                 </div>
               ) : (
-                <div className="w-7 h-7 rounded-full border border-[#F9D8E6]/80" />
+                <div className="w-7 h-7 rounded-full border border-[#E3A4AE]/80" />
               )}
-              <span className="text-[8px] uppercase tracking-widest text-[#F9D8E6]/80">
+              <span className="text-[8px] uppercase tracking-widest text-[#E3A4AE]/80">
                 Stitched Edge
               </span>
             </div>
             <div className="relative z-10">
               <p
-                className={`truncate text-[#FDFBF7] ${textFontClass} ${
+                className={`truncate text-[#FAF6F0] ${textFontClass} ${
                   isStudio ? 'text-base' : 'text-xs'
                 }`}
               >
@@ -577,15 +577,15 @@ export const ProductVisual: React.FC<ProductVisualProps> = ({
             <div className="flex flex-col gap-1 opacity-25 pointer-events-none">
               <div className="flex gap-1">
                 {[0, 1, 2, 3, 4, 5].map((k) => (
-                  <span key={k} className="w-3 h-2.5 rounded-[2px] bg-[#FDFBF7]" />
+                  <span key={k} className="w-3 h-2.5 rounded-[2px] bg-[#FAF6F0]" />
                 ))}
               </div>
               <div className="flex gap-1">
                 {[0, 1, 2, 3, 4, 5].map((k) => (
-                  <span key={k} className="w-3 h-2.5 rounded-[2px] bg-[#FDFBF7]" />
+                  <span key={k} className="w-3 h-2.5 rounded-[2px] bg-[#FAF6F0]" />
                 ))}
               </div>
-              <div className="w-16 h-2.5 rounded-[2px] bg-[#FDFBF7] mx-auto" />
+              <div className="w-16 h-2.5 rounded-[2px] bg-[#FAF6F0] mx-auto" />
             </div>
 
             {/* Brand logo & caption on right side of desk mat */}
@@ -599,12 +599,12 @@ export const ProductVisual: React.FC<ProductVisualProps> = ({
                   />
                 </div>
               ) : (
-                <span className="text-[8px] tracking-widest uppercase text-[#F9D8E6]/80 mb-0.5">
+                <span className="text-[8px] tracking-widest uppercase text-[#E3A4AE]/80 mb-0.5">
                   800×300mm
                 </span>
               )}
               <span
-                className={`truncate max-w-full text-[#FDFBF7] ${textFontClass} ${
+                className={`truncate max-w-full text-[#FAF6F0] ${textFontClass} ${
                   isStudio ? 'text-sm' : 'text-[11px]'
                 }`}
               >
