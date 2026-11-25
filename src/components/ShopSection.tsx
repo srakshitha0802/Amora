@@ -1,7 +1,7 @@
 import React from 'react';
 import { Check, Plus, MessageCircle, Sparkles, Building2, Heart } from 'lucide-react';
 import type { OrderMode, Product, ProductCategory } from '../types';
-import { CATEGORY_TABS, buildProductEnquiryWhatsAppUrl } from '../data/products';
+import { CATEGORY_TABS, buildProductEnquiryWhatsAppUrl, getProductImage } from '../data/products';
 import { ProductVisual } from './ProductVisual';
 
 interface ShopSectionProps {
@@ -167,14 +167,18 @@ export const ShopSection: React.FC<ShopSectionProps> = ({
                     </span>
                   </div>
 
-                  {/* Visual Mockup Container */}
-                  <div className="aspect-[4/3] rounded-2xl overflow-hidden bg-black/10 border border-current/10 flex items-center justify-center p-3 mb-4 group-hover:scale-[1.01] transition-transform duration-300">
-                    <ProductVisual
-                      visualType={product.visualType}
-                      accentColor={product.defaultAccent}
-                      customText={product.defaultSampleText}
-                      imageUrl={product.imageUrl}
+                  {/* Product Photography Container */}
+                  <div className="aspect-[4/3] rounded-2xl overflow-hidden bg-black/10 border border-current/10 relative mb-4">
+                    <img
+                      src={product.imageUrl || getProductImage(product.id)}
                       alt={product.name}
+                      loading="lazy"
+                      referrerPolicy="no-referrer"
+                      className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                      onError={(e) => {
+                        const target = e.currentTarget as HTMLImageElement;
+                        target.src = '/assets/catalog/corporate-merchandise/standard-mousepad.jpg';
+                      }}
                     />
                   </div>
 

@@ -29,9 +29,9 @@ export const ProductVisual: React.FC<ProductVisualProps> = ({
 }) => {
   const [imgFailed, setImgFailed] = React.useState(false);
 
-  if (imageUrl && !imgFailed && mode === 'card') {
+  if (imageUrl && !imgFailed && !uploadedImage) {
     return (
-      <div className="relative w-full h-full overflow-hidden bg-[#F5F0E8]">
+      <div className="relative w-full h-full overflow-hidden bg-[#F5F0E8] flex items-center justify-center">
         <img
           src={imageUrl}
           alt={alt}
@@ -39,6 +39,11 @@ export const ProductVisual: React.FC<ProductVisualProps> = ({
           onError={() => setImgFailed(true)}
           className="w-full h-full object-cover"
         />
+        {mode === 'studio' && customText && (
+          <div className="absolute bottom-4 inset-x-4 bg-black/70 backdrop-blur-md text-white p-2.5 rounded-xl text-center border border-white/20 shadow-lg">
+            <p className="text-xs font-serif italic tracking-wider font-semibold">"{customText}"</p>
+          </div>
+        )}
       </div>
     );
   }

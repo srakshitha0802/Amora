@@ -166,6 +166,8 @@ export const CustomiserDrawer: React.FC<CustomiserDrawerProps> = ({
               customText={customText}
               uploadedImage={uploadedImage}
               fontStyle={fontStyle}
+              imageUrl={product.imageUrl}
+              alt={product.name}
               mode="studio"
             />
             <div className="absolute bottom-3 right-3 px-2.5 py-1 rounded bg-[#0B0E14] text-[#FAF6F0]/90 border border-white/10 text-[11px] font-medium text-[#FAF6F0]/70">

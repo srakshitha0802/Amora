@@ -12,7 +12,7 @@ import {
   Info,
 } from 'lucide-react';
 import type { ShortlistItem } from '../types';
-import { buildWhatsAppUrl } from '../data/products';
+import { buildWhatsAppUrl, getProductImage } from '../data/products';
 
 interface ShortlistDrawerProps {
   isOpen: boolean;
@@ -175,20 +175,32 @@ export const ShortlistDrawer: React.FC<ShortlistDrawerProps> = ({
                   className="rounded-2xl bg-[#26202A] border border-white/10 p-4 space-y-3"
                 >
                   <div className="flex items-start justify-between gap-3">
-                    <div>
-                      <span className={`text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full inline-block mb-1.5 ${
-                        item.isBulkOnly
-                          ? 'bg-[#6D2E58]/30 text-[#C88DA0] border border-[#6D2E58]/50'
-                          : 'bg-[#C88DA0]/20 text-[#EBC6CF] border border-[#C88DA0]/30'
-                      }`}>
-                        {item.isBulkOnly ? 'MOQ: 36+ Pieces (Corporate)' : 'No MOQ (Personal)'}
-                      </span>
-                      <h3 className="font-serif text-lg font-semibold text-[#F8F4EA] leading-snug">
-                        {item.name}
-                      </h3>
-                      <p className="text-xs text-[#C88DA0] font-semibold mt-0.5 tabular-nums">
-                        ₹{item.unitPriceEstimate} / pc · Subtotal: ₹{(item.unitPriceEstimate * item.quantity).toLocaleString('en-IN')}
-                      </p>
+                    <div className="flex items-start gap-3 min-w-0">
+                      <div className="w-14 h-14 rounded-xl overflow-hidden bg-black/30 border border-white/10 shrink-0">
+                        <img
+                          src={getProductImage(item.productId)}
+                          alt={item.name}
+                          className="w-full h-full object-cover"
+                          onError={(e) => {
+                            (e.currentTarget as HTMLImageElement).src = '/assets/catalog/corporate-merchandise/standard-mousepad.jpg';
+                          }}
+                        />
+                      </div>
+                      <div className="min-w-0">
+                        <span className={`text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full inline-block mb-1 ${
+                          item.isBulkOnly
+                            ? 'bg-[#6D2E58]/30 text-[#C88DA0] border border-[#6D2E58]/50'
+                            : 'bg-[#C88DA0]/20 text-[#EBC6CF] border border-[#C88DA0]/30'
+                        }`}>
+                          {item.isBulkOnly ? 'MOQ: 36+ Pieces' : 'No MOQ'}
+                        </span>
+                        <h3 className="font-serif text-base font-semibold text-[#F8F4EA] leading-snug truncate">
+                          {item.name}
+                        </h3>
+                        <p className="text-xs text-[#C88DA0] font-semibold mt-0.5 tabular-nums">
+                          ₹{item.unitPriceEstimate} / pc · Subtotal: ₹{(item.unitPriceEstimate * item.quantity).toLocaleString('en-IN')}
+                        </p>
+                      </div>
                     </div>
 
                     <button
