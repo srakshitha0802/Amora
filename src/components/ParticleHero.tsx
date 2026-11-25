@@ -379,12 +379,13 @@ export const ParticleHero: React.FC<ParticleHeroProps> = ({
                   onMouseEnter={() => setIsHovered(true)}
                   onMouseLeave={() => setIsHovered(false)}
                 >
-                  {/* Layer 1: 3D Amora Emblem Core with Dynamic Parallax Tilt */}
+                  {/* Layer 1: 3D Amora Emblem Core with Dynamic Parallax Tilt (Exact 3D Model Length Match) */}
                   <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-0">
                     <CrystallineEmblemCore
                       finish={selectedFinish}
                       theme={theme}
                       isInteracting={isHovered}
+                      sizeMultiplier={0.78}
                     />
                   </div>
 
