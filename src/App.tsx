@@ -44,13 +44,13 @@ export default function App() {
   const [corporatePrefill, setCorporatePrefill] = React.useState<CorporatePrefill | null>(null);
   const [toastText, setToastText] = React.useState<string | null>(null);
 
-  // Dual Theme Engine (Dark & Light Mode)
+  // Dual Theme Engine (Default: Approved Light Ivory & Plum Foundation)
   const [theme, setTheme] = React.useState<'dark' | 'light'>(() => {
     try {
       const saved = window.localStorage.getItem(THEME_STORAGE_KEY);
-      return saved === 'light' ? 'light' : 'dark';
+      return saved === 'dark' ? 'dark' : 'light';
     } catch {
-      return 'dark';
+      return 'light';
     }
   });
 
@@ -335,23 +335,23 @@ export default function App() {
       <StylistWidget />
 
       {/* Mobile Sticky Bottom Quick-Action Bar */}
-      <div className="md:hidden fixed bottom-0 inset-x-0 z-40 h-14 glass border-t border-[#76577B]/12 px-3 flex items-center gap-2.5">
+      <div className="md:hidden fixed bottom-0 inset-x-0 z-40 h-14 bg-[#F8F4EA]/95 backdrop-blur-md border-t border-[#6D2E58]/15 px-3 flex items-center gap-2.5">
         <a
-          href={quickWhatsAppUrl}
+          href="https://wa.me/c/919819442335"
           target="_blank"
           rel="noopener noreferrer"
-          className="flex-1 h-10 rounded-xl bg-[#232E36] text-[#FAF6F0] text-xs font-semibold inline-flex items-center justify-center gap-1.5 whitespace-nowrap shadow-sm"
+          className="flex-1 h-10 rounded-xl bg-[#6D2E58] text-[#F8F4EA] text-xs font-semibold inline-flex items-center justify-center gap-1.5 whitespace-nowrap shadow-sm"
         >
           <MessageCircle className="w-4 h-4 text-[#25D366]" aria-hidden="true" />
-          WhatsApp
+          WhatsApp Catalog
         </a>
         <button
           type="button"
-          onClick={() => scrollToSection('bulk-quote-form')}
-          className="flex-1 h-10 rounded-xl bg-[#E3A4AE]/20 text-[#232E36] border border-[#E3A4AE]/30 text-xs font-semibold inline-flex items-center justify-center gap-1.5 whitespace-nowrap cursor-pointer"
+          onClick={() => scrollToSection('corporate')}
+          className="flex-1 h-10 rounded-xl bg-white text-[#2E2A32] border border-[#6D2E58]/25 text-xs font-semibold inline-flex items-center justify-center gap-1.5 whitespace-nowrap cursor-pointer shadow-xs"
         >
-          <FileText className="w-4 h-4 text-[#76577B]" aria-hidden="true" />
-          Bulk Quote
+          <FileText className="w-4 h-4 text-[#6D2E58]" aria-hidden="true" />
+          Bulk Enquiries
         </button>
       </div>
     </div>

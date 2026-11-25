@@ -17,32 +17,32 @@ const FEATURED_CATEGORIES: Array<{
   mode: OrderMode;
 }> = [
   {
-    title: 'Prints & Keepsakes',
+    title: 'Polaroids & Photo Products',
     subtitle: 'Polaroids, photo frames, bookmarks & letters',
     policy: 'No MOQ · From 1 piece',
-    category: 'Prints & Keepsakes',
+    category: 'Polaroids & Photo Products',
     mode: 'personal',
   },
   {
     title: 'Stickers & Photocards',
     subtitle: 'Waterproof kiss-cut sheets & matte posters',
     policy: 'No MOQ · Custom art',
-    category: 'Stickers & Photocards',
+    category: 'Stickers',
     mode: 'personal',
   },
   {
-    title: 'Corporate Drinkware',
-    subtitle: 'Insulated bottles & studio ceramic mugs',
-    policy: 'MOQ: 30+ Pieces',
-    category: 'Corporate Merchandise (MOQ 30+)',
+    title: 'Corporate Merchandise',
+    subtitle: 'Insulated bottles, ceramic mugs & desk mats',
+    policy: 'MOQ: 36+ Pieces',
+    category: 'Corporate Merchandise',
     mode: 'bulk',
   },
   {
-    title: 'Desk & Welcome Kits',
-    subtitle: 'Stitched mousepads & extended keyboard mats',
-    policy: 'MOQ: 30+ Pieces',
-    category: 'Customised Products',
-    mode: 'bulk',
+    title: 'Personalised Gifts',
+    subtitle: 'Bespoke gifts, bookmarks & frames',
+    policy: 'No MOQ · Customised',
+    category: 'Personalised Gifts',
+    mode: 'personal',
   },
 ];
 
