@@ -10,16 +10,20 @@ interface CircularProductOrbitProps {
   theme?: 'dark' | 'light';
 }
 
-// Curated 8 Signature Highlight Pieces for balanced 45-degree turntable layout
+// Curated Signature Highlight Pieces for 360-degree runway turntable (Top highlight first)
 const FEATURED_RUNWAY_IDS = [
+  'executive-onboarding-kit',
+  'basic-white-mug',
+  'black-patch-mug',
+  'notebook-pen-gift-set',
+  'premium-lock-diary',
+  'premium-laptop-sleeve',
+  'corporate-backpack',
+  'fridge-magnets',
+  'hook-leather-keychain',
+  'steel-shape-keychain',
+  'acrylic-keychain',
   'custom-printed-sipper-bottle',
-  'custom-printed-coffee-mug',
-  'custom-printed-keyboard-mat',
-  'custom-printed-mousepad',
-  'matte-polaroids-16',
-  'spotify-polaroids-3',
-  'page-whisper',
-  'cool-laptop-stickers',
 ];
 
 export const CircularProductOrbit: React.FC<CircularProductOrbitProps> = ({

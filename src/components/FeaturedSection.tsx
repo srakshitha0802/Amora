@@ -11,34 +11,108 @@ interface FeaturedSectionProps {
   theme?: 'dark' | 'light';
 }
 
+const B2B_HIGHLIGHT_KIT = {
+  id: 'executive-onboarding-kit',
+  name: 'Executive Onboarding Welcome Kit',
+  subtitle: 'The Definitive Day-1 Employee & Client Gifting Hamper',
+  price: '₹1,199 / kit',
+  moq: 'Strict MOQ: 36 Kits',
+  image: '/assets/catalog/corporate-merchandise/executive-onboarding-kit.jpg',
+  itemsIncluded: [
+    'Custom Illustrated Magnetic Gift Box with Brand Art',
+    'Matte Black Temperature Insulated Bottle (500ml)',
+    'Heavy Ceramic Coffee Mug with High-Gloss Sublimation',
+    'Executive Diary (232 Pages) with Metallic Lock & Pen',
+    'Premium Hook Leather Keychain with Engraved Metal Bar',
+    'Solid Metal Adjustable Mobile / Desk Stand',
+  ],
+  tag: 'Top Most Highlight · 100% Customisable',
+};
+
 const B2B_CONFIRMED_ITEMS = [
   {
-    name: 'Custom 600ml Sipper Bottle',
-    price: '₹350 / pc',
-    moq: 'MOQ: 36 pcs',
-    image: '/assets/catalog/corporate-merchandise/sipper-bottle-600ml.jpg',
-    tag: 'Laser Engraved / UV Print',
-  },
-  {
-    name: 'Custom Ceramic Coffee Mug',
+    name: 'A++ White Ceramic Mug',
     price: '₹199 / pc',
     moq: 'MOQ: 36 pcs',
-    image: '/assets/catalog/corporate-merchandise/coffee-mug.jpg',
-    tag: '330ml Heavy Ceramic',
+    image: '/assets/catalog/corporate-merchandise/white-ceramic-mug.jpg',
+    tag: 'Grade A++ · Basic White Mug',
   },
   {
-    name: 'Extended Keyboard / Table Mat',
+    name: 'Imported Black Patch Mug',
     price: '₹299 / pc',
     moq: 'MOQ: 36 pcs',
-    image: '/assets/catalog/corporate-merchandise/keyboard-mat.jpg',
-    tag: '800×300mm Stitched Rim',
+    image: '/assets/catalog/corporate-merchandise/black-patch-mug.jpg',
+    tag: 'Dual Tone Photo Window',
   },
   {
-    name: 'Custom Printed Round Mousepad',
+    name: 'Executive Notebook & Pen Set',
+    price: '₹399 / set',
+    moq: 'MOQ: 36 pcs',
+    image: '/assets/catalog/corporate-merchandise/notebook-pen-gift-set.jpg',
+    tag: 'Textured Linen · Pen & Box',
+  },
+  {
+    name: 'Premium Lock Diary (232 Pgs)',
+    price: '₹399 / set',
+    moq: 'MOQ: 36 pcs',
+    image: '/assets/catalog/corporate-merchandise/premium-lock-diary.jpg',
+    tag: 'Brass Buckle Clasp · Pen Included',
+  },
+  {
+    name: 'Premium PU Laptop Sleeve (15.6")',
+    price: '₹399 / pc',
+    moq: 'MOQ: 36 pcs',
+    image: '/assets/catalog/corporate-merchandise/premium-laptop-sleeve.jpg',
+    tag: 'Water-Resistant · Top Handles',
+  },
+  {
+    name: 'Multipurpose Corporate Backpack',
+    price: '₹449 / pc',
+    moq: 'MOQ: 36 pcs',
+    image: '/assets/catalog/corporate-merchandise/corporate-backpack.jpg',
+    tag: 'Laptop Compartment · Dual Pocket',
+  },
+  {
+    name: 'MDF Sublimation Fridge Magnets',
+    price: '₹149 / pc',
+    moq: 'MOQ: 36 pcs',
+    image: '/assets/catalog/corporate-merchandise/fridge-magnets.jpg',
+    tag: 'Any Custom Silhouette Possible',
+  },
+  {
+    name: 'Mobile Touch Stylus Pen',
     price: '₹99 / pc',
     moq: 'MOQ: 36 pcs',
-    image: '/assets/catalog/corporate-merchandise/round-mousepad.jpg',
-    tag: '200mm Anti-Slip Rubber',
+    image: '/assets/catalog/corporate-merchandise/mobile-touch-pen.jpg',
+    tag: '2-in-1 Pen & Touch Stylus',
+  },
+  {
+    name: 'Executive Metal Ball Pen',
+    price: '₹69 / pc',
+    moq: 'MOQ: 36 pcs',
+    image: '/assets/catalog/corporate-merchandise/executive-metal-pen.jpg',
+    tag: 'Solid Metal · Laser Engraved',
+  },
+  {
+    name: 'Premium Hook Leather Keychain',
+    price: '₹129 / pc',
+    moq: 'MOQ: 36 pcs',
+    image: '/assets/catalog/corporate-merchandise/hook-leather-keychain.jpg',
+    tag: 'Carabiner Clasp · Maroon & Black',
+  },
+  {
+    name: 'Stainless Steel Shape Keychain',
+    price: '₹179 / pc',
+    moq: 'MOQ: 36 pcs',
+    image: '/assets/catalog/corporate-merchandise/steel-shape-keychain.jpg',
+    tag: '304 Steel · Laser Cut Silhouette',
+  },
+  {
+    name: 'Personalised UV Acrylic Keychain',
+    price: '₹149 / pc',
+    moq: 'MOQ: 36 pcs',
+    image: '/assets/catalog/corporate-merchandise/acrylic-keychain.jpg',
+    tag: 'Clear Optical Acrylic · Tassel Charm',
   },
 ];
 
@@ -186,6 +260,130 @@ export const FeaturedSection: React.FC<FeaturedSectionProps> = ({
                 Estimate Corporate Kit ↗
               </button>
             </div>
+          </div>
+
+          {/* ─── TOP MOST MAIN HIGHLIGHT: EXECUTIVE ONBOARDING WELCOME KIT (₹1,199 · MOQ 36) ─── */}
+          <div
+            className={`rounded-3xl p-6 sm:p-8 mb-10 border shadow-2xl relative overflow-hidden transition-all ${
+              isDark
+                ? 'bg-gradient-to-br from-[#301B2B] via-[#201524] to-[#160E18] border-[#C88DA0]/30'
+                : 'bg-gradient-to-br from-[#FFF9F6] via-white to-[#FDF4F6] border-[#6D2E58]/25 shadow-[0_20px_50px_rgba(109,46,88,0.09)]'
+            }`}
+          >
+            {/* Top Spotlight Ribbon */}
+            <div className="flex flex-wrap items-center justify-between gap-3 mb-6 pb-4 border-b border-current/10">
+              <div className="flex items-center gap-2.5">
+                <span className="px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider bg-[#6D2E58] text-[#F8F4EA] flex items-center gap-1.5 shadow-md">
+                  <Box className="w-3.5 h-3.5 text-[#EBC6CF]" />
+                  <span>Main Highlight · Top Recommended</span>
+                </span>
+                <span className="text-xs font-medium opacity-80">
+                  Strict MOQ: 36 Kits · 100% Customisable
+                </span>
+              </div>
+              <div className="flex items-center gap-2">
+                <span className="text-xs uppercase font-mono tracking-wider opacity-70">Day-1 Welcome Kit</span>
+                <span className="font-serif text-2xl font-bold text-[#6D2E58] dark:text-[#EBC6CF]">
+                  {B2B_HIGHLIGHT_KIT.price}
+                </span>
+              </div>
+            </div>
+
+            {/* Split Grid: Photo & Comprehensive Specs */}
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+              {/* Product Photograph Showcase */}
+              <div className="lg:col-span-6 relative group">
+                <div className="aspect-[4/3] rounded-2xl overflow-hidden border border-[#6D2E58]/20 shadow-xl bg-black/10">
+                  <img
+                    src={B2B_HIGHLIGHT_KIT.image}
+                    alt={B2B_HIGHLIGHT_KIT.name}
+                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                  />
+                </div>
+                <div className="absolute bottom-3 left-3 px-3 py-1.5 rounded-xl bg-black/80 backdrop-blur-md text-white text-[11px] font-mono flex items-center gap-2">
+                  <ShieldCheck className="w-3.5 h-3.5 text-[#25D366]" />
+                  <span>Actual Client Production Unit</span>
+                </div>
+              </div>
+
+              {/* Kit Details & Inclusions */}
+              <div className="lg:col-span-6 flex flex-col justify-between">
+                <div>
+                  <h3 className="font-serif text-2xl sm:text-4xl font-normal tracking-tight mb-2">
+                    {B2B_HIGHLIGHT_KIT.name}
+                  </h3>
+                  <p
+                    className={`text-xs sm:text-sm leading-relaxed mb-5 ${
+                      isDark ? 'text-[#D8C6E6]' : 'text-[#584F5E]'
+                    }`}
+                  >
+                    Curated executive onboarding suite engineered for day-1 employee welcome, leadership offsites, and premier client gifting. Every single item in the hamper is branded with your bespoke company identity and pantone palette.
+                  </p>
+
+                  {/* Bulleted Inclusions */}
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 mb-6">
+                    {B2B_HIGHLIGHT_KIT.itemsIncluded.map((item) => (
+                      <div
+                        key={item}
+                        className={`p-2.5 rounded-xl border text-[11px] font-medium flex items-center gap-2 ${
+                          isDark
+                            ? 'bg-black/30 border-white/10 text-white/90'
+                            : 'bg-white border-[#6D2E58]/15 text-[#2E2A32] shadow-2xs'
+                        }`}
+                      >
+                        <ShieldCheck className="w-3.5 h-3.5 text-[#25D366] shrink-0" />
+                        <span className="leading-snug">{item}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Direct Action Buttons */}
+                <div className="flex flex-wrap items-center gap-3 pt-4 border-t border-current/10">
+                  <a
+                    href={`https://wa.me/919819442335?text=${encodeURIComponent(
+                      'Hello Amora.co, I would like to order the Executive Onboarding Welcome Kit (₹1199, MOQ 36).'
+                    )}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    onClick={() => playTactileClick(1600, 0.04)}
+                    className="inline-flex items-center gap-2 px-6 py-3 rounded-full text-xs sm:text-sm font-semibold transition-all hover:scale-105 shadow-lg bg-[#25D366] text-black font-bold hover:bg-[#20ba59]"
+                  >
+                    <MessageCircle className="w-4 h-4 fill-current" />
+                    <span>Enquire Kit on WhatsApp (₹1,199)</span>
+                  </a>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      playTactileClick(1500, 0.03);
+                      onExploreCorporate();
+                    }}
+                    className={`px-5 py-3 rounded-full text-xs sm:text-sm font-semibold border transition-all cursor-pointer ${
+                      isDark
+                        ? 'border-white/20 hover:bg-white/10 text-[#F8F4EA]'
+                        : 'bg-white border-[#6D2E58]/25 text-[#2E2A32] hover:bg-[#F8F4EA]'
+                    }`}
+                  >
+                    Customise in B2B Estimator ↗
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* ─── BELOW IT: COMPLETE CUSTOMISABLE PRODUCTS CATALOGUE (MOQ 36) ─── */}
+          <div className="mb-4 flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+            <div>
+              <h4 className="font-serif text-xl sm:text-2xl font-semibold">
+                Individual Customisable Essentials
+              </h4>
+              <p className={`text-xs ${isDark ? 'text-[#D8C6E6]' : 'text-[#584F5E]'}`}>
+                All products below are fully customizable with your company logos and delivered with a strict MOQ of 36 pieces.
+              </p>
+            </div>
+            <span className="text-[10px] font-mono uppercase tracking-wider px-2.5 py-1 rounded-full bg-[#6D2E58]/15 text-[#C88DA0] border border-[#6D2E58]/20 self-start sm:self-auto">
+              12 Confirmed Products
+            </span>
           </div>
 
           {/* Genuine Studio Photography Showcase for Corporate Products */}

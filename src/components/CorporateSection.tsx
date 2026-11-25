@@ -29,12 +29,25 @@ interface CorporateSectionProps {
 }
 
 const BULK_PRODUCT_OPTIONS = [
+  'Executive Onboarding Welcome Kit',
+  'A++ White Ceramic Mug',
+  'Imported Black Patch Mug',
+  'Executive Notebook & Pen Gift Set',
+  'Premium Diary with Metallic Lock & Pen',
+  'Premium PU Laptop Sleeve (15.6")',
+  'Multipurpose Corporate Backpack',
+  'Personalised MDF Sublimation Fridge Magnets',
   'Custom Printed Mousepad',
   'Custom Printed Round Mousepad',
   'Custom Printed Keyboard / Table Mat',
   'Custom Printed Coffee Mug',
   'Custom Printed Sipper Bottle',
   'Custom Printed Sports Bottle',
+  'Hook Leather Keychain',
+  'Stainless Steel Shape Keychain',
+  'UV Clear Acrylic Keychain',
+  'Mobile Touch Stylus Pen',
+  'Executive Metal Ball Pen',
   'Custom Mix / Employee Welcome Kit',
 ];
 

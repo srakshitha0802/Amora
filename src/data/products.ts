@@ -39,6 +39,21 @@ export const ACCENT_SWATCHES = [
 
 // Dedicated High-Resolution Genuine Product Images
 export const PRODUCT_IMAGES: Record<string, string> = {
+  // Client Confirmed Highlight & Corporate Products
+  'executive-onboarding-kit': '/assets/catalog/corporate-merchandise/executive-onboarding-kit.jpg',
+  'basic-white-mug': '/assets/catalog/corporate-merchandise/white-ceramic-mug.jpg',
+  'black-patch-mug': '/assets/catalog/corporate-merchandise/black-patch-mug.jpg',
+  'notebook-pen-gift-set': '/assets/catalog/corporate-merchandise/notebook-pen-gift-set.jpg',
+  'premium-lock-diary': '/assets/catalog/corporate-merchandise/premium-lock-diary.jpg',
+  'premium-laptop-sleeve': '/assets/catalog/corporate-merchandise/premium-laptop-sleeve.jpg',
+  'corporate-backpack': '/assets/catalog/corporate-merchandise/corporate-backpack.jpg',
+  'fridge-magnets': '/assets/catalog/corporate-merchandise/fridge-magnets.jpg',
+  'hook-leather-keychain': '/assets/catalog/corporate-merchandise/hook-leather-keychain.jpg',
+  'steel-shape-keychain': '/assets/catalog/corporate-merchandise/steel-shape-keychain.jpg',
+  'acrylic-keychain': '/assets/catalog/corporate-merchandise/acrylic-keychain.jpg',
+  'mobile-touch-pen': '/assets/catalog/corporate-merchandise/mobile-touch-pen.jpg',
+  'executive-metal-pen': '/assets/catalog/corporate-merchandise/executive-metal-pen.jpg',
+
   // Corporate Merchandise (Confirmed Studio Photos from WhatsApp)
   'custom-printed-mousepad': '/assets/catalog/corporate-merchandise/standard-mousepad.jpg',
   'custom-printed-round-mousepad': '/assets/catalog/corporate-merchandise/round-mousepad.jpg',

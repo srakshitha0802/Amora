@@ -338,19 +338,22 @@ export const ParticleHero: React.FC<ParticleHeroProps> = ({
                   </span>
                 </div>
 
-                {/* Corner Floating Real Product Chip: Sipper Bottle (Top-Right) */}
+                {/* Corner Floating Real Product Chip: Executive Onboarding Kit (Main Highlight) (Top-Right) */}
                 <div
                   onClick={onExploreCorporate}
-                  className="absolute top-14 right-3 z-20 hidden sm:flex items-center gap-2.5 p-2 rounded-2xl bg-white/95 dark:bg-[#1A161E]/95 border border-[#6D2E58]/20 shadow-xl cursor-pointer hover:scale-105 transition-transform"
+                  className="absolute top-14 right-3 z-20 hidden sm:flex items-center gap-2.5 p-2 rounded-2xl bg-white/95 dark:bg-[#1A161E]/95 border border-[#C88DA0]/40 shadow-xl cursor-pointer hover:scale-105 transition-transform"
                 >
                   <img
-                    src="/assets/catalog/corporate-merchandise/sipper-bottle-600ml.jpg"
-                    alt="Sipper Bottle"
-                    className="w-10 h-10 rounded-xl object-cover shrink-0"
+                    src="/assets/catalog/corporate-merchandise/executive-onboarding-kit.jpg"
+                    alt="Executive Onboarding Kit"
+                    className="w-11 h-11 rounded-xl object-cover shrink-0 border border-[#6D2E58]/20"
                   />
                   <div className="text-left pr-1">
-                    <p className="text-[10px] font-bold font-serif leading-tight">600ml Sipper</p>
-                    <span className="text-[9px] text-[#6D2E58] dark:text-[#C88DA0] font-mono font-semibold">₹350 · MOQ 36</span>
+                    <div className="flex items-center gap-1">
+                      <span className="text-[8px] uppercase tracking-wider bg-[#6D2E58] text-[#F8F4EA] px-1.5 py-0.2 rounded font-bold">Top Highlight</span>
+                    </div>
+                    <p className="text-[10px] font-bold font-serif leading-tight mt-0.5">Executive Kit</p>
+                    <span className="text-[9px] text-[#6D2E58] dark:text-[#C88DA0] font-mono font-semibold">₹1,199 · MOQ 36</span>
                   </div>
                 </div>
 

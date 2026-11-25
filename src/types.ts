@@ -22,7 +22,13 @@ export type ProductVisualType =
   | 'round-mousepad'
   | 'keyboard-mat'
   | 'sipper-bottle'
-  | 'sports-bottle';
+  | 'sports-bottle'
+  | 'gift-kit'
+  | 'notebook'
+  | 'bag'
+  | 'pen'
+  | 'keychain'
+  | 'magnet';
 
 export interface Product {
   id: string;

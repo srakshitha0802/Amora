@@ -736,6 +736,36 @@ export const ProductVisual: React.FC<ProductVisualProps> = ({
           </div>
         </div>
       )}
+
+      {/* Fallback Showcase for gift-kit, notebook, bag, pen, keychain, magnet */}
+      {!['photo-frame', 'bookmark', 'photocards-posters', 'polaroids', 'sticker-sheet', 'photostrips-letters', 'water-bottle', 'mug', 'mousepad', 'round-mousepad', 'keyboard-mat', 'sipper-bottle', 'sports-bottle'].includes(visualType) && (
+        <div className="relative z-10 flex flex-col items-center justify-center p-4">
+          <div
+            className={`relative rounded-2xl shadow-xl flex flex-col items-center justify-center p-5 overflow-hidden border transition-all ${
+              isStudio ? 'w-64 h-52' : 'w-44 h-36'
+            }`}
+            style={{
+              backgroundColor: accentColor,
+              borderColor: 'rgba(255,255,255,0.25)',
+              boxShadow: '0 18px 36px -12px rgba(59,13,39,0.35)',
+            }}
+          >
+            {uploadedImage ? (
+              <img src={uploadedImage} alt="Custom artwork" className="max-w-[70%] max-h-[55%] object-contain mb-2 rounded" />
+            ) : (
+              <div className="w-12 h-12 rounded-2xl bg-white/20 backdrop-blur-md flex items-center justify-center mb-2 border border-white/30 shadow-inner">
+                <span className="font-serif text-white font-bold text-xl">A</span>
+              </div>
+            )}
+            <span className={`text-white text-center font-medium truncate max-w-full px-2 ${textFontClass} ${isStudio ? 'text-sm' : 'text-xs'}`}>
+              {displayCaption}
+            </span>
+            <span className="text-[9px] uppercase tracking-widest text-white/70 mt-1 font-mono">
+              Customised Amora Merch
+            </span>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
