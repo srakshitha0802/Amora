@@ -231,8 +231,8 @@ export default function App() {
 
   return (
     <div
-      className={`min-h-screen relative selection:bg-[#76577B] selection:text-[#FAF6F0] transition-colors duration-300 ${
-        theme === 'dark' ? 'bg-[#06080C] text-[#FAF6F0]' : 'bg-[#F5F1EB] text-[#161E24]'
+      className={`min-h-screen relative selection:bg-[#6D2E58] selection:text-[#F8F4EA] transition-colors duration-300 ${
+        theme === 'dark' ? 'bg-[#1A161E] text-[#F8F4EA]' : 'bg-[#F8F4EA] text-[#2E2A32]'
       }`}
     >
       {/* Floating Glassmorphic Pill Navbar */}
