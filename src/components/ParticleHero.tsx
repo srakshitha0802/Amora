@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { ArrowRight, Sparkles, ShieldCheck, Box, MessageCircle, ExternalLink, Heart, MapPin, Award } from 'lucide-react';
-import { BRAND_LOGO_URL, WHATSAPP_CATALOG_URL, buildWhatsAppUrl } from '../data/products';
+import { ArrowRight, MessageCircle, ExternalLink, Heart, ChevronDown } from 'lucide-react';
+import { WHATSAPP_CATALOG_URL } from '../data/products';
 import { playTactileClick } from '../utils/audio';
 
 interface ParticleHeroProps {
@@ -15,7 +15,7 @@ export const ParticleHero: React.FC<ParticleHeroProps> = ({
   theme = 'light',
 }) => {
   const [mounted, setMounted] = useState(false);
-  const containerRef = useRef<HTMLDivElement>(null);
+  const stageRef = useRef<HTMLDivElement>(null);
   const [tilt, setTilt] = useState({ x: 0, y: 0 });
 
   useEffect(() => {
@@ -25,15 +25,15 @@ export const ParticleHero: React.FC<ParticleHeroProps> = ({
 
   const isDark = theme === 'dark';
 
-  // Smooth mouse tilt parallax for the physical showcase stage
+  // Smooth mouse tilt parallax for the 3D physical stage
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (!containerRef.current) return;
-    const rect = containerRef.current.getBoundingClientRect();
+    if (!stageRef.current) return;
+    const rect = stageRef.current.getBoundingClientRect();
     const x = (e.clientX - rect.left) / rect.width - 0.5;
     const y = (e.clientY - rect.top) / rect.height - 0.5;
     setTilt({
-      x: -y * 10,
-      y: x * 12,
+      x: -y * 8,
+      y: x * 10,
     });
   };
 
@@ -41,89 +41,126 @@ export const ParticleHero: React.FC<ParticleHeroProps> = ({
     setTilt({ x: 0, y: 0 });
   };
 
+  const handleScrollDown = () => {
+    playTactileClick(1200, 0.03);
+    const orbitSection = document.getElementById('orbit-showcase') || document.getElementById('keepsakes') || document.getElementById('shop');
+    orbitSection?.scrollIntoView({ behavior: 'smooth' });
+  };
+
   return (
-    <section id="home" className="relative w-full min-h-[92vh] flex items-center overflow-hidden pt-28 sm:pt-32 pb-16">
-      {/* Warm Champagne Studio Glows */}
+    <section
+      id="home"
+      className={`relative w-full min-h-[96vh] flex flex-col justify-between overflow-hidden pt-24 sm:pt-28 pb-10 transition-colors duration-500 ${
+        isDark
+          ? 'bg-gradient-to-br from-[#1C1621] via-[#16121B] to-[#120E15]'
+          : 'bg-gradient-to-br from-[#FAF2EE] via-[#F8EDEA] to-[#F5E2E6]'
+      }`}
+    >
+      {/* ─── BOTANICAL PALM FROND SHADOW (Top-Left Sunlit Cast matching reference mockup) ─── */}
       <div
-        className={`absolute top-1/4 left-1/12 w-[600px] h-[600px] rounded-full blur-[180px] pointer-events-none transition-opacity duration-700 ${
-          isDark ? 'bg-[#6D2E58]/20' : 'bg-[#EBC6CF]/30'
+        className={`absolute -top-10 -left-10 w-[380px] sm:w-[480px] lg:w-[580px] pointer-events-none select-none transition-opacity duration-700 z-0 ${
+          isDark ? 'opacity-[0.06] mix-blend-screen' : 'opacity-[0.22] mix-blend-multiply'
+        }`}
+      >
+        <svg viewBox="0 0 500 500" fill="none" className="w-full h-auto text-[#4A3B44]">
+          {/* Palm Frond 1 */}
+          <path
+            d="M 20 -40 C 90 40, 220 120, 360 210 M 80 15 C 150 15, 230 45, 290 85 M 120 45 C 190 55, 270 95, 330 145 M 160 80 C 230 100, 310 145, 370 205 M 200 120 C 270 145, 340 195, 395 260 M 240 160 C 300 190, 365 245, 410 315"
+            stroke="currentColor"
+            strokeWidth="18"
+            strokeLinecap="round"
+            filter="blur(16px)"
+          />
+          {/* Palm Frond 2 */}
+          <path
+            d="M -30 60 C 60 120, 180 230, 260 380 M 30 100 C 90 120, 160 180, 210 250 M 70 140 C 130 170, 200 235, 245 310 M 110 190 C 165 225, 230 300, 270 380"
+            stroke="currentColor"
+            strokeWidth="14"
+            strokeLinecap="round"
+            filter="blur(14px)"
+          />
+          {/* Palm Frond 3 Accent */}
+          <path
+            d="M 40 -60 C 110 10, 200 80, 280 160 M 90 0 C 150 15, 220 50, 270 95"
+            stroke="currentColor"
+            strokeWidth="12"
+            strokeLinecap="round"
+            filter="blur(12px)"
+          />
+        </svg>
+      </div>
+
+      {/* Warm Ambient Glows */}
+      <div
+        className={`absolute top-1/4 left-1/10 w-[500px] h-[500px] rounded-full blur-[160px] pointer-events-none transition-opacity duration-700 ${
+          isDark ? 'bg-[#6D2E58]/20' : 'bg-[#EBC6CF]/40'
         }`}
       />
       <div
-        className={`absolute bottom-1/4 right-1/12 w-[520px] h-[520px] rounded-full blur-[170px] pointer-events-none transition-opacity duration-700 ${
-          isDark ? 'bg-[#F3C69F]/14' : 'bg-[#F8F4EA]/80'
+        className={`absolute bottom-1/5 right-1/10 w-[480px] h-[480px] rounded-full blur-[150px] pointer-events-none transition-opacity duration-700 ${
+          isDark ? 'bg-[#C88DA0]/10' : 'bg-[#F8F4EA]/90'
         }`}
       />
 
-      {/* Main Grid Container */}
-      <div className="max-w-[1400px] w-full mx-auto px-5 sm:px-8 lg:px-12 relative z-10">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
+      {/* ─── MAIN HERO CONTENT CONTAINER ─── */}
+      <div className="max-w-[1360px] w-full mx-auto px-5 sm:px-8 lg:px-12 relative z-10 flex-1 flex flex-col justify-center">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
           
-          {/* ─── LEFT COLUMN: Humanised Editorial Brand Narrative ─── */}
+          {/* ═════════════════════════════════════════════════════════════
+              LEFT COLUMN: Editorial Typography, Taglines & CTAs
+              ═════════════════════════════════════════════════════════════ */}
           <div
             className={`lg:col-span-6 flex flex-col items-start text-left transition-all duration-1000 ${
               mounted ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
             }`}
           >
-            {/* Tagline & Studio Origin Pill */}
-            <div className="flex flex-wrap items-center gap-2 mb-4">
+            {/* Tagline Pill: ♥ A LITTLE THOUGHT. A LOT OF LOVE. */}
+            <div className="mb-5 sm:mb-6">
               <div
-                className={`inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-semibold uppercase tracking-wider border shadow-xs ${
+                className={`inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-[11px] sm:text-xs font-semibold uppercase tracking-wider border shadow-xs transition-colors ${
                   isDark
                     ? 'bg-white/5 border-white/15 text-[#EBC6CF]'
-                    : 'bg-white border-[#6D2E58]/20 text-[#6D2E58] shadow-xs'
+                    : 'bg-white/80 backdrop-blur-md border-[#6D2E58]/15 text-[#6D2E58]'
                 }`}
               >
                 <Heart className="w-3.5 h-3.5 text-[#C88DA0] fill-[#C88DA0]" />
-                <span>A Little Thought. A Lot of Love.</span>
-              </div>
-
-              <div
-                className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[11px] font-mono border ${
-                  isDark ? 'border-white/10 text-white/60' : 'border-[#6D2E58]/15 text-[#584F5E] bg-white/60'
-                }`}
-              >
-                <MapPin className="w-3 h-3 text-[#C88DA0]" />
-                <span>Kalyan Studio · Est. June '25</span>
+                <span className="tracking-[0.16em]">A Little Thought. A Lot of Love.</span>
               </div>
             </div>
 
-            {/* Brand Logo & Wordmark Lockup */}
-            <div className="flex items-center gap-3.5 mb-5">
-              <div className="w-12 h-12 rounded-full overflow-hidden border-2 border-[#E5BE6C] shadow-md shadow-[#6D2E58]/20 bg-[#F8F4EA] p-0.5 shrink-0">
-                <img src={BRAND_LOGO_URL} alt="Amora.co" className="w-full h-full object-cover rounded-full" />
-              </div>
-              <div className="flex flex-col">
-                <span
-                  className={`font-serif text-3xl sm:text-4xl font-semibold leading-none tracking-tight ${
-                    isDark ? 'text-[#F8F4EA]' : 'text-[#2E2A32]'
-                  }`}
-                >
-                  amora<span className="text-[#C88DA0]">.co</span>
-                </span>
-                <span
-                  className={`italic font-serif text-xs sm:text-sm tracking-widest mt-1 ${
-                    isDark ? 'text-[#D8C6E6]' : 'text-[#6D2E58]'
-                  }`}
-                >
-                  prints, &amp; pretty things
-                </span>
-              </div>
-            </div>
-
-            {/* Main Editorial Headline */}
+            {/* Editorial Headline:
+                Thoughtfully
+                personalised.
+                Beautifully branded. (with underline flourish)
+            */}
             <h1
-              className={`font-serif text-4xl sm:text-6xl lg:text-7xl font-normal tracking-tight leading-[1.04] mb-5 ${
+              className={`font-serif text-[42px] sm:text-[62px] lg:text-[72px] font-normal tracking-tight leading-[1.05] mb-6 ${
                 isDark ? 'text-[#F8F4EA]' : 'text-[#2E2A32]'
               }`}
             >
-              Thoughtfully personalised. <br />
-              <em className="italic text-[#C88DA0] font-normal">Beautifully branded.</em>
+              Thoughtfully<br />
+              personalised.<br />
+              <span className="relative inline-block italic font-normal text-[#C88DA0]">
+                Beautifully branded.
+                {/* Handcrafted Curved Underline Stroke Flashing Underneath */}
+                <svg
+                  className="absolute -bottom-2 sm:-bottom-3 left-0 w-full h-3 sm:h-4 text-[#C88DA0]"
+                  viewBox="0 0 320 18"
+                  fill="none"
+                >
+                  <path
+                    d="M 4 14 C 80 4, 230 2, 316 13"
+                    stroke="currentColor"
+                    strokeWidth="2.8"
+                    strokeLinecap="round"
+                  />
+                </svg>
+              </span>
             </h1>
 
-            {/* Subtitle */}
+            {/* Subtitle Paragraph */}
             <p
-              className={`text-sm sm:text-base max-w-lg leading-relaxed mb-8 ${
+              className={`text-sm sm:text-base max-w-lg leading-relaxed mb-8 font-normal ${
                 isDark ? 'text-[#D8C6E6]' : 'text-[#584F5E]'
               }`}
             >
@@ -131,15 +168,15 @@ export const ParticleHero: React.FC<ParticleHeroProps> = ({
               From a single tactile polaroid tucked into a wax-sealed letter to 500-piece company onboarding kits — thoughtfully crafted in our Kalyan studio.
             </p>
 
-            {/* Primary Action CTAs */}
-            <div className="flex flex-wrap gap-3.5 sm:gap-4 items-center mb-8 w-full sm:w-auto">
+            {/* CTAs: Corporate Merchandise (MOQ 36) + Personal Keepsakes (No MOQ) */}
+            <div className="flex flex-wrap gap-3.5 sm:gap-4 items-center mb-4 w-full sm:w-auto">
               <button
                 type="button"
                 onClick={() => {
                   playTactileClick(1600, 0.04);
                   onExploreCorporate();
                 }}
-                className="rounded-full px-6 sm:px-7 py-3 sm:py-3.5 text-xs sm:text-sm font-semibold transition-all inline-flex items-center gap-2.5 shadow-xl hover:-translate-y-0.5 cursor-pointer bg-[#6D2E58] text-[#F8F4EA] hover:bg-[#8E4474] border border-[#C88DA0]/40"
+                className="rounded-full px-6 sm:px-7 py-3 sm:py-3.5 text-xs sm:text-sm font-semibold transition-all inline-flex items-center gap-2.5 shadow-lg shadow-[#6D2E58]/20 hover:-translate-y-0.5 cursor-pointer bg-[#6D2E58] text-[#F8F4EA] hover:bg-[#582447] border border-[#C88DA0]/40"
               >
                 <span>Corporate Merchandise (MOQ 36)</span>
                 <ArrowRight className="w-4 h-4 text-[#F8F4EA]" />
@@ -151,239 +188,153 @@ export const ParticleHero: React.FC<ParticleHeroProps> = ({
                   playTactileClick(1800, 0.04);
                   onExplorePersonal();
                 }}
-                className={`rounded-full px-6 sm:px-7 py-3 sm:py-3.5 text-xs sm:text-sm font-semibold transition-all inline-flex items-center gap-2.5 hover:-translate-y-0.5 cursor-pointer border ${
+                className={`rounded-full px-6 sm:px-7 py-3 sm:py-3.5 text-xs sm:text-sm font-semibold transition-all inline-flex items-center gap-2.5 hover:-translate-y-0.5 cursor-pointer border backdrop-blur-sm ${
                   isDark
                     ? 'border-white/20 hover:bg-white/10 text-[#F8F4EA]'
-                    : 'bg-white border-[#6D2E58]/25 hover:bg-[#F8F4EA] text-[#2E2A32] shadow-sm'
+                    : 'bg-white/80 border-[#6D2E58]/25 hover:bg-white text-[#2E2A32] shadow-xs'
                 }`}
               >
                 <span>Personal Keepsakes (No MOQ)</span>
                 <ArrowRight className="w-4 h-4 text-[#6D2E58]" />
               </button>
+            </div>
 
+            {/* Tertiary Action: WhatsApp Catalogue */}
+            <div className="mb-2">
               <a
                 href={WHATSAPP_CATALOG_URL}
                 target="_blank"
                 rel="noopener noreferrer"
                 onClick={() => playTactileClick(1400, 0.03)}
-                className={`rounded-full px-4 py-2.5 text-xs font-medium transition-all inline-flex items-center gap-2 hover:-translate-y-0.5 border ${
+                className={`rounded-full px-4 py-2 text-xs font-semibold transition-all inline-flex items-center gap-2 hover:-translate-y-0.5 border shadow-2xs ${
                   isDark
-                    ? 'border-emerald-500/30 text-emerald-300 hover:bg-emerald-500/10'
-                    : 'border-emerald-600/30 text-emerald-800 bg-emerald-50/80 hover:bg-emerald-100'
+                    ? 'border-emerald-500/30 text-emerald-300 bg-emerald-950/30 hover:bg-emerald-900/40'
+                    : 'border-emerald-600/25 text-[#1B7339] bg-[#E3F6EB] hover:bg-[#D4EFE0]'
                 }`}
               >
-                <span className="w-2 h-2 rounded-full bg-[#25D366]" />
+                <MessageCircle className="w-3.5 h-3.5 text-[#25D366] fill-[#25D366]" />
                 <span>WhatsApp Catalogue</span>
-                <ExternalLink className="w-3.5 h-3.5 opacity-70" />
+                <ExternalLink className="w-3 h-3 opacity-70" />
               </a>
-            </div>
-
-            {/* Trust Badges */}
-            <div
-              className={`grid grid-cols-3 gap-3 sm:gap-4 pt-6 border-t w-full max-w-lg text-[11px] sm:text-xs ${
-                isDark ? 'border-white/10 text-[#D8C6E6]' : 'border-[#6D2E58]/20 text-[#584F5E]'
-              }`}
-            >
-              <div className="flex items-center gap-1.5 sm:gap-2">
-                <ShieldCheck className="w-4 h-4 text-[#C88DA0] shrink-0" />
-                <span>No MOQ on Keepsakes</span>
-              </div>
-              <div className="flex items-center gap-1.5 sm:gap-2">
-                <Box className="w-4 h-4 text-[#EBC6CF] shrink-0" />
-                <span>MOQ: 36+ Corporate</span>
-              </div>
-              <div className="flex items-center gap-1.5 sm:gap-2">
-                <Award className="w-4 h-4 text-[#25D366] shrink-0" />
-                <span>1,000+ Orders Done</span>
-              </div>
             </div>
           </div>
 
-          {/* ─── RIGHT COLUMN: Humanised Champagne Keepsake Medallion & Scrapbook Stage ─── */}
+          {/* ═════════════════════════════════════════════════════════════
+              RIGHT COLUMN: The Exact Physical 3D Showcase Stage
+              ═════════════════════════════════════════════════════════════ */}
           <div
-            ref={containerRef}
+            ref={stageRef}
             onMouseMove={handleMouseMove}
             onMouseLeave={handleMouseLeave}
-            className={`lg:col-span-6 w-full flex items-center justify-center transition-all duration-1000 delay-150 select-none ${
+            className={`lg:col-span-6 w-full flex items-center justify-center transition-all duration-1000 delay-150 select-none relative ${
               mounted ? 'opacity-100 scale-100' : 'opacity-0 scale-95'
             }`}
             style={{ perspective: '1200px' }}
           >
-            {/* The Main Champagne Display Card */}
+            {/* Interactive 3D Stage Composition */}
             <div
-              className={`relative w-full max-w-[490px] h-[490px] sm:h-[530px] rounded-[36px] p-6 sm:p-8 flex items-center justify-center overflow-hidden transition-transform duration-200 ease-out border shadow-2xl ${
-                isDark
-                  ? 'bg-gradient-to-b from-[#241C27] via-[#1B151F] to-[#140F17] border-white/15 shadow-[0_25px_60px_rgba(0,0,0,0.6)]'
-                  : 'bg-gradient-to-b from-[#FFFDF9] via-[#FAF5EE] to-[#F5ECE0] border-[#E5BE6C]/35 shadow-[0_25px_60px_rgba(109,46,88,0.1)]'
-              }`}
+              className="relative w-full max-w-[560px] flex items-center justify-center transition-transform duration-200 ease-out"
               style={{
                 transform: `rotateX(${tilt.x}deg) rotateY(${tilt.y}deg)`,
                 transformStyle: 'preserve-3d',
               }}
             >
-              {/* Subtle Champagne Ambient Backlight */}
-              <div
-                className="absolute inset-0 rounded-full blur-3xl pointer-events-none opacity-50"
-                style={{
-                  background: 'radial-gradient(circle at 50% 50%, rgba(243,198,159,0.35) 0%, rgba(200,141,160,0.15) 55%, transparent 75%)',
-                  transform: 'translateZ(-20px)',
-                }}
-              />
-
-              {/* ─── HAND-DRAWN PREMIUM DOODLES ─── */}
-              {/* Doodle 1: Sparkle Stars (Top Left) */}
-              <div className="absolute top-8 left-8 pointer-events-none text-[#E5BE6C] opacity-80" style={{ transform: 'translateZ(20px)' }}>
-                <svg width="40" height="40" viewBox="0 0 40 40" fill="none">
-                  <path d="M20 0 L23 15 L38 20 L23 25 L20 40 L17 25 L2 20 L17 15 Z" fill="currentColor" opacity="0.85" />
-                  <circle cx="8" cy="8" r="1.5" fill="currentColor" />
-                  <circle cx="32" cy="10" r="2" fill="currentColor" />
-                </svg>
-              </div>
-
-              {/* Doodle 2: Handcrafted Botanical Jasmine Vine (Top Right) */}
-              <div className="absolute top-6 right-6 pointer-events-none text-[#C88DA0] opacity-75" style={{ transform: 'translateZ(15px)' }}>
-                <svg width="65" height="50" viewBox="0 0 65 50" fill="none">
-                  <path d="M5 45 Q 25 20, 58 8" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-                  <path d="M30 26 C 24 20, 20 28, 28 32 Z" fill="currentColor" opacity="0.7" />
-                  <path d="M45 16 C 40 10, 36 18, 44 22 Z" fill="currentColor" opacity="0.7" />
-                  <circle cx="58" cy="8" r="3" fill="#E5BE6C" />
-                </svg>
-              </div>
-
-              {/* Doodle 3: Hand-Drawn Ribbon Loop & Heart (Bottom Left) */}
-              <div className="absolute bottom-8 left-8 pointer-events-none text-[#C88DA0] opacity-80" style={{ transform: 'translateZ(25px)' }}>
-                <svg width="55" height="40" viewBox="0 0 55 40" fill="none">
-                  <path d="M10 32 C 10 20, 22 15, 26 25 C 30 15, 42 20, 42 32 C 42 38, 26 40, 26 40 C 26 40, 10 38, 10 32 Z" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-                  <path d="M26 10 Q 30 4, 38 7" stroke="#E5BE6C" strokeWidth="1.5" strokeLinecap="round" />
-                </svg>
-              </div>
-
-              {/* ─── CORNER TACTILE CHIP 1: Executive Welcome Kit Preview (Top Right) ─── */}
-              <div
-                onClick={onExploreCorporate}
-                className="absolute top-12 right-6 z-30 hidden sm:flex items-center gap-3 p-2.5 rounded-2xl bg-white/95 dark:bg-[#1C1621]/95 border border-[#E5BE6C]/40 shadow-xl cursor-pointer hover:scale-105 transition-transform"
-                style={{ transform: 'translateZ(35px)' }}
-              >
+              {/* Clean Cropped Rendered Stage from Client Reference */}
+              <div className="relative w-full rounded-3xl overflow-visible">
                 <img
-                  src="/assets/catalog/corporate-merchandise/executive-onboarding-kit.jpg"
-                  alt="Executive Onboarding Kit"
-                  className="w-11 h-11 rounded-xl object-cover shrink-0 border border-[#6D2E58]/20"
+                  src="/assets/hero-stage-clean.png"
+                  alt="Amora Product Stage - Mug, Bottle, Gift Box on Terrazzo Podium with Silk Drapery"
+                  className="w-full h-auto object-contain select-none pointer-events-none drop-shadow-2xl rounded-3xl"
+                  draggable={false}
                 />
-                <div className="text-left pr-1.5">
-                  <span className="text-[9px] uppercase tracking-wider bg-[#6D2E58] text-[#F8F4EA] px-1.5 py-0.5 rounded font-bold">
-                    Main Highlight
-                  </span>
-                  <p className="text-[11px] font-bold font-serif leading-tight mt-0.5">Executive Kit</p>
-                  <span className="text-[10px] text-[#6D2E58] dark:text-[#EBC6CF] font-mono font-semibold">
-                    ₹1,199 · MOQ 36
-                  </span>
-                </div>
-              </div>
 
-              {/* ─── CORNER TACTILE CHIP 2: Handcrafted Polaroid (Bottom Left) ─── */}
-              <div
-                onClick={onExplorePersonal}
-                className="absolute bottom-10 left-6 z-30 hidden sm:flex items-center gap-3 p-2.5 rounded-2xl bg-white/95 dark:bg-[#1C1621]/95 border border-[#C88DA0]/40 shadow-xl cursor-pointer hover:scale-105 transition-transform rotate-[-3deg]"
-                style={{ transform: 'translateZ(35px)' }}
-              >
-                {/* Washi Tape Strip on Polaroid */}
+                {/* ─── INTERACTIVE CLICK HOTSPOTS OVER STAGE ELEMENTS ─── */}
+                
+                {/* 1. Floating Polaroid Top-Left: "Trusted by 500+ Brands" */}
                 <div
-                  className="absolute -top-2 left-6 w-12 h-4 opacity-80 rotate-[3deg] pointer-events-none"
-                  style={{
-                    background: 'rgba(200,141,160,0.85)',
-                    clipPath: 'polygon(4% 0%, 96% 0%, 100% 100%, 0% 100%)',
+                  onClick={() => {
+                    playTactileClick(1500, 0.03);
+                    onExploreCorporate();
                   }}
-                />
-                <img
-                  src="https://images.unsplash.com/photo-1526170375885-4d8ecf77b99f?auto=format&fit=crop&w=120&q=80"
-                  alt="Polaroid Keepsake"
-                  className="w-11 h-11 rounded-xl object-cover shrink-0 border border-current/10"
-                />
-                <div className="text-left pr-1">
-                  <p className="text-[11px] font-bold font-serif leading-tight">Matte Polaroids</p>
-                  <span className="text-[10px] text-[#25D366] font-mono font-semibold">
-                    From ₹125 · No MOQ
-                  </span>
-                </div>
-              </div>
-
-              {/* ─── CENTERPIECE: OFFICIAL AMORA LOGO CHAMPAGNE MEDALLION ─── */}
-              <div
-                className="relative flex items-center justify-center transition-transform duration-75"
-                style={{
-                  transform: 'translateZ(25px)',
-                }}
-              >
-                {/* Champagne Gold Outer Bezel Ring */}
-                <div
-                  className="relative w-[280px] h-[280px] sm:w-[320px] sm:h-[320px] rounded-full p-2.5 flex items-center justify-center shadow-2xl transition-all"
-                  style={{
-                    background: isDark
-                      ? 'linear-gradient(135deg, rgba(243,198,159,0.7) 0%, rgba(109,46,88,0.5) 50%, rgba(229,190,108,0.8) 100%)'
-                      : 'linear-gradient(135deg, #FFF6E5 0%, #E5BE6C 40%, #C5963E 70%, #FDE39D 100%)',
-                    boxShadow: isDark
-                      ? '0 0 60px rgba(243,198,159,0.35), 0 25px 50px rgba(0,0,0,0.6)'
-                      : '0 0 50px rgba(229,190,108,0.35), 0 20px 45px rgba(109,46,88,0.15)',
-                  }}
+                  title="Click to view Corporate Gifting & Client Showcase"
+                  className="absolute top-[16%] left-[4%] w-[32%] h-[38%] rounded-2xl cursor-pointer hover:ring-2 hover:ring-[#C88DA0]/50 transition-all z-20 group"
+                  aria-label="Trusted by 500+ Brands"
                 >
-                  {/* Subtle Inner Ring Inlay */}
-                  <div
-                    className="w-full h-full rounded-full p-1.5 flex items-center justify-center shadow-inner"
-                    style={{
-                      background: isDark
-                        ? 'linear-gradient(135deg, #2A1F2D 0%, #17111A 100%)'
-                        : 'linear-gradient(135deg, #FFFFFF 0%, #FAF4EB 100%)',
-                    }}
-                  >
-                    {/* The Official Amora Logo Disc */}
-                    <div className="w-full h-full rounded-full overflow-hidden relative shadow-lg">
-                      <img
-                        src="/assets/amora-logo-official.jpg"
-                        alt="Amora.co Official Logo"
-                        className="w-full h-full object-cover scale-[1.06] select-none pointer-events-none rounded-full"
-                        draggable={false}
-                      />
-
-                      {/* Dynamic Specular Glass Glint across the logo face */}
-                      <div
-                        className="absolute inset-0 rounded-full pointer-events-none transition-transform duration-75"
-                        style={{
-                          background: `linear-gradient(${125 + tilt.y * 1.5}deg, rgba(255,255,255,0.45) 0%, rgba(255,255,255,0.06) 38%, transparent 65%)`,
-                          transform: `translate(${tilt.y * 1.2}px, ${-tilt.x * 1.2}px)`,
-                        }}
-                      />
-
-                      {/* Delicate Tactile Glass Reflection Curvature */}
-                      <div
-                        className="absolute inset-0 rounded-full pointer-events-none"
-                        style={{
-                          boxShadow: isDark
-                            ? 'inset 0 1px 4px rgba(255,255,255,0.4), inset 0 -3px 8px rgba(0,0,0,0.4)'
-                            : 'inset 0 1px 4px rgba(255,255,255,0.7), inset 0 -3px 8px rgba(118,87,123,0.15)',
-                        }}
-                      />
-                    </div>
-                  </div>
+                  <span className="sr-only">Explore Brands & Corporate Gifting</span>
                 </div>
-              </div>
 
-              {/* Bottom Champagne Seal Inscription */}
-              <div
-                className="absolute bottom-4 z-20 flex items-center gap-2 px-3 py-1 rounded-full text-[11px] font-mono tracking-wider"
-                style={{
-                  background: isDark ? 'rgba(0,0,0,0.5)' : 'rgba(255,255,255,0.85)',
-                  color: isDark ? '#E5BE6C' : '#6D2E58',
-                  border: isDark ? '1px solid rgba(255,255,255,0.1)' : '1px solid rgba(109,46,88,0.15)',
-                  transform: 'translateZ(30px)',
-                }}
-              >
-                <Sparkles className="w-3 h-3 text-[#E5BE6C]" />
-                <span>Champagne Edition · Studio Core</span>
+                {/* 2. Floating Frosted Card Bottom-Right: "Corporate Gifting - MOQ 36 Pieces →" */}
+                <div
+                  onClick={() => {
+                    playTactileClick(1600, 0.04);
+                    onExploreCorporate();
+                  }}
+                  title="Corporate Gifting - MOQ 36 Pieces"
+                  className="absolute bottom-[8%] right-[4%] w-[38%] h-[20%] rounded-2xl cursor-pointer hover:ring-2 hover:ring-[#6D2E58]/50 transition-all z-20 group"
+                  aria-label="Corporate Gifting MOQ 36 Pieces"
+                >
+                  <span className="sr-only">Corporate Gifting MOQ 36 Pieces</span>
+                </div>
+
+                {/* 3. Bottom Right Circular Scroll Down Button "↓" */}
+                <button
+                  type="button"
+                  onClick={handleScrollDown}
+                  aria-label="Scroll down to 3D Orbit and Catalog"
+                  className={`absolute -bottom-2 right-2 sm:right-4 w-10 h-10 sm:w-11 sm:h-11 rounded-full flex items-center justify-center border shadow-lg backdrop-blur-md transition-all hover:scale-110 active:scale-95 cursor-pointer z-30 ${
+                    isDark
+                      ? 'bg-black/50 border-white/20 text-[#F8F4EA] hover:bg-black/70'
+                      : 'bg-white/80 border-[#6D2E58]/20 text-[#2E2A32] hover:bg-white shadow-[0_4px_16px_rgba(109,46,88,0.12)]'
+                  }`}
+                >
+                  <ChevronDown className="w-5 h-5 text-[#6D2E58] dark:text-[#EBC6CF] animate-bounce" />
+                </button>
               </div>
             </div>
           </div>
 
         </div>
+
+        {/* ═════════════════════════════════════════════════════════════
+            BOTTOM FEATURE BAR (Matching Reference Mockup Exactly)
+            [💎 Premium Quality] [🚚 On-Time Delivery] [🎧 Dedicated Support] [🛡️ Bulk Order Ready]
+            ═════════════════════════════════════════════════════════════ */}
+        <div className="mt-10 sm:mt-12 w-full max-w-4xl mx-auto">
+          <div
+            className={`backdrop-blur-md rounded-full px-5 sm:px-8 py-3 sm:py-3.5 border shadow-sm flex flex-wrap items-center justify-around gap-4 sm:gap-6 text-xs sm:text-[13px] transition-colors ${
+              isDark
+                ? 'bg-[#251D2A]/80 border-white/10 text-[#D8C6E6] shadow-black/40'
+                : 'bg-white/75 border-white/80 text-[#584F5E] shadow-[0_8px_24px_rgba(109,46,88,0.06)]'
+            }`}
+          >
+            <div className="flex items-center gap-2 font-medium">
+              <span className="text-sm">💎</span>
+              <span className={isDark ? 'text-[#F8F4EA]' : 'text-[#2E2A32]'}>Premium Quality</span>
+            </div>
+
+            <div className="hidden xs:block w-px h-3.5 bg-current opacity-20" />
+
+            <div className="flex items-center gap-2 font-medium">
+              <span className="text-sm">🚚</span>
+              <span className={isDark ? 'text-[#F8F4EA]' : 'text-[#2E2A32]'}>On-Time Delivery</span>
+            </div>
+
+            <div className="hidden xs:block w-px h-3.5 bg-current opacity-20" />
+
+            <div className="flex items-center gap-2 font-medium">
+              <span className="text-sm">🎧</span>
+              <span className={isDark ? 'text-[#F8F4EA]' : 'text-[#2E2A32]'}>Dedicated Support</span>
+            </div>
+
+            <div className="hidden xs:block w-px h-3.5 bg-current opacity-20" />
+
+            <div className="flex items-center gap-2 font-medium">
+              <span className="text-sm">🛡️</span>
+              <span className={isDark ? 'text-[#F8F4EA]' : 'text-[#2E2A32]'}>Bulk Order Ready</span>
+            </div>
+          </div>
+        </div>
+
       </div>
     </section>
   );

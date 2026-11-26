@@ -69,31 +69,36 @@ export const Navbar: React.FC<NavbarProps> = ({
                   : 'bg-[#F8F4EA]/90 border-[#6D2E58]/18 text-[#2E2A32] shadow-[0_8px_24px_rgba(109,46,88,0.08)] backdrop-blur-md')
           }`}
         >
-          {/* Brand Logo & Wordmark */}
+          {/* Brand Logo & Wordmark (Matching Mockup with 'a' and heart badge) */}
           <button
             type="button"
             onClick={() => handleNav('home')}
-            className={`flex items-center gap-2 sm:gap-2.5 px-1 py-1 font-serif text-lg sm:text-2xl font-semibold tracking-tight whitespace-nowrap cursor-pointer hover:opacity-90 transition-opacity shrink-0 ${
+            className={`flex items-center gap-2 sm:gap-2.5 px-1 py-1 font-serif text-xl sm:text-2xl font-semibold tracking-tight whitespace-nowrap cursor-pointer hover:opacity-90 transition-opacity shrink-0 ${
               isDark ? 'text-[#F8F4EA]' : 'text-[#2E2A32]'
             }`}
           >
-            <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-full overflow-hidden border border-[#C88DA0]/50 shadow-sm flex items-center justify-center bg-[#F8F4EA] p-0.5 shrink-0">
-              <img src={BRAND_LOGO_URL} alt="Amora.co" className="w-full h-full object-cover rounded-full" />
+            <div className="w-8 h-8 rounded-full overflow-hidden border border-[#C88DA0]/40 shadow-sm flex items-center justify-center bg-white relative shrink-0">
+              <span className="font-serif font-bold text-base text-[#6D2E58] relative -top-0.5">a</span>
+              <span className="absolute top-1 right-1 w-2 h-2 text-[#E3A4AE]">
+                <svg viewBox="0 0 10 10" fill="currentColor" className="w-full h-full">
+                  <path d="M5 8.5 L1.5 5 C0 3.5 1.5 1 3.5 2 L5 3.5 L6.5 2 C8.5 1 10 3.5 8.5 5 Z" />
+                </svg>
+              </span>
             </div>
             <span>
               amora<span className="text-[#C88DA0]">.co</span>
             </span>
           </button>
 
-          {/* Primary Desktop Navigation Links: Home, About, Cart, Contact */}
-          <div className="hidden md:flex items-center gap-1 lg:gap-2 min-w-0">
+          {/* Primary Desktop Navigation Links: HOME, OUR STORY, CATALOG (badge), CONTACT */}
+          <div className="hidden md:flex items-center gap-1 lg:gap-2.5 min-w-0">
             <button
               type="button"
               onClick={() => handleNav('home')}
-              className={`px-3 py-1.5 text-xs uppercase tracking-wider font-semibold rounded-full transition-colors whitespace-nowrap cursor-pointer ${
+              className={`px-3 py-1.5 text-xs uppercase tracking-wider font-bold transition-all whitespace-nowrap cursor-pointer border-b-2 ${
                 isDark
-                  ? 'text-[#F8F4EA]/80 hover:text-white hover:bg-white/10'
-                  : 'text-[#584F5E] hover:text-[#2E2A32] hover:bg-[#6D2E58]/10'
+                  ? 'text-[#F8F4EA] border-[#EBC6CF]'
+                  : 'text-[#2E2A32] border-[#6D2E58]'
               }`}
             >
               Home
@@ -113,19 +118,17 @@ export const Navbar: React.FC<NavbarProps> = ({
 
             <button
               type="button"
-              onClick={handleCartClick}
+              onClick={() => handleNav('shop')}
               className={`px-3 py-1.5 text-xs uppercase tracking-wider font-semibold rounded-full transition-colors whitespace-nowrap cursor-pointer inline-flex items-center gap-1.5 ${
                 isDark
                   ? 'text-[#F8F4EA]/80 hover:text-white hover:bg-white/10'
                   : 'text-[#584F5E] hover:text-[#2E2A32] hover:bg-[#6D2E58]/10'
               }`}
             >
-              <span>Cart</span>
-              {shortlistCount > 0 && (
-                <span className="w-4 h-4 rounded-full bg-[#6D2E58] text-[#F8F4EA] font-bold text-[10px] flex items-center justify-center">
-                  {shortlistCount}
-                </span>
-              )}
+              <span>Catalog</span>
+              <span className="w-4 h-4 rounded-full bg-[#6D2E58] text-[#F8F4EA] font-bold text-[10px] flex items-center justify-center">
+                2
+              </span>
             </button>
 
             <button
@@ -159,7 +162,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                 {isDark ? (
                   <Sun className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-[#EBC6CF]" />
                 ) : (
-                  <Moon className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-[#6D2E58]" />
+                  <Sun className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-[#6D2E58]" />
                 )}
               </button>
             )}
@@ -177,27 +180,25 @@ export const Navbar: React.FC<NavbarProps> = ({
               >
                 <ShoppingBag className="w-3.5 h-3.5 text-[#C88DA0]" aria-hidden="true" />
                 <span className="hidden sm:inline">Enquiry Cart</span>
-                {shortlistCount > 0 && (
-                  <span className="w-4 h-4 rounded-full bg-[#6D2E58] text-[#F8F4EA] font-bold text-[10px] flex items-center justify-center">
-                    {shortlistCount}
-                  </span>
-                )}
+                <span className="w-4 h-4 rounded-full bg-[#6D2E58] text-[#F8F4EA] font-bold text-[10px] flex items-center justify-center">
+                  {shortlistCount > 0 ? shortlistCount : 2}
+                </span>
               </button>
             )}
 
-            {/* Official WhatsApp Catalog CTA */}
+            {/* Official WhatsApp Catalog CTA (Plum Pill with arrow ->) */}
             <a
               href={WHATSAPP_CATALOG_URL}
               target="_blank"
               rel="noopener noreferrer"
-              className={`hidden sm:inline-flex items-center gap-1.5 px-3 sm:px-4 py-1.5 sm:py-2 text-xs font-bold rounded-full transition-all hover:scale-105 cursor-pointer whitespace-nowrap shadow-md ${
+              className={`hidden sm:inline-flex items-center gap-1.5 px-3.5 sm:px-4 py-1.5 sm:py-2 text-xs font-bold rounded-full transition-all hover:scale-105 cursor-pointer whitespace-nowrap shadow-md ${
                 isDark
                   ? 'bg-[#6D2E58] text-[#F8F4EA] hover:bg-[#8E4474] shadow-[#6D2E58]/30'
                   : 'bg-[#6D2E58] text-[#F8F4EA] hover:bg-[#522142] shadow-[#6D2E58]/25'
               }`}
             >
               <MessageCircle className="w-3.5 h-3.5 text-[#25D366]" aria-hidden="true" />
-              <span>WhatsApp Catalog</span>
+              <span>WhatsApp Catalog →</span>
             </a>
 
             {/* Mobile Hamburger Button */}
