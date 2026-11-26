@@ -66,9 +66,8 @@ export const ParticleHero: React.FC<ParticleHeroProps> = ({
               (Approx 45% width on desktop)
               ═════════════════════════════════════════════════════════════ */}
           <div
-            className={`lg:col-span-6 xl:col-span-5 flex flex-col items-start text-left transition-all duration-1000 ${
-              mounted ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
-            }`}
+            className={`lg:col-span-6 xl:col-span-5 flex flex-col items-start text-left transition-all duration-1000 ${mounted ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
+              }`}
           >
             {/* Top Badge: ♥ A LITTLE THOUGHT. A LOT OF LOVE. */}
             <div className="mb-4 sm:mb-5">
@@ -279,7 +278,7 @@ export const ParticleHero: React.FC<ParticleHeroProps> = ({
             Exact placement matching reference mockup
             ═════════════════════════════════════════════════════════════ */}
         <div className="mt-8 sm:mt-10 lg:mt-6 w-full flex items-center justify-between gap-4">
-          
+
           {/* Frosted Glass Trust Bar */}
           <div className="backdrop-blur-xl rounded-full px-5 sm:px-8 py-3 sm:py-3.5 border shadow-[0_10px_35px_rgba(112,45,88,0.08)] flex flex-wrap items-center gap-3 sm:gap-6 text-xs sm:text-[13px] bg-white/92 border-white/90 text-[#34232F]">
             {/* Item 1: Premium Quality */}

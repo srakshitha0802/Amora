@@ -23,6 +23,24 @@
 }
 
 :root {
+  --bg-canvas: #F8F1E9;
+  --bg-elevated: #FFF9F4;
+  --text-primary: #34232F;
+  --text-secondary: #76636D;
+  --text-muted: #8E7A85;
+  --border-subtle: rgba(112, 45, 88, 0.16);
+  --glass-bg: rgba(255, 255, 255, 0.72);
+  --glass-border-gradient: linear-gradient(
+    180deg,
+    rgba(112, 45, 88, 0.35) 0%,
+    rgba(199, 127, 152, 0.25) 20%,
+    rgba(112, 45, 88, 0.08) 50%,
+    rgba(199, 127, 152, 0.25) 80%,
+    rgba(112, 45, 88, 0.35) 100%
+  );
+}
+
+.dark {
   --bg-canvas: #1A161E;
   --bg-elevated: #26202A;
   --text-primary: #F8F1E9;
@@ -38,24 +56,6 @@
     rgba(255, 255, 255, 0) 60%,
     rgba(255, 255, 255, 0.15) 80%,
     rgba(255, 255, 255, 0.45) 100%
-  );
-}
-
-.light {
-  --bg-canvas: #F8F1E9;
-  --bg-elevated: #FFF9F4;
-  --text-primary: #34232F;
-  --text-secondary: #76636D;
-  --text-muted: #8E7A85;
-  --border-subtle: rgba(112, 45, 88, 0.16);
-  --glass-bg: rgba(255, 255, 255, 0.72);
-  --glass-border-gradient: linear-gradient(
-    180deg,
-    rgba(112, 45, 88, 0.35) 0%,
-    rgba(199, 127, 152, 0.25) 20%,
-    rgba(112, 45, 88, 0.08) 50%,
-    rgba(199, 127, 152, 0.25) 80%,
-    rgba(112, 45, 88, 0.35) 100%
   );
 }
 

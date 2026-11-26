@@ -91,14 +91,13 @@ export const Navbar: React.FC<NavbarProps> = ({
             className={`flex items-center gap-2.5 sm:gap-3 px-1 py-1 font-serif text-xl sm:text-2xl font-semibold tracking-tight whitespace-nowrap cursor-pointer hover:opacity-90 transition-opacity shrink-0 ${isDark ? 'text-[#F8F1E9]' : 'text-[#34232F]'
               }`}
           >
-            {/* Circular Amora Logo with Monogram 'a' and tiny pink heart badge */}
+            {/* Genuine Original Amora Emblem Logo */}
             <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-full overflow-hidden border border-[#C77F98]/40 shadow-xs flex items-center justify-center bg-white relative shrink-0">
-              <span className="font-serif font-bold text-base sm:text-lg text-[#702D58] relative -top-0.5">a</span>
-              <span className="absolute top-1 sm:top-1.5 right-1 sm:right-1.5 w-2 h-2 text-[#EBC5CC]">
-                <svg viewBox="0 0 10 10" fill="currentColor" className="w-full h-full">
-                  <path d="M5 8.5 L1.5 5 C0 3.5 1.5 1 3.5 2 L5 3.5 L6.5 2 C8.5 1 10 3.5 8.5 5 Z" />
-                </svg>
-              </span>
+              <img
+                src="/assets/amora-emblem-clean.png"
+                alt="Amora"
+                className="w-full h-full object-cover"
+              />
             </div>
             <span>
               amora<span className="text-[#C77F98]">.co</span>
@@ -156,9 +155,6 @@ export const Navbar: React.FC<NavbarProps> = ({
                 }`}
             >
               <span>Catalog</span>
-              <span className="w-4 h-4 rounded-full bg-[#702D58] text-[#F8F1E9] font-bold text-[10px] flex items-center justify-center">
-                {shortlistCount > 0 ? shortlistCount : 2}
-              </span>
               {activeSection === 'shop' && (
                 <span className="absolute bottom-0 left-3 right-3 h-[2px] bg-[#702D58] dark:bg-[#C77F98] rounded-full" />
               )}
@@ -218,9 +214,11 @@ export const Navbar: React.FC<NavbarProps> = ({
                   shopping_bag
                 </span>
                 <span className="hidden sm:inline">Enquiry Cart</span>
-                <span className="w-4 h-4 rounded-full bg-[#702D58] text-[#F8F1E9] font-bold text-[10px] flex items-center justify-center">
-                  {shortlistCount > 0 ? shortlistCount : 2}
-                </span>
+                {shortlistCount > 0 && (
+                  <span className="w-4 h-4 rounded-full bg-[#702D58] text-[#F8F1E9] font-bold text-[10px] flex items-center justify-center">
+                    {shortlistCount}
+                  </span>
+                )}
               </button>
             )}
 
@@ -287,9 +285,11 @@ export const Navbar: React.FC<NavbarProps> = ({
                 }`}
             >
               <span>Catalog</span>
-              <span className="w-5 h-5 rounded-full bg-[#702D58] text-[#F8F1E9] font-bold text-xs flex items-center justify-center">
-                {shortlistCount > 0 ? shortlistCount : 2}
-              </span>
+              {shortlistCount > 0 && (
+                <span className="w-5 h-5 rounded-full bg-[#702D58] text-[#F8F1E9] font-bold text-xs flex items-center justify-center">
+                  {shortlistCount}
+                </span>
+              )}
             </button>
 
             <button
@@ -310,7 +310,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                 <span className="material-symbols-outlined text-[#C77F98] text-[18px]">
                   shopping_bag
                 </span>
-                <span>Enquiry Cart ({shortlistCount > 0 ? shortlistCount : 2})</span>
+                <span>Enquiry Cart{shortlistCount > 0 ? ` (${shortlistCount})` : ''}</span>
               </button>
 
               <a

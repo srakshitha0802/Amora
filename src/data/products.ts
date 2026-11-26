@@ -1,7 +1,7 @@
 import type { PrintingFinish, Product, ProductCategory } from '../types';
 import rawProducts from '../../content/products.json';
 
-export const BRAND_LOGO_URL = '/assets/aistudio/PHOTO-2026-11-21-11-46-55_ece32d0a.jpg';
+export const BRAND_LOGO_URL = '/assets/amora-emblem-clean.png';
 export const INSTAGRAM_URL = 'https://www.instagram.com/amora.co._?dmpr=eDcycW4yZm1qNzM%3D';
 export const INSTAGRAM_HANDLE = '@amora.co._';
 export const STUDIO_EMAIL = 'amora.copap@gmail.com';

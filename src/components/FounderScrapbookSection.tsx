@@ -42,12 +42,16 @@ export const FounderScrapbookSection: React.FC<FounderScrapbookSectionProps> = (
             <span>A Note from the Founder · Our Story</span>
           </div>
 
-          <h2 className="font-serif text-4xl sm:text-6xl font-normal tracking-tight leading-[1.08] mb-4 text-[#34232F] dark:text-[#FFF9F4]">
+          <h2 className={`font-serif text-4xl sm:text-6xl font-normal tracking-tight leading-[1.08] mb-4 ${
+            isDark ? 'text-[#FFF9F4]' : 'text-[#34232F]'
+          }`}>
             A Little Thought. <br />
             <em className="italic text-[#C77F98] font-normal">A Lot of Love.</em>
           </h2>
 
-          <p className="text-base sm:text-lg leading-relaxed text-[#584552] dark:text-[#E8DCE4]">
+          <p className={`text-base sm:text-lg leading-relaxed ${
+            isDark ? 'text-[#E8DCE4]' : 'text-[#4A3845] font-medium'
+          }`}>
             Where it all began — little keepsakes made for the people who mattered.
             A personal journey from a family living room to over 1,000+ fulfilled stories.
           </p>
@@ -128,14 +132,14 @@ export const FounderScrapbookSection: React.FC<FounderScrapbookSectionProps> = (
                   <p className="font-serif italic text-lg sm:text-xl font-bold text-[#702D58]">
                     Where it all began...
                   </p>
-                  <p className="text-xs mt-1 text-[#4A3B44] font-medium">
+                  <p className="text-xs mt-1 text-[#34232F] font-semibold">
                     Little keepsakes made for the people who mattered most.
                   </p>
                 </div>
               </div>
 
               {/* Polaroid 2 / Sister Dedication Note: Rajashree & Harshini */}
-              <div className="p-5 rounded-2xl border shadow-xl relative transition-transform duration-300 hover:rotate-0 rotate-[2deg] bg-gradient-to-br from-[#FFF5F7] to-[#FAF0F3] border-[#702D58]/25 text-[#34232F]">
+              <div className="p-5 rounded-2xl border shadow-xl relative transition-transform duration-300 hover:rotate-0 rotate-[2deg] bg-gradient-to-br from-[#FFF5F7] to-[#FAF0F3] border-[#702D58]/30 text-[#34232F]">
                 {/* Paperclip Doodle */}
                 <div className="absolute -top-4 right-6 w-6 h-10 pointer-events-none">
                   <svg viewBox="0 0 24 40" fill="none" className="w-full h-full text-[#C77F98]">
@@ -155,14 +159,14 @@ export const FounderScrapbookSection: React.FC<FounderScrapbookSectionProps> = (
                   </span>
                 </div>
 
-                <h4 className="font-serif text-lg sm:text-xl font-normal leading-snug mb-2 text-[#34232F]">
+                <h4 className="font-serif text-lg sm:text-xl font-semibold leading-snug mb-2 text-[#34232F]">
                   Encouraged by my elder sisters,{' '}
                   <span className="font-bold text-[#702D58]">
                     Rajashree &amp; Harshini
                   </span>
                 </h4>
 
-                <p className="text-xs sm:text-[13px] leading-relaxed italic text-[#34232F] font-medium">
+                <p className="text-xs sm:text-[13px] leading-relaxed italic text-[#34232F] font-semibold">
                   “They saw the love poured into every gift and gently pushed me:
                   ‘Take this beyond our own family. The world needs this feeling.’ That was the spark that gave birth to Amora.”
                 </p>
@@ -216,32 +220,38 @@ export const FounderScrapbookSection: React.FC<FounderScrapbookSectionProps> = (
               {/* The Genuine Founder Story Written by Achintya */}
               <div className="space-y-5">
                 {/* Location Badge */}
-                <div className="flex items-center gap-2 text-xs text-[#702D58] font-mono font-bold">
+                <div className={`flex items-center gap-2 text-xs font-mono font-bold ${
+                  isDark ? 'text-[#EBC5CC]' : 'text-[#702D58]'
+                }`}>
                   <span className="material-symbols-outlined text-[16px]">
                     location_on
                   </span>
                   <span>Kalyan Studio, Thane District, Maharashtra</span>
                 </div>
 
-                <h3 className="font-serif text-2xl sm:text-4xl font-normal tracking-tight leading-tight text-[#34232F] dark:text-[#FFF9F4]">
+                <h3 className={`font-serif text-2xl sm:text-4xl font-normal tracking-tight leading-tight ${
+                  isDark ? 'text-[#FFF9F4]' : 'text-[#34232F]'
+                }`}>
                   “Amora began with something simple:{' '}
-                  <span className="italic text-[#702D58] dark:text-[#EBC5CC]">
+                  <span className={`italic ${isDark ? 'text-[#EBC5CC]' : 'text-[#702D58]'}`}>
                     the joy of making the people we love feel special.”
                   </span>
                 </h3>
 
                 {/* Body Paragraphs with 100% visible high-contrast typography */}
-                <div className="space-y-4 text-sm sm:text-base leading-relaxed text-[#2E2028] dark:text-[#F8F1E9] font-normal">
+                <div className={`space-y-4 text-sm sm:text-base leading-relaxed font-normal ${
+                  isDark ? 'text-[#F8F1E9]' : 'text-[#2E2028]'
+                }`}>
                   <p>
-                    What started in 2025 as my own way of turning ordinary printouts into thoughtfully curated photo cards and personalised gifts for the people who mattered most slowly became something bigger. I wanted every little detail to say what words sometimes couldn't — <strong className="font-bold text-[#702D58] dark:text-[#EBC5CC]">you are special, you are remembered, and you matter.</strong>
+                    What started in 2025 as my own way of turning ordinary printouts into thoughtfully curated photo cards and personalised gifts for the people who mattered most slowly became something bigger. I wanted every little detail to say what words sometimes couldn't — <strong className={`font-bold ${isDark ? 'text-[#EBC5CC]' : 'text-[#702D58]'}`}>you are special, you are remembered, and you matter.</strong>
                   </p>
 
                   <p>
-                    The idea of turning this little passion into a business came from my elder sisters, <strong className="font-bold text-[#702D58] dark:text-[#EBC5CC]">Rajashree and Harshini</strong>, who encouraged me to take it beyond gifting my own loved ones. That became my eureka moment.
+                    The idea of turning this little passion into a business came from my elder sisters, <strong className={`font-bold ${isDark ? 'text-[#EBC5CC]' : 'text-[#702D58]'}`}>Rajashree and Harshini</strong>, who encouraged me to take it beyond gifting my own loved ones. That became my eureka moment.
                   </p>
 
                   <p>
-                    I started Amora from scratch in <strong className="font-bold text-[#702D58] dark:text-[#EBC5CC]">June 2025</strong>, with nothing but an idea, a lot of enthusiasm and the desire to create something meaningful. Since then, we've grown across products, crossed 1,000+ orders and evolved into corporate gifting and customised merchandise.
+                    I started Amora from scratch in <strong className={`font-bold ${isDark ? 'text-[#EBC5CC]' : 'text-[#702D58]'}`}>June 2025</strong>, with nothing but an idea, a lot of enthusiasm and the desire to create something meaningful. Since then, we've grown across products, crossed 1,000+ orders and evolved into corporate gifting and customised merchandise.
                   </p>
 
                   <p>
@@ -271,23 +281,37 @@ export const FounderScrapbookSection: React.FC<FounderScrapbookSectionProps> = (
                 </div>
 
                 {/* ─── PULL QUOTE BANNER ─── */}
-                <div className="p-6 sm:p-7 rounded-2xl border relative my-4 shadow-md bg-[#FFF5F8] border-[#702D58]/25 text-[#34232F]">
-                  <blockquote className="font-serif italic text-lg sm:text-2xl leading-relaxed text-[#702D58] font-medium">
+                <div className={`p-6 sm:p-7 rounded-2xl border relative my-4 shadow-md ${
+                  isDark
+                    ? 'bg-[#1E1721] border-[#C77F98]/30 text-[#F8F1E9]'
+                    : 'bg-[#FFF5F8] border-[#702D58]/25 text-[#34232F]'
+                }`}>
+                  <blockquote className={`font-serif italic text-lg sm:text-2xl leading-relaxed font-medium ${
+                    isDark ? 'text-[#F8F1E9]' : 'text-[#702D58]'
+                  }`}>
                     “Because behind every creation is a little thought, and behind every little thought is love.”
                   </blockquote>
 
                   {/* Founder Signature & Title */}
-                  <div className="mt-4 pt-3 border-t border-[#702D58]/20 flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+                  <div className={`mt-4 pt-3 border-t flex flex-col sm:flex-row sm:items-center justify-between gap-2 ${
+                    isDark ? 'border-white/15' : 'border-[#702D58]/20'
+                  }`}>
                     <div>
-                      <span className="font-serif font-bold text-base sm:text-lg block text-[#34232F]">
+                      <span className={`font-serif font-bold text-base sm:text-lg block ${
+                        isDark ? 'text-[#FFF9F4]' : 'text-[#34232F]'
+                      }`}>
                         — Achintya Gurba
                       </span>
-                      <span className="text-xs text-[#702D58] font-bold tracking-wide">
+                      <span className={`text-xs font-bold tracking-wide ${
+                        isDark ? 'text-[#EBC5CC]' : 'text-[#702D58]'
+                      }`}>
                         Founder, Amora.co
                       </span>
                     </div>
 
-                    <span className="text-xs font-mono font-semibold text-[#584552]">
+                    <span className={`text-xs font-mono font-semibold ${
+                      isDark ? 'text-[#C77F98]' : 'text-[#584552]'
+                    }`}>
                       Kalyan Studio · Established 2025
                     </span>
                   </div>

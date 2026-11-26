@@ -244,14 +244,25 @@ export const AboutAndContactSection: React.FC<AboutAndContactSectionProps> = ({
       <footer className="bg-[#2E2A32] text-[#F8F4EA] pt-14 pb-28 md:pb-14">
         <div className="max-w-[1280px] mx-auto px-5 sm:px-8">
           <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-8 pb-8 mb-8 border-b border-white/10">
-            <div>
-              <p className="font-serif text-3xl font-semibold">amora.co</p>
-              <p className="text-sm text-[#C88DA0] mt-1 font-serif italic">
-                Thoughtfully Personalised. Beautifully Branded.
-              </p>
-              <p className="text-xs text-white/60 mt-1">
-                A creative studio for personalised gifts, custom merchandise and corporate gifting.
-              </p>
+            <div className="flex items-center gap-3.5">
+              <div className="w-12 h-12 rounded-full overflow-hidden border border-[#C77F98]/40 shadow-xs flex items-center justify-center bg-white relative shrink-0">
+                <img
+                  src={BRAND_LOGO_URL}
+                  alt="Amora Logo"
+                  className="w-full h-full object-cover"
+                />
+              </div>
+              <div>
+                <p className="font-serif text-3xl font-semibold">
+                  amora<span className="text-[#C77F98]">.co</span>
+                </p>
+                <p className="text-sm text-[#C77F98] mt-1 font-serif italic">
+                  Thoughtfully Personalised. Beautifully Branded.
+                </p>
+                <p className="text-xs text-white/60 mt-1">
+                  A creative studio for personalised gifts, custom merchandise and corporate gifting.
+                </p>
+              </div>
             </div>
             <div className="flex flex-wrap gap-3">
               <a
