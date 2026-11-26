@@ -45,14 +45,7 @@ export default function App() {
   const [toastText, setToastText] = React.useState<string | null>(null);
 
   // Dual Theme Engine (Default: Approved Light Ivory & Plum Foundation)
-  const [theme, setTheme] = React.useState<'dark' | 'light'>(() => {
-    try {
-      const saved = window.localStorage.getItem(THEME_STORAGE_KEY);
-      return saved === 'dark' ? 'dark' : 'light';
-    } catch {
-      return 'light';
-    }
-  });
+  const [theme, setTheme] = React.useState<'dark' | 'light'>('light');
 
   React.useEffect(() => {
     try {

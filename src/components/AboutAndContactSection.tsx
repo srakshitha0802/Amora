@@ -24,7 +24,7 @@ interface AboutAndContactSectionProps {
 }
 
 export const AboutAndContactSection: React.FC<AboutAndContactSectionProps> = ({
-  theme = 'dark',
+  theme = 'light',
 }) => {
   const isDark = theme === 'dark';
 

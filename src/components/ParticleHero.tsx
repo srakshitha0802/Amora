@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { ArrowRight, MessageCircle, ExternalLink, Heart, ChevronDown } from 'lucide-react';
 import { WHATSAPP_CATALOG_URL } from '../data/products';
 import { playTactileClick } from '../utils/audio';
 
@@ -12,7 +11,6 @@ interface ParticleHeroProps {
 export const ParticleHero: React.FC<ParticleHeroProps> = ({
   onExplorePersonal,
   onExploreCorporate,
-  theme = 'light',
 }) => {
   const [mounted, setMounted] = useState(false);
   const stageRef = useRef<HTMLDivElement>(null);
@@ -23,17 +21,15 @@ export const ParticleHero: React.FC<ParticleHeroProps> = ({
     return () => clearTimeout(timer);
   }, []);
 
-  const isDark = theme === 'dark';
-
-  // Smooth mouse tilt parallax for the 3D physical stage
+  // Subtle mouse tilt interaction for the floating glass cards
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
     if (!stageRef.current) return;
     const rect = stageRef.current.getBoundingClientRect();
     const x = (e.clientX - rect.left) / rect.width - 0.5;
     const y = (e.clientY - rect.top) / rect.height - 0.5;
     setTilt({
-      x: -y * 8,
-      y: x * 10,
+      x: -y * 4,
+      y: x * 5,
     });
   };
 
@@ -43,110 +39,63 @@ export const ParticleHero: React.FC<ParticleHeroProps> = ({
 
   const handleScrollDown = () => {
     playTactileClick(1200, 0.03);
-    const orbitSection = document.getElementById('orbit-showcase') || document.getElementById('keepsakes') || document.getElementById('shop');
-    orbitSection?.scrollIntoView({ behavior: 'smooth' });
+    const target =
+      document.getElementById('orbit-showcase') ||
+      document.getElementById('keepsakes') ||
+      document.getElementById('shop');
+    target?.scrollIntoView({ behavior: 'smooth' });
   };
 
   return (
     <section
       id="home"
-      className={`relative w-full min-h-[96vh] flex flex-col justify-between overflow-hidden pt-24 sm:pt-28 pb-10 transition-colors duration-500 ${
-        isDark
-          ? 'bg-gradient-to-br from-[#1C1621] via-[#16121B] to-[#120E15]'
-          : 'bg-gradient-to-br from-[#FAF2EE] via-[#F8EDEA] to-[#F5E2E6]'
-      }`}
+      className="relative w-full min-h-[780px] lg:min-h-[850px] xl:min-h-[880px] flex flex-col justify-between overflow-hidden pt-28 sm:pt-32 lg:pt-34 pb-8 transition-colors duration-500 bg-[#F8F1E9]"
+      style={{
+        backgroundImage: "url('/assets/amora-hero-bg-clean-2x.jpg')",
+        backgroundSize: 'cover',
+        backgroundPosition: 'center right',
+        backgroundRepeat: 'no-repeat',
+      }}
     >
-      {/* ─── BOTANICAL PALM FROND SHADOW (Top-Left Sunlit Cast matching reference mockup) ─── */}
-      <div
-        className={`absolute -top-10 -left-10 w-[380px] sm:w-[480px] lg:w-[580px] pointer-events-none select-none transition-opacity duration-700 z-0 ${
-          isDark ? 'opacity-[0.06] mix-blend-screen' : 'opacity-[0.22] mix-blend-multiply'
-        }`}
-      >
-        <svg viewBox="0 0 500 500" fill="none" className="w-full h-auto text-[#4A3B44]">
-          {/* Palm Frond 1 */}
-          <path
-            d="M 20 -40 C 90 40, 220 120, 360 210 M 80 15 C 150 15, 230 45, 290 85 M 120 45 C 190 55, 270 95, 330 145 M 160 80 C 230 100, 310 145, 370 205 M 200 120 C 270 145, 340 195, 395 260 M 240 160 C 300 190, 365 245, 410 315"
-            stroke="currentColor"
-            strokeWidth="18"
-            strokeLinecap="round"
-            filter="blur(16px)"
-          />
-          {/* Palm Frond 2 */}
-          <path
-            d="M -30 60 C 60 120, 180 230, 260 380 M 30 100 C 90 120, 160 180, 210 250 M 70 140 C 130 170, 200 235, 245 310 M 110 190 C 165 225, 230 300, 270 380"
-            stroke="currentColor"
-            strokeWidth="14"
-            strokeLinecap="round"
-            filter="blur(14px)"
-          />
-          {/* Palm Frond 3 Accent */}
-          <path
-            d="M 40 -60 C 110 10, 200 80, 280 160 M 90 0 C 150 15, 220 50, 270 95"
-            stroke="currentColor"
-            strokeWidth="12"
-            strokeLinecap="round"
-            filter="blur(12px)"
-          />
-        </svg>
-      </div>
+      {/* ─── MAIN HERO CONTAINER ─── */}
+      <div className="max-w-[1400px] w-full mx-auto px-5 sm:px-8 lg:px-12 relative z-10 flex-1 flex flex-col justify-center">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-6 items-center">
 
-      {/* Warm Ambient Glows */}
-      <div
-        className={`absolute top-1/4 left-1/10 w-[500px] h-[500px] rounded-full blur-[160px] pointer-events-none transition-opacity duration-700 ${
-          isDark ? 'bg-[#6D2E58]/20' : 'bg-[#EBC6CF]/40'
-        }`}
-      />
-      <div
-        className={`absolute bottom-1/5 right-1/10 w-[480px] h-[480px] rounded-full blur-[150px] pointer-events-none transition-opacity duration-700 ${
-          isDark ? 'bg-[#C88DA0]/10' : 'bg-[#F8F4EA]/90'
-        }`}
-      />
-
-      {/* ─── MAIN HERO CONTENT CONTAINER ─── */}
-      <div className="max-w-[1360px] w-full mx-auto px-5 sm:px-8 lg:px-12 relative z-10 flex-1 flex flex-col justify-center">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
-          
           {/* ═════════════════════════════════════════════════════════════
-              LEFT COLUMN: Editorial Typography, Taglines & CTAs
+              LEFT COLUMN: Editorial Typography, Taglines & Action CTAs
+              (Approx 45% width on desktop)
               ═════════════════════════════════════════════════════════════ */}
           <div
-            className={`lg:col-span-6 flex flex-col items-start text-left transition-all duration-1000 ${
+            className={`lg:col-span-6 xl:col-span-5 flex flex-col items-start text-left transition-all duration-1000 ${
               mounted ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
             }`}
           >
-            {/* Tagline Pill: ♥ A LITTLE THOUGHT. A LOT OF LOVE. */}
-            <div className="mb-5 sm:mb-6">
-              <div
-                className={`inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-[11px] sm:text-xs font-semibold uppercase tracking-wider border shadow-xs transition-colors ${
-                  isDark
-                    ? 'bg-white/5 border-white/15 text-[#EBC6CF]'
-                    : 'bg-white/80 backdrop-blur-md border-[#6D2E58]/15 text-[#6D2E58]'
-                }`}
-              >
-                <Heart className="w-3.5 h-3.5 text-[#C88DA0] fill-[#C88DA0]" />
-                <span className="tracking-[0.16em]">A Little Thought. A Lot of Love.</span>
+            {/* Top Badge: ♥ A LITTLE THOUGHT. A LOT OF LOVE. */}
+            <div className="mb-4 sm:mb-5">
+              <div className="inline-flex items-center gap-2 px-3.5 sm:px-4 py-1.5 rounded-full text-[11px] sm:text-xs font-semibold uppercase tracking-[0.14em] border shadow-xs bg-white/90 backdrop-blur-md border-[#702D58]/15 text-[#702D58]">
+                <span className="material-symbols-outlined fill text-[#C77F98] text-[14px]">
+                  favorite
+                </span>
+                <span>A Little Thought. A Lot of Love.</span>
               </div>
             </div>
 
             {/* Editorial Headline:
                 Thoughtfully
                 personalised.
-                Beautifully branded. (with underline flourish)
+                Beautifully branded. (in dusty rose italic with baseline underline flourish)
             */}
-            <h1
-              className={`font-serif text-[42px] sm:text-[62px] lg:text-[72px] font-normal tracking-tight leading-[1.05] mb-6 ${
-                isDark ? 'text-[#F8F4EA]' : 'text-[#2E2A32]'
-              }`}
-            >
+            <h1 className="font-serif text-[44px] sm:text-[60px] lg:text-[64px] xl:text-[72px] font-normal tracking-tight leading-[1.04] mb-5 sm:mb-6 text-[#34232F]">
               Thoughtfully<br />
               personalised.<br />
-              <span className="relative inline-block italic font-normal text-[#C88DA0]">
+              <span className="relative inline-block italic font-normal text-[#C77F98]">
                 Beautifully branded.
-                {/* Handcrafted Curved Underline Stroke Flashing Underneath */}
+                {/* Curved underline flourish stroke matching reference mockup */}
                 <svg
-                  className="absolute -bottom-2 sm:-bottom-3 left-0 w-full h-3 sm:h-4 text-[#C88DA0]"
+                  className="absolute -bottom-2 sm:-bottom-2.5 left-0 w-full h-3 sm:h-4 text-[#C77F98]"
                   viewBox="0 0 320 18"
                   fill="none"
+                  aria-hidden="true"
                 >
                   <path
                     d="M 4 14 C 80 4, 230 2, 316 13"
@@ -158,137 +107,167 @@ export const ParticleHero: React.FC<ParticleHeroProps> = ({
               </span>
             </h1>
 
-            {/* Subtitle Paragraph */}
-            <p
-              className={`text-sm sm:text-base max-w-lg leading-relaxed mb-8 font-normal ${
-                isDark ? 'text-[#D8C6E6]' : 'text-[#584F5E]'
-              }`}
-            >
+            {/* Description Paragraph */}
+            <p className="text-[15px] sm:text-[16px] max-w-lg leading-relaxed mb-7 sm:mb-8 font-normal text-[#584552]">
               Amora is a creative studio for personalised gifts, custom merchandise and corporate gifting.
               From a single tactile polaroid tucked into a wax-sealed letter to 500-piece company onboarding kits — thoughtfully crafted in our Kalyan studio.
             </p>
 
-            {/* CTAs: Corporate Merchandise (MOQ 36) + Personal Keepsakes (No MOQ) */}
-            <div className="flex flex-wrap gap-3.5 sm:gap-4 items-center mb-4 w-full sm:w-auto">
+            {/* Primary Action Buttons */}
+            <div className="flex flex-wrap gap-3 sm:gap-3.5 items-center mb-4 w-full sm:w-auto">
+              {/* Primary: Corporate Merchandise (MOQ 36) -> */}
               <button
                 type="button"
                 onClick={() => {
                   playTactileClick(1600, 0.04);
                   onExploreCorporate();
                 }}
-                className="rounded-full px-6 sm:px-7 py-3 sm:py-3.5 text-xs sm:text-sm font-semibold transition-all inline-flex items-center gap-2.5 shadow-lg shadow-[#6D2E58]/20 hover:-translate-y-0.5 cursor-pointer bg-[#6D2E58] text-[#F8F4EA] hover:bg-[#582447] border border-[#C88DA0]/40"
+                className="rounded-full px-6 sm:px-7 py-3 sm:py-3.5 text-xs sm:text-sm font-semibold transition-all duration-200 inline-flex items-center gap-2.5 shadow-lg shadow-[#702D58]/25 hover:-translate-y-0.5 hover:shadow-xl hover:shadow-[#702D58]/35 active:translate-y-0 cursor-pointer bg-[#702D58] text-white hover:bg-[#592345] border border-[#C77F98]/40 group"
               >
                 <span>Corporate Merchandise (MOQ 36)</span>
-                <ArrowRight className="w-4 h-4 text-[#F8F4EA]" />
+                <span className="material-symbols-outlined text-[18px] transition-transform duration-200 group-hover:translate-x-1 text-white">
+                  arrow_forward
+                </span>
               </button>
 
+              {/* Secondary: Personal Keepsakes (No MOQ) -> */}
               <button
                 type="button"
                 onClick={() => {
                   playTactileClick(1800, 0.04);
                   onExplorePersonal();
                 }}
-                className={`rounded-full px-6 sm:px-7 py-3 sm:py-3.5 text-xs sm:text-sm font-semibold transition-all inline-flex items-center gap-2.5 hover:-translate-y-0.5 cursor-pointer border backdrop-blur-sm ${
-                  isDark
-                    ? 'border-white/20 hover:bg-white/10 text-[#F8F4EA]'
-                    : 'bg-white/80 border-[#6D2E58]/25 hover:bg-white text-[#2E2A32] shadow-xs'
-                }`}
+                className="rounded-full px-6 sm:px-7 py-3 sm:py-3.5 text-xs sm:text-sm font-semibold transition-all duration-200 inline-flex items-center gap-2.5 hover:-translate-y-0.5 active:translate-y-0 cursor-pointer border backdrop-blur-md bg-white/95 border-[#EBC5CC] hover:bg-white text-[#34232F] shadow-sm group"
               >
                 <span>Personal Keepsakes (No MOQ)</span>
-                <ArrowRight className="w-4 h-4 text-[#6D2E58]" />
+                <span className="material-symbols-outlined text-[18px] transition-transform duration-200 group-hover:translate-x-1 text-[#702D58]">
+                  arrow_forward
+                </span>
               </button>
             </div>
 
-            {/* Tertiary Action: WhatsApp Catalogue */}
-            <div className="mb-2">
+            {/* Tertiary WhatsApp Catalog Button */}
+            <div className="mb-6">
               <a
                 href={WHATSAPP_CATALOG_URL}
                 target="_blank"
                 rel="noopener noreferrer"
                 onClick={() => playTactileClick(1400, 0.03)}
-                className={`rounded-full px-4 py-2 text-xs font-semibold transition-all inline-flex items-center gap-2 hover:-translate-y-0.5 border shadow-2xs ${
-                  isDark
-                    ? 'border-emerald-500/30 text-emerald-300 bg-emerald-950/30 hover:bg-emerald-900/40'
-                    : 'border-emerald-600/25 text-[#1B7339] bg-[#E3F6EB] hover:bg-[#D4EFE0]'
-                }`}
+                className="rounded-full px-4 py-2 text-xs font-semibold transition-all duration-200 inline-flex items-center gap-2 hover:-translate-y-0.5 border shadow-2xs border-[#BDE8D3] text-[#1E683B] bg-[#E8F8F0] hover:bg-[#D9F4E5]"
               >
-                <MessageCircle className="w-3.5 h-3.5 text-[#25D366] fill-[#25D366]" />
+                <svg className="w-3.5 h-3.5 text-[#25D366] fill-current" viewBox="0 0 24 24">
+                  <path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.582 2.128 2.182-.573c.978.58 1.911.928 3.145.929 3.178 0 5.767-2.587 5.768-5.766.001-3.187-2.575-5.77-5.764-5.771zm3.392 8.244c-.144.405-.837.774-1.17.824-.312.045-.694.073-2.123-.522-1.828-.76-3.003-2.617-3.094-2.739-.092-.122-.74-1.026-.74-1.956 0-.931.488-1.389.66-1.579.173-.19.377-.238.503-.238.125 0 .251.001.36.006.115.006.269-.044.421.323.157.38.536 1.309.583 1.405.047.095.078.207.016.333-.063.125-.094.204-.188.314-.094.111-.197.247-.282.332-.094.095-.192.198-.083.385.11.188.487.804 1.045 1.301.719.64 1.325.838 1.513.933.188.094.298.083.408-.043.111-.125.474-.551.6-.74.125-.188.251-.157.421-.094.172.063 1.09.514 1.278.608.188.094.314.141.36.22.046.078.046.454-.098.859z" />
+                </svg>
                 <span>WhatsApp Catalogue</span>
-                <ExternalLink className="w-3 h-3 opacity-70" />
+                <span className="material-symbols-outlined text-[14px] opacity-70">
+                  arrow_outward
+                </span>
               </a>
             </div>
           </div>
 
           {/* ═════════════════════════════════════════════════════════════
-              RIGHT COLUMN: The Exact Physical 3D Showcase Stage
+              RIGHT COLUMN: Interactive Floating Glass Cards & Accents
+              Overlaid directly above the background photoshoot set
+              (Approx 55% width on desktop)
               ═════════════════════════════════════════════════════════════ */}
           <div
             ref={stageRef}
             onMouseMove={handleMouseMove}
             onMouseLeave={handleMouseLeave}
-            className={`lg:col-span-6 w-full flex items-center justify-center transition-all duration-1000 delay-150 select-none relative ${
+            className={`lg:col-span-6 xl:col-span-7 w-full min-h-[420px] sm:min-h-[480px] lg:min-h-[560px] relative transition-all duration-1000 delay-150 select-none ${
               mounted ? 'opacity-100 scale-100' : 'opacity-0 scale-95'
             }`}
             style={{ perspective: '1200px' }}
           >
-            {/* Interactive 3D Stage Composition */}
+            {/* Interactive container for cards */}
             <div
-              className="relative w-full max-w-[560px] flex items-center justify-center transition-transform duration-200 ease-out"
+              className="relative w-full h-full min-h-[420px] sm:min-h-[480px] lg:min-h-[560px] flex items-center justify-center transition-transform duration-200 ease-out"
               style={{
                 transform: `rotateX(${tilt.x}deg) rotateY(${tilt.y}deg)`,
                 transformStyle: 'preserve-3d',
               }}
             >
-              {/* Clean Cropped Rendered Stage from Client Reference */}
-              <div className="relative w-full rounded-3xl overflow-visible">
-                <img
-                  src="/assets/hero-stage-clean.png"
-                  alt="Amora Product Stage - Mug, Bottle, Gift Box on Terrazzo Podium with Silk Drapery"
-                  className="w-full h-auto object-contain select-none pointer-events-none drop-shadow-2xl rounded-3xl"
-                  draggable={false}
-                />
+              {/* ─── 1. FLOATING CARD 1 (Upper Left of Arch): "Trusted by 500+ Brands" ─── */}
+              <div
+                onClick={() => {
+                  playTactileClick(1500, 0.03);
+                  onExploreCorporate();
+                }}
+                title="Click to explore Corporate Clients & Case Studies"
+                className="absolute top-[10%] sm:top-[12%] lg:top-[14%] left-[2%] sm:left-[5%] lg:left-[4%] z-30 -rotate-6 hover:-rotate-2 hover:scale-105 transition-all duration-300 cursor-pointer group"
+                style={{ transform: 'translateZ(35px)' }}
+              >
+                <div className="p-2 sm:p-2.5 rounded-2xl bg-white/95 backdrop-blur-md border border-white shadow-[0_20px_45px_-6px_rgba(112,45,88,0.22)] relative">
+                  {/* Tiny Heart Corner Icon */}
+                  <div className="absolute -top-1.5 -right-1.5 w-5 h-5 rounded-full bg-[#EBC5CC] border border-white text-[#702D58] flex items-center justify-center shadow-xs">
+                    <span className="material-symbols-outlined fill text-[#702D58] text-[11px]">
+                      favorite
+                    </span>
+                  </div>
 
-                {/* ─── INTERACTIVE CLICK HOTSPOTS OVER STAGE ELEMENTS ─── */}
-                
-                {/* 1. Floating Polaroid Top-Left: "Trusted by 500+ Brands" */}
-                <div
-                  onClick={() => {
-                    playTactileClick(1500, 0.03);
-                    onExploreCorporate();
-                  }}
-                  title="Click to view Corporate Gifting & Client Showcase"
-                  className="absolute top-[16%] left-[4%] w-[32%] h-[38%] rounded-2xl cursor-pointer hover:ring-2 hover:ring-[#C88DA0]/50 transition-all z-20 group"
-                  aria-label="Trusted by 500+ Brands"
-                >
-                  <span className="sr-only">Explore Brands & Corporate Gifting</span>
+                  {/* Clean Realistic Photo of Ribbon Gift Package */}
+                  <div className="w-24 sm:w-28 h-20 sm:h-24 rounded-xl overflow-hidden bg-[#FAF3EC] border border-[#EBC5CC]/40 relative">
+                    <img
+                      src="/assets/gift-box-clean.png"
+                      alt="Amora Gift Package with Silk Ribbon"
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                    />
+                  </div>
+
+                  {/* Bottom Label Banner */}
+                  <div className="mt-1.5 flex items-center justify-center gap-1.5 text-[10px] sm:text-[11px] font-bold text-[#34232F]">
+                    <span className="material-symbols-outlined text-[13px] text-[#702D58]">
+                      group
+                    </span>
+                    <span>Trusted by 500+ Brands</span>
+                  </div>
                 </div>
+              </div>
 
-                {/* 2. Floating Frosted Card Bottom-Right: "Corporate Gifting - MOQ 36 Pieces →" */}
-                <div
-                  onClick={() => {
-                    playTactileClick(1600, 0.04);
-                    onExploreCorporate();
-                  }}
-                  title="Corporate Gifting - MOQ 36 Pieces"
-                  className="absolute bottom-[8%] right-[4%] w-[38%] h-[20%] rounded-2xl cursor-pointer hover:ring-2 hover:ring-[#6D2E58]/50 transition-all z-20 group"
-                  aria-label="Corporate Gifting MOQ 36 Pieces"
-                >
-                  <span className="sr-only">Corporate Gifting MOQ 36 Pieces</span>
+              {/* ─── 2. HANDWRITTEN BRAND ACCENT (Upper Right above flowers & box): "Make it yours ♡" ─── */}
+              <div
+                className="absolute top-[8%] sm:top-[10%] lg:top-[12%] right-[4%] sm:right-[6%] lg:right-[6%] z-20 pointer-events-none select-none -rotate-6"
+                style={{ transform: 'translateZ(20px)' }}
+              >
+                <span className="font-script text-4xl sm:text-5xl lg:text-6xl text-[#C77F98] drop-shadow-sm font-normal">
+                  Make it yours ♡
+                </span>
+              </div>
+
+              {/* ─── 3. FLOATING GLASS CARD 2 (Lower Right on Silk below box): "Corporate Gifting - MOQ 36 Pieces →" ─── */}
+              <div
+                onClick={() => {
+                  playTactileClick(1600, 0.04);
+                  onExploreCorporate();
+                }}
+                title="Corporate Gifting Studio - Minimum Order Quantity 36 Pieces"
+                className="absolute bottom-[10%] sm:bottom-[12%] lg:bottom-[14%] right-[2%] sm:right-[4%] lg:right-[4%] z-30 hover:scale-105 active:scale-98 transition-all duration-300 cursor-pointer group"
+                style={{ transform: 'translateZ(40px)' }}
+              >
+                <div className="px-3.5 sm:px-4 py-2.5 sm:py-3 rounded-2xl bg-white/95 backdrop-blur-lg border border-white shadow-[0_20px_40px_rgba(112,45,88,0.18)] flex items-center gap-3">
+                  {/* Deep Plum Briefcase Icon Container */}
+                  <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-[#702D58] text-white flex items-center justify-center shadow-xs shrink-0 group-hover:bg-[#592345] transition-colors">
+                    <span className="material-symbols-outlined text-[20px] text-[#EBC5CC]">
+                      work
+                    </span>
+                  </div>
+
+                  {/* Text Hierarchy */}
+                  <div className="text-left pr-1">
+                    <p className="text-xs sm:text-sm font-bold text-[#34232F] leading-tight">
+                      Corporate Gifting
+                    </p>
+                    <p className="text-[10px] sm:text-xs text-[#76636D] font-medium mt-0.5">
+                      MOQ 36 Pieces
+                    </p>
+                  </div>
+
+                  {/* Arrow using Google Material Symbol */}
+                  <span className="material-symbols-outlined text-[16px] text-[#702D58] transition-transform duration-200 group-hover:translate-x-1 ml-1">
+                    arrow_forward
+                  </span>
                 </div>
-
-                {/* 3. Bottom Right Circular Scroll Down Button "↓" */}
-                <button
-                  type="button"
-                  onClick={handleScrollDown}
-                  aria-label="Scroll down to 3D Orbit and Catalog"
-                  className={`absolute -bottom-2 right-2 sm:right-4 w-10 h-10 sm:w-11 sm:h-11 rounded-full flex items-center justify-center border shadow-lg backdrop-blur-md transition-all hover:scale-110 active:scale-95 cursor-pointer z-30 ${
-                    isDark
-                      ? 'bg-black/50 border-white/20 text-[#F8F4EA] hover:bg-black/70'
-                      : 'bg-white/80 border-[#6D2E58]/20 text-[#2E2A32] hover:bg-white shadow-[0_4px_16px_rgba(109,46,88,0.12)]'
-                  }`}
-                >
-                  <ChevronDown className="w-5 h-5 text-[#6D2E58] dark:text-[#EBC6CF] animate-bounce" />
-                </button>
               </div>
             </div>
           </div>
@@ -296,43 +275,63 @@ export const ParticleHero: React.FC<ParticleHeroProps> = ({
         </div>
 
         {/* ═════════════════════════════════════════════════════════════
-            BOTTOM FEATURE BAR (Matching Reference Mockup Exactly)
-            [💎 Premium Quality] [🚚 On-Time Delivery] [🎧 Dedicated Support] [🛡️ Bulk Order Ready]
+            BOTTOM SECTION: Trust Bar (Left) + Circular Scroll Indicator (Right)
+            Exact placement matching reference mockup
             ═════════════════════════════════════════════════════════════ */}
-        <div className="mt-10 sm:mt-12 w-full max-w-4xl mx-auto">
-          <div
-            className={`backdrop-blur-md rounded-full px-5 sm:px-8 py-3 sm:py-3.5 border shadow-sm flex flex-wrap items-center justify-around gap-4 sm:gap-6 text-xs sm:text-[13px] transition-colors ${
-              isDark
-                ? 'bg-[#251D2A]/80 border-white/10 text-[#D8C6E6] shadow-black/40'
-                : 'bg-white/75 border-white/80 text-[#584F5E] shadow-[0_8px_24px_rgba(109,46,88,0.06)]'
-            }`}
-          >
+        <div className="mt-8 sm:mt-10 lg:mt-6 w-full flex items-center justify-between gap-4">
+          
+          {/* Frosted Glass Trust Bar */}
+          <div className="backdrop-blur-xl rounded-full px-5 sm:px-8 py-3 sm:py-3.5 border shadow-[0_10px_35px_rgba(112,45,88,0.08)] flex flex-wrap items-center gap-3 sm:gap-6 text-xs sm:text-[13px] bg-white/92 border-white/90 text-[#34232F]">
+            {/* Item 1: Premium Quality */}
             <div className="flex items-center gap-2 font-medium">
-              <span className="text-sm">💎</span>
-              <span className={isDark ? 'text-[#F8F4EA]' : 'text-[#2E2A32]'}>Premium Quality</span>
+              <span className="material-symbols-outlined text-[#702D58] text-[18px]">
+                diamond
+              </span>
+              <span className="text-[#34232F]">Premium Quality</span>
             </div>
 
             <div className="hidden xs:block w-px h-3.5 bg-current opacity-20" />
 
+            {/* Item 2: On-Time Delivery */}
             <div className="flex items-center gap-2 font-medium">
-              <span className="text-sm">🚚</span>
-              <span className={isDark ? 'text-[#F8F4EA]' : 'text-[#2E2A32]'}>On-Time Delivery</span>
+              <span className="material-symbols-outlined text-[#702D58] text-[18px]">
+                local_shipping
+              </span>
+              <span className="text-[#34232F]">On-Time Delivery</span>
             </div>
 
             <div className="hidden xs:block w-px h-3.5 bg-current opacity-20" />
 
+            {/* Item 3: Dedicated Support */}
             <div className="flex items-center gap-2 font-medium">
-              <span className="text-sm">🎧</span>
-              <span className={isDark ? 'text-[#F8F4EA]' : 'text-[#2E2A32]'}>Dedicated Support</span>
+              <span className="material-symbols-outlined text-[#702D58] text-[18px]">
+                support_agent
+              </span>
+              <span className="text-[#34232F]">Dedicated Support</span>
             </div>
 
             <div className="hidden xs:block w-px h-3.5 bg-current opacity-20" />
 
+            {/* Item 4: Bulk Order Ready */}
             <div className="flex items-center gap-2 font-medium">
-              <span className="text-sm">🛡️</span>
-              <span className={isDark ? 'text-[#F8F4EA]' : 'text-[#2E2A32]'}>Bulk Order Ready</span>
+              <span className="material-symbols-outlined text-[#702D58] text-[18px]">
+                verified_user
+              </span>
+              <span className="text-[#34232F]">Bulk Order Ready</span>
             </div>
           </div>
+
+          {/* Circular Scroll Down Indicator "↓" */}
+          <button
+            type="button"
+            onClick={handleScrollDown}
+            aria-label="Scroll down to Catalog and Collections"
+            className="w-10 h-10 sm:w-11 sm:h-11 rounded-full flex items-center justify-center border border-white bg-white/90 backdrop-blur-md shadow-md hover:scale-110 active:scale-95 transition-all duration-200 cursor-pointer z-30 group shrink-0"
+          >
+            <span className="material-symbols-outlined text-[#702D58] text-[20px] transition-transform duration-200 group-hover:translate-y-0.5">
+              arrow_downward
+            </span>
+          </button>
         </div>
 
       </div>

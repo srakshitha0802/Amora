@@ -128,35 +128,35 @@ const B2C_CATEGORIES: Array<{
     subtitle: 'Vintage-bordered instant prints & keepsakes',
     policy: 'No MOQ · From ₹125',
     category: 'Polaroids & Photo Products',
-    image: 'https://images.unsplash.com/photo-1526170375885-4d8ecf77b99f?auto=format&fit=crop&w=600&q=80',
+    image: '/assets/catalog/b2c/polaroids.jpg',
   },
   {
     title: 'Personalised Gifts',
     subtitle: 'Spotify plaques & bespoke memory frames',
     policy: 'No MOQ · Customised',
     category: 'Personalised Gifts',
-    image: 'https://images.unsplash.com/photo-1614680376593-902f749f7ffc?auto=format&fit=crop&w=600&q=80',
+    image: '/assets/catalog/b2c/personalised-gifts.jpg',
   },
   {
     title: 'Stickers & Decals',
     subtitle: 'Waterproof kiss-cut matte & clear vinyl',
     policy: 'No MOQ · From ₹89',
     category: 'Stickers',
-    image: 'https://images.unsplash.com/photo-1581291518655-9523c932edcf?auto=format&fit=crop&w=600&q=80',
+    image: '/assets/catalog/b2c/stickers.jpg',
   },
   {
     title: 'Bookmarks & Stationery',
     subtitle: '300 GSM cotton card with silk satin tassels',
     policy: 'No MOQ · From ₹99',
     category: 'Bookmarks & Stationery',
-    image: 'https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?auto=format&fit=crop&w=600&q=80',
+    image: '/assets/catalog/b2c/bookmarks.jpg',
   },
   {
     title: 'Posters & Wall Art',
     subtitle: 'Matte & velvet silk wall art & prints',
     policy: 'No MOQ · From ₹149',
     category: 'Posters & Prints',
-    image: 'https://images.unsplash.com/photo-1579783902614-a3fb3927b675?auto=format&fit=crop&w=600&q=80',
+    image: '/assets/catalog/b2c/posters.jpg',
   },
 ];
 
@@ -483,7 +483,15 @@ export const FeaturedSection: React.FC<FeaturedSectionProps> = ({
                 }`}
               >
                 <div className="relative aspect-[4/3] rounded-xl overflow-hidden mb-3 bg-black/10">
-                  <img src={item.image} alt={item.title} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" loading="lazy" />
+                  <img
+                    src={item.image}
+                    alt={item.title}
+                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                    loading="lazy"
+                    onError={(e) => {
+                      (e.currentTarget as HTMLImageElement).src = '/assets/amora-logo-official.jpg';
+                    }}
+                  />
                   <span className={`absolute top-2 left-2 text-[9px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full ${
                     isDark ? 'bg-black/75 text-[#EBC6CF]' : 'bg-white/90 text-[#6D2E58]'
                   }`}>

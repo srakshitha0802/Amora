@@ -131,6 +131,9 @@ export const KeepsakeShowcase: React.FC<KeepsakeShowcaseProps> = ({
                       alt={item.name}
                       className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                       loading="lazy"
+                      onError={(e) => {
+                        (e.currentTarget as HTMLImageElement).src = '/assets/catalog/b2c/polaroids.jpg';
+                      }}
                     />
 
                     {/* Top Badge Overlay */}
