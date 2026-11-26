@@ -16,6 +16,7 @@ import { FeaturedSection } from './components/FeaturedSection';
 import { KeepsakeShowcase } from './components/KeepsakeShowcase';
 import { ShopSection } from './components/ShopSection';
 import { CorporateSection } from './components/CorporateSection';
+import { FounderScrapbookSection } from './components/FounderScrapbookSection';
 import { AboutAndContactSection } from './components/AboutAndContactSection';
 import { CustomiserDrawer } from './components/CustomiserDrawer';
 import { ShortlistDrawer } from './components/ShortlistDrawer';
@@ -290,14 +291,17 @@ export default function App() {
           theme={theme}
         />
 
-        {/* 6. Dedicated Track B: Corporate B2B Studio & Bulk Quotation Form (Strict MOQ 30+) */}
+        {/* 6. Dedicated Track B: Corporate B2B Studio & Bulk Quotation Form (Strict MOQ 36+) */}
         <CorporateSection
           prefill={corporatePrefill}
           onAddKitToShortlist={handleAddKitToShortlist}
           theme={theme}
         />
 
-        {/* 7. About Us (Achintya Gurba / Kalyan Studio) & Contact / Instagram Lookbook */}
+        {/* 7. Founder Scrapbook Section (A Little Thought. A Lot of Love. — Achintya Gurba) */}
+        <FounderScrapbookSection theme={theme} />
+
+        {/* 8. Contact & Social Lookbook / Instagram */}
         <AboutAndContactSection theme={theme} />
       </main>
 

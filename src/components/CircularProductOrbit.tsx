@@ -10,7 +10,7 @@ interface CircularProductOrbitProps {
   theme?: 'dark' | 'light';
 }
 
-// Curated Signature Highlight Pieces for 360-degree runway turntable (Top highlight first)
+// Curated Signature Highlight Pieces for 360-degree runway turntable
 const FEATURED_RUNWAY_IDS = [
   'executive-onboarding-kit',
   'basic-white-mug',
@@ -38,17 +38,18 @@ export const CircularProductOrbit: React.FC<CircularProductOrbitProps> = ({
     const featured = FEATURED_RUNWAY_IDS.map((id) => products.find((p) => p.id === id)).filter(
       Boolean
     ) as Product[];
-    return featured.length >= 6 ? featured : products.slice(0, 8);
+    return featured.length >= 6 ? featured : products.slice(0, 10);
   }, [products]);
 
   const total = runwayProducts.length;
   const angleStep = 360 / total;
 
-  // Physics animation state refs (keeps animation 100% butter-smooth without React state lag)
+  // Physics animation state refs (100% butter-smooth)
   const targetRotationRef = useRef(0);
   const currentRotationRef = useRef(0);
   const velocityRef = useRef(0);
   const isDraggingRef = useRef(false);
+  const dragStartXRef = useRef(0);
   const lastPointerXRef = useRef(0);
   const lastPointerTimeRef = useRef(0);
   const idleTimerRef = useRef(0);
@@ -65,17 +66,17 @@ export const CircularProductOrbit: React.FC<CircularProductOrbitProps> = ({
     const handleResize = () => {
       const w = window.innerWidth;
       setIsMobile(w < 768);
-      if (w < 640) setRadius(280);
+      if (w < 640) setRadius(270);
       else if (w < 1024) setRadius(340);
-      else if (w < 1280) setRadius(380);
-      else setRadius(420);
+      else if (w < 1280) setRadius(390);
+      else setRadius(440);
     };
     handleResize();
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
-  // Main High-Precision Physics Loop (Lerp + Momentum Inertia + Auto-Pan)
+  // Main High-Precision Physics Loop (Lerp + Momentum Inertia + Gentle Auto-Pan)
   useEffect(() => {
     let lastTime = performance.now();
 
@@ -87,14 +88,14 @@ export const CircularProductOrbit: React.FC<CircularProductOrbitProps> = ({
         // Apply inertia velocity decay
         if (Math.abs(velocityRef.current) > 0.005) {
           targetRotationRef.current += velocityRef.current * (dt / 16);
-          velocityRef.current *= 0.92; // smooth exponential friction
+          velocityRef.current *= 0.94; // Smooth exponential friction
         } else {
           velocityRef.current = 0;
           idleTimerRef.current += dt;
 
-          // Gentle continuous turntable auto-pan when user is idle for 2.5s
-          if (idleTimerRef.current > 2500 && !isMobile) {
-            targetRotationRef.current += 0.045 * (dt / 16);
+          // Gentle turntable auto-pan when user is idle for 2.8s
+          if (idleTimerRef.current > 2800 && !isMobile) {
+            targetRotationRef.current += 0.04 * (dt / 16);
           }
         }
       } else {
@@ -103,9 +104,8 @@ export const CircularProductOrbit: React.FC<CircularProductOrbitProps> = ({
 
       // Smooth Spring / Lerp towards target rotation
       const diff = targetRotationRef.current - currentRotationRef.current;
-      currentRotationRef.current += diff * 0.085;
+      currentRotationRef.current += diff * 0.095;
 
-      // Sync display state occasionally for active index calculation
       const curr = currentRotationRef.current;
       setDisplayRotation(curr);
 
@@ -122,13 +122,17 @@ export const CircularProductOrbit: React.FC<CircularProductOrbitProps> = ({
     };
   }, [angleStep, total, isMobile]);
 
-  // Pointer & Drag Interactions
+  // Pointer & Drag Interactions with PointerCapture
   const handlePointerDown = (e: React.PointerEvent) => {
     isDraggingRef.current = true;
     velocityRef.current = 0;
     idleTimerRef.current = 0;
+    dragStartXRef.current = e.clientX;
     lastPointerXRef.current = e.clientX;
     lastPointerTimeRef.current = performance.now();
+    try {
+      e.currentTarget.setPointerCapture(e.pointerId);
+    } catch {}
   };
 
   const handlePointerMove = (e: React.PointerEvent) => {
@@ -138,23 +142,26 @@ export const CircularProductOrbit: React.FC<CircularProductOrbitProps> = ({
     const dx = e.clientX - lastPointerXRef.current;
 
     // Apply drag directly to target with sensitivity
-    const dragFactor = isMobile ? 0.35 : 0.28;
+    const dragFactor = isMobile ? 0.32 : 0.25;
     targetRotationRef.current -= dx * dragFactor;
 
-    // Track instant velocity for inertia throw
-    velocityRef.current = -dx / dt * 5.2;
+    // Track instant velocity for smooth momentum release
+    velocityRef.current = (-dx / dt) * 4.8;
 
     lastPointerXRef.current = e.clientX;
     lastPointerTimeRef.current = now;
   };
 
-  const handlePointerUp = () => {
+  const handlePointerUp = (e: React.PointerEvent) => {
     if (!isDraggingRef.current) return;
     isDraggingRef.current = false;
+    try {
+      e.currentTarget.releasePointerCapture(e.pointerId);
+    } catch {}
     playTactileClick(1400, 0.02);
   };
 
-  // Step Buttons (Next / Prev with Smooth Spring Settling)
+  // Step Buttons (Next / Prev with Smooth Settling)
   const handleNext = useCallback(() => {
     playTactileClick(1600, 0.03);
     idleTimerRef.current = 0;
@@ -194,68 +201,79 @@ export const CircularProductOrbit: React.FC<CircularProductOrbitProps> = ({
   return (
     <section
       id="orbit-showcase"
-      className="relative w-full py-18 sm:py-26 select-none overflow-hidden transition-colors duration-300"
+      className="relative w-full py-16 sm:py-24 select-none overflow-hidden transition-colors duration-300"
       onPointerDown={handlePointerDown}
       onPointerMove={handlePointerMove}
       onPointerUp={handlePointerUp}
       onPointerCancel={handlePointerUp}
-      style={{ cursor: isDraggingRef.current ? 'grabbing' : 'grab' }}
+      style={{
+        cursor: isDraggingRef.current ? 'grabbing' : 'grab',
+        touchAction: 'pan-y',
+      }}
     >
       {/* Studio Ambient Backdrops */}
       <div
-        className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[650px] h-[650px] rounded-full blur-[160px] pointer-events-none ${
-          isDark ? 'bg-[#6D2E58]/18' : 'bg-[#C88DA0]/14'
+        className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[650px] h-[650px] rounded-full blur-[170px] pointer-events-none ${
+          isDark ? 'bg-[#6D2E58]/18' : 'bg-[#EBC6CF]/22'
         }`}
       />
       <div
-        className={`absolute bottom-10 left-1/2 -translate-x-1/2 w-[450px] h-[250px] rounded-full blur-[120px] pointer-events-none ${
-          isDark ? 'bg-[#C88DA0]/10' : 'bg-[#6D2E58]/8'
+        className={`absolute bottom-10 left-1/2 -translate-x-1/2 w-[450px] h-[250px] rounded-full blur-[130px] pointer-events-none ${
+          isDark ? 'bg-[#F3C69F]/10' : 'bg-[#F8F4EA]/60'
         }`}
       />
 
-      {/* Section Header */}
-      <div className="max-w-4xl mx-auto px-6 text-center mb-10 sm:mb-14 relative z-10 pointer-events-none">
+      {/* Section Header with Hand-Drawn Flourish */}
+      <div className="max-w-4xl mx-auto px-6 text-center mb-8 sm:mb-12 relative z-10 pointer-events-none">
         <div
-          className={`inline-flex items-center gap-2 px-3.5 sm:px-4 py-1.5 rounded-full text-[11px] sm:text-xs font-semibold uppercase tracking-widest mb-4 border shadow-xs ${
+          className={`inline-flex items-center gap-2 px-3.5 sm:px-4 py-1.5 rounded-full text-[11px] sm:text-xs font-semibold uppercase tracking-widest mb-3 border shadow-xs ${
             isDark
               ? 'bg-white/5 border-white/15 text-[#C88DA0]'
               : 'bg-white border-[#6D2E58]/20 text-[#6D2E58] shadow-xs'
           }`}
         >
           <Sparkles className="w-3.5 h-3.5 text-[#C88DA0]" />
-          <span>360° Studio Runway · Kalyan Workshop</span>
+          <span>360° Studio Runway · Touch &amp; Drag Turntable</span>
         </div>
+
         <h2 className="font-serif text-3xl sm:text-5xl lg:text-6xl font-normal tracking-tight">
-          Every product in <em className="italic text-[#C88DA0] font-normal">tactile 360° motion.</em>
+          Every piece in <em className="italic text-[#C88DA0] font-normal">tactile 360° motion.</em>
         </h2>
-        <p
-          className={`mt-3 text-xs sm:text-base max-w-xl mx-auto leading-relaxed ${
-            isDark ? 'text-[#D8C6E6]' : 'text-[#584F5E]'
-          }`}
-        >
-          Drag horizontally to spin the studio turntable. Experience our confirmed corporate merchandise and handcrafted personal keepsakes from every angle.
+
+        <p className={`text-xs sm:text-sm mt-2 max-w-md mx-auto ${isDark ? 'text-[#D8C6E6]' : 'text-[#584F5E]'}`}>
+          Drag horizontally or swipe to spin the handcrafted catalogue. Click any item to explore.
         </p>
       </div>
 
-      {/* ─── 3D PERSPECTIVE ORBIT STAGE ─── */}
-      <div className="relative w-full h-[400px] sm:h-[460px] my-4 flex items-center justify-center orbit-cylinder-stage">
-        
-        {/* Studio Turntable Ground Ring Shadow */}
+      {/* ─── 3D CYLINDRICAL TURNTABLE STAGE ─── */}
+      <div
+        className="relative w-full h-[400px] sm:h-[450px] flex items-center justify-center overflow-visible"
+        style={{
+          perspective: isMobile ? '950px' : '1350px',
+          perspectiveOrigin: '50% 50%',
+        }}
+      >
+        {/* Subtle Turntable Shadow Disc */}
         <div
-          className="absolute top-1/2 left-1/2 -translate-x-1/2 translate-y-28 sm:translate-y-36 w-[500px] sm:w-[650px] h-20 rounded-full blur-xl pointer-events-none"
+          className="absolute rounded-full pointer-events-none"
           style={{
+            width: `${radius * 1.8}px`,
+            height: '110px',
+            bottom: '20px',
             background: isDark
-              ? 'radial-gradient(ellipse, rgba(109,46,88,0.4) 0%, rgba(0,0,0,0) 70%)'
-              : 'radial-gradient(ellipse, rgba(109,46,88,0.18) 0%, rgba(0,0,0,0) 70%)',
+              ? 'radial-gradient(ellipse at center, rgba(0,0,0,0.5) 0%, transparent 72%)'
+              : 'radial-gradient(ellipse at center, rgba(109,46,88,0.12) 0%, transparent 72%)',
+            transform: 'rotateX(75deg)',
           }}
         />
 
         {/* 3D Rotating Ring Container */}
         <div
-          className="orbit-cylinder-ring relative w-[240px] sm:w-[260px] h-[340px] sm:h-[370px]"
+          className="orbit-cylinder-ring relative w-[230px] sm:w-[250px] h-[330px] sm:h-[360px]"
           style={{
             transform: `rotateY(${-displayRotation}deg)`,
             transformStyle: 'preserve-3d',
+            willChange: 'transform',
           }}
         >
           {runwayProducts.map((product, index) => {
@@ -264,13 +282,12 @@ export const CircularProductOrbit: React.FC<CircularProductOrbitProps> = ({
             const rad = (relAngle * Math.PI) / 180;
             const cosVal = Math.cos(rad);
 
-            // Hide cards pointing away (> 90 degrees back) to eliminate crowding and optimize rendering
-            if (cosVal < 0.05) return null;
-
-            const isFront = cosVal > 0.72;
+            // Keep in DOM with visibility hidden to prevent layout thrash
+            const isVisible = cosVal >= -0.15;
+            const isFront = cosVal > 0.70;
             const isCurrentActive = index === activeIndex;
-            const blurPx = Math.max(0, Math.round((1 - cosVal) * 2.5));
-            const opacity = Math.max(0.4, cosVal);
+            const blurPx = Math.max(0, Math.round((1 - cosVal) * 2));
+            const opacity = Math.max(0, Math.min(1, (cosVal + 0.15) * 1.1));
             const scale = Math.max(0.85, 0.92 + cosVal * 0.12);
             const zIndex = Math.round((cosVal + 1) * 100);
 
@@ -283,28 +300,29 @@ export const CircularProductOrbit: React.FC<CircularProductOrbitProps> = ({
                   e.stopPropagation();
                   handleSelectCard(index);
                 }}
-                className="orbit-card-item absolute inset-0 rounded-3xl overflow-hidden transition-all duration-150"
+                className="orbit-card-item absolute inset-0 rounded-3xl overflow-hidden transition-all duration-100"
                 style={{
                   transform: `rotateY(${cardAngle}deg) translateZ(${radius}px) scale(${scale})`,
                   filter: `blur(${blurPx}px)`,
-                  opacity: opacity,
+                  opacity: isVisible ? opacity : 0,
+                  visibility: isVisible ? 'visible' : 'hidden',
                   zIndex: zIndex,
                   pointerEvents: isFront ? 'auto' : 'none',
                 }}
               >
                 <div
-                  className={`w-full h-full p-3.5 sm:p-4 flex flex-col justify-between rounded-3xl relative overflow-hidden transition-all duration-300 border ${
+                  className={`w-full h-full p-3 sm:p-3.5 flex flex-col justify-between rounded-3xl relative overflow-hidden transition-all duration-200 border ${
                     isDark
-                      ? 'bg-[#26202A]/95 border-white/15'
+                      ? 'bg-[#221B25]/95 border-white/15'
                       : 'bg-white/95 border-[#6D2E58]/20 shadow-[0_15px_35px_rgba(109,46,88,0.08)]'
                   } ${
                     isCurrentActive
-                      ? 'ring-2 ring-[#C88DA0] shadow-[0_20px_45px_rgba(109,46,88,0.25)]'
+                      ? 'ring-2 ring-[#C88DA0] shadow-[0_20px_45px_rgba(109,46,88,0.22)]'
                       : ''
                   }`}
                 >
                   {/* Product Photography Container */}
-                  <div className="relative w-full h-[60%] rounded-2xl overflow-hidden bg-black/10">
+                  <div className="relative w-full h-[58%] rounded-2xl overflow-hidden bg-black/10">
                     <img
                       src={imageSrc}
                       alt={product.name}
@@ -312,10 +330,10 @@ export const CircularProductOrbit: React.FC<CircularProductOrbitProps> = ({
                       loading="lazy"
                     />
 
-                    {/* Category Pill Tag */}
-                    <div className="absolute top-2.5 left-2.5">
+                    {/* Category / MOQ Pill */}
+                    <div className="absolute top-2 left-2">
                       <span
-                        className={`inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10px] font-semibold uppercase tracking-wider backdrop-blur-md shadow-xs ${
+                        className={`inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[9px] font-semibold uppercase tracking-wider backdrop-blur-md shadow-xs ${
                           product.isBulkOnly
                             ? 'bg-[#6D2E58]/90 text-[#F8F4EA] border border-[#C88DA0]/40'
                             : 'bg-white/90 text-[#6D2E58] border border-[#6D2E58]/30'
@@ -324,7 +342,7 @@ export const CircularProductOrbit: React.FC<CircularProductOrbitProps> = ({
                         {product.isBulkOnly ? (
                           <>
                             <Box className="w-2.5 h-2.5 text-[#EBC6CF]" />
-                            <span>MOQ: 36 pcs</span>
+                            <span>MOQ: 36</span>
                           </>
                         ) : (
                           <>
@@ -336,21 +354,21 @@ export const CircularProductOrbit: React.FC<CircularProductOrbitProps> = ({
                     </div>
 
                     {/* Price Tag Overlay */}
-                    <div className="absolute bottom-2.5 right-2.5">
-                      <span className="px-2.5 py-0.5 rounded-md text-[11px] font-bold bg-black/80 text-[#F8F4EA] backdrop-blur-md shadow-xs">
+                    <div className="absolute bottom-2 right-2">
+                      <span className="px-2 py-0.5 rounded-md text-[10px] font-bold bg-black/80 text-[#F8F4EA] backdrop-blur-md shadow-xs font-mono">
                         {product.priceLabel}
                       </span>
                     </div>
                   </div>
 
                   {/* Card Editorial Info */}
-                  <div className="pt-2.5 flex flex-col justify-between flex-1">
+                  <div className="pt-2 flex flex-col justify-between flex-1">
                     <div>
-                      <h3 className="font-serif text-lg font-semibold leading-tight line-clamp-1 group-hover:text-[#C88DA0]">
+                      <h3 className="font-serif text-base sm:text-lg font-semibold leading-tight line-clamp-1">
                         {product.name}
                       </h3>
                       <p
-                        className={`text-[11px] line-clamp-1 mt-1 leading-relaxed ${
+                        className={`text-[10px] sm:text-[11px] line-clamp-1 mt-0.5 leading-relaxed ${
                           isDark ? 'text-[#D8C6E6]' : 'text-[#584F5E]'
                         }`}
                       >
@@ -358,8 +376,8 @@ export const CircularProductOrbit: React.FC<CircularProductOrbitProps> = ({
                       </p>
                     </div>
 
-                    {/* Customise & Preview Button */}
-                    <div className="pt-2">
+                    {/* Customise & Preview Action */}
+                    <div className="pt-1.5">
                       <button
                         type="button"
                         onClick={(e) => {
@@ -367,9 +385,9 @@ export const CircularProductOrbit: React.FC<CircularProductOrbitProps> = ({
                           playTactileClick(1800, 0.03);
                           onCustomiseProduct(product);
                         }}
-                        className="w-full py-2 px-3 text-xs font-semibold rounded-xl transition-all cursor-pointer shadow-sm bg-[#6D2E58] text-[#F8F4EA] hover:bg-[#8E4474] flex items-center justify-center gap-1.5"
+                        className="w-full py-1.5 px-3 text-xs font-semibold rounded-xl transition-all cursor-pointer shadow-sm bg-[#6D2E58] text-[#F8F4EA] hover:bg-[#8E4474] flex items-center justify-center gap-1.5"
                       >
-                        <span>Customise &amp; Preview</span>
+                        <span>Preview &amp; Customise</span>
                       </button>
                     </div>
                   </div>
@@ -434,7 +452,7 @@ export const CircularProductOrbit: React.FC<CircularProductOrbitProps> = ({
         {/* Focused Product WhatsApp Action */}
         <div className="flex items-center gap-3">
           <span className="text-xs opacity-75 tabular-nums font-mono">
-            0{activeIndex + 1} / 0{total}
+            0{activeIndex + 1} / {total < 10 ? `0${total}` : total}
           </span>
           <a
             href={buildWhatsAppUrl(

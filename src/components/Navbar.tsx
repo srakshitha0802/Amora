@@ -108,7 +108,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                   : 'text-[#584F5E] hover:text-[#2E2A32] hover:bg-[#6D2E58]/10'
               }`}
             >
-              About
+              Our Story
             </button>
 
             <button
@@ -238,7 +238,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                 isDark ? 'hover:bg-white/10 text-[#F8F4EA]' : 'hover:bg-[#6D2E58]/10 text-[#2E2A32]'
               }`}
             >
-              About
+              Our Story (Founder Note)
             </button>
 
             <button

@@ -27,7 +27,6 @@ export const AboutAndContactSection: React.FC<AboutAndContactSectionProps> = ({
   theme = 'dark',
 }) => {
   const isDark = theme === 'dark';
-  const [logoError, setLogoError] = React.useState(false);
 
   const conciergeWhatsApp = buildWhatsAppUrl(
     'Hello Amora.co team! I would love to discuss a personalised gift or corporate merchandise enquiry.'
@@ -35,143 +34,9 @@ export const AboutAndContactSection: React.FC<AboutAndContactSectionProps> = ({
 
   return (
     <>
-      {/* ABOUT US */}
-      <section id="about" className={`py-20 lg:py-32 border-b border-current/10 transition-colors duration-300 ${
-        isDark ? 'bg-[#1A161E] text-[#F8F4EA]' : 'bg-[#F8F4EA] text-[#2E2A32]'
-      }`}>
-        <div className="max-w-[1280px] mx-auto px-5 sm:px-8">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-center">
-            {/* Studio Emblem Card */}
-            <div className="lg:col-span-5">
-              <div className={`rounded-3xl p-8 sm:p-12 flex flex-col items-center text-center relative overflow-hidden transition-all ${
-                isDark
-                  ? 'liquid-glass border border-white/10'
-                  : 'bg-white border border-[#76577B]/20 shadow-xl'
-              }`}>
-                {/* Ambient glow */}
-                <div className="absolute top-0 right-0 w-48 h-48 rounded-full bg-[#E3A4AE]/15 blur-[60px] pointer-events-none" />
-                <div className="absolute bottom-0 left-0 w-40 h-40 rounded-full bg-[#76577B]/10 blur-[50px] pointer-events-none" />
-
-                <div className={`w-56 sm:w-64 aspect-square rounded-3xl overflow-hidden flex items-center justify-center relative z-10 border transition-all ${
-                  isDark
-                    ? 'bg-[#1A161E] text-[#F8F4EA] border-white/10 shadow-[0_24px_48px_-20px_rgba(118,87,123,0.3)]'
-                    : 'bg-[#F8F4EA] text-[#2E2A32] border-[#76577B]/20 shadow-[0_24px_48px_-20px_rgba(118,87,123,0.15)]'
-                }`}>
-                  {!logoError ? (
-                    <img
-                      src={BRAND_LOGO_URL}
-                      alt="Amora.co official logo — prints and pretty things"
-                      referrerPolicy="no-referrer"
-                      onError={() => setLogoError(true)}
-                      className="w-full h-full object-contain p-4"
-                    />
-                  ) : (
-                    <div className="p-6">
-                      <p className={`font-serif text-4xl font-semibold ${isDark ? 'text-[#FAF6F0]' : 'text-[#161E24]'}`}>
-                        amora.co
-                      </p>
-                      <p className={`text-xs mt-1 ${isDark ? 'text-[#CBD5E1]' : 'text-[#424D55]'}`}>
-                        prints, &amp; pretty things
-                      </p>
-                    </div>
-                  )}
-                </div>
-
-                {/* Founder Attribution Card (Crystal Clear High Contrast in BOTH Modes) */}
-                <div className={`mt-8 pt-6 border-t w-full flex flex-col gap-1.5 relative z-10 ${
-                  isDark ? 'border-white/10' : 'border-[#76577B]/15'
-                }`}>
-                  <div className={`inline-flex items-center justify-center gap-2 px-4 py-2 rounded-full mx-auto font-medium text-sm transition-all ${
-                    isDark
-                      ? 'bg-white/5 border border-white/15 text-[#FAF6F0]'
-                      : 'bg-[#FAF6F0] border border-[#76577B]/25 text-[#161E24] shadow-xs'
-                  }`}>
-                    <Heart className="w-4 h-4 text-[#E3A4AE] fill-[#E3A4AE]" aria-hidden="true" />
-                    <span>Founded by <strong className={`font-semibold ${isDark ? 'text-[#FAF6F0]' : 'text-[#76577B]'}`}>Achintya Gurba</strong></span>
-                  </div>
-                  <p className={`text-xs mt-1 font-medium ${isDark ? 'text-[#CBD5E1]' : 'text-[#424D55]'}`}>
-                    Kalyan, Thane District, Maharashtra, India
-                  </p>
-                </div>
-              </div>
-            </div>
-
-            {/* Brand Story */}
-            <div className="lg:col-span-7">
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold uppercase tracking-wider mb-4 bg-[#76577B]/10 text-[#76577B] border border-[#76577B]/20">
-                Our Story · Prints &amp; Pretty Things
-              </div>
-              <h2
-                className={`font-serif text-3xl sm:text-5xl font-semibold leading-tight ${
-                  isDark ? 'text-[#FAF6F0]' : 'text-[#161E24]'
-                }`}
-                style={{ textWrap: 'balance' } as React.CSSProperties}
-              >
-                Where heartfelt keepsakes meet high-craft corporate branding
-              </h2>
-
-              <div className={`mt-8 space-y-5 text-[15px] sm:text-base leading-relaxed ${
-                isDark ? 'text-[#CBD5E1]' : 'text-[#424D55]'
-              }`}>
-                <p>
-                  Founded by <span className={`font-semibold ${isDark ? 'text-[#FAF6F0]' : 'text-[#161E24]'}`}>Achintya Gurba</span> in{' '}
-                  <span className={`font-semibold ${isDark ? 'text-[#FAF6F0]' : 'text-[#161E24]'}`}>
-                    Kalyan, Thane District, Maharashtra
-                  </span>
-                  , <span className={`font-semibold ${isDark ? 'text-[#FAF6F0]' : 'text-[#161E24]'}`}>Amora.co</span> began with a
-                  simple belief: printed objects should feel intentional, tactile, and worth
-                  keeping — never disposable.
-                </p>
-                <p>
-                  On one side of our studio table, we craft intimate single-piece keepsakes with
-                  zero minimum orders: vintage-toned polaroids, pressed-feel bookmarks, kiss-cut
-                  sticker sheets, and wax-sealed photostrip letters made to celebrate birthdays,
-                  friendships, and quiet everyday memories.
-                </p>
-                <p>
-                  On the other, we partner with growing startups, agencies, and HR leaders to
-                  produce cohesive corporate merchandise and employee welcome kits (from 30+ pieces)
-                  with studio-grade colour calibration across drinkware and workspace mats.
-                </p>
-              </div>
-
-              {/* Three Commitments */}
-              <div className={`grid grid-cols-1 sm:grid-cols-3 gap-5 mt-10 pt-8 border-t ${
-                isDark ? 'border-white/10' : 'border-[#76577B]/20'
-              }`}>
-                <div className={`p-5 rounded-2xl border transition-all ${
-                  isDark ? 'bg-white/5 border-white/10' : 'bg-white border-[#76577B]/20 shadow-sm'
-                }`}>
-                  <p className="font-serif text-3xl font-semibold text-[#76577B]">1 Piece</p>
-                  <p className={`text-xs mt-1.5 leading-normal ${isDark ? 'text-[#CBD5E1]' : 'text-[#424D55]'}`}>
-                    No MOQ on personal prints, polaroids, frames &amp; bookmarks
-                  </p>
-                </div>
-                <div className={`p-5 rounded-2xl border transition-all ${
-                  isDark ? 'bg-white/5 border-white/10' : 'bg-white border-[#76577B]/20 shadow-sm'
-                }`}>
-                  <p className="font-serif text-3xl font-semibold text-[#76577B]">30+ MOQ</p>
-                  <p className={`text-xs mt-1.5 leading-normal ${isDark ? 'text-[#CBD5E1]' : 'text-[#424D55]'}`}>
-                    Dedicated bulk production for bottles, mugs &amp; desk mats
-                  </p>
-                </div>
-                <div className={`p-5 rounded-2xl border transition-all ${
-                  isDark ? 'bg-white/5 border-white/10' : 'bg-white border-[#76577B]/20 shadow-sm'
-                }`}>
-                  <p className="font-serif text-3xl font-semibold text-[#76577B]">Kalyan Hub</p>
-                  <p className={`text-xs mt-1.5 leading-normal ${isDark ? 'text-[#CBD5E1]' : 'text-[#424D55]'}`}>
-                    Proofed in Thane District, shipped reliably across India
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
       {/* CONTACT & SOCIAL HUB */}
       <section id="contact" className={`py-20 lg:py-32 border-b border-current/10 transition-colors duration-300 ${
-        isDark ? 'bg-[#0B0E14] text-[#FAF6F0]' : 'bg-[#EFE8DD] text-[#161E24]'
+        isDark ? 'bg-[#18131B] text-[#F8F4EA]' : 'bg-[#FAF6F0] text-[#2E2A32]'
       }`}>
         <div className="max-w-[1280px] mx-auto px-5 sm:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-end mb-14">
