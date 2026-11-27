@@ -63,42 +63,44 @@ export const PRODUCT_IMAGES: Record<string, string> = {
   'custom-printed-sports-bottle': '/assets/catalog/corporate-merchandise/sports-bottle-750ml.jpg',
 
   // Matte Polaroids
-  'matte-polaroids-5': 'https://images.unsplash.com/photo-1526170375885-4d8ecf77b99f?auto=format&fit=crop&w=800&q=80',
-  'matte-polaroids-8': 'https://images.unsplash.com/photo-1516035069371-29a1b244cc32?auto=format&fit=crop&w=800&q=80',
-  'matte-polaroids-16': 'https://images.unsplash.com/photo-1513519245088-0e12902e5a38?auto=format&fit=crop&w=800&q=80',
+  'matte-polaroids-5': '/assets/catalog/b2c/polaroids.jpg',
+  'matte-polaroids-8': '/assets/catalog/b2c/polaroids.jpg',
+  'matte-polaroids-16': '/assets/catalog/b2c/polaroids.jpg',
 
   // Glossy Polaroids
-  'glossy-polaroids-5': 'https://images.unsplash.com/photo-1492691527719-9d1e07e534b4?auto=format&fit=crop&w=800&q=80',
-  'glossy-polaroids-8': 'https://images.unsplash.com/photo-1534447677768-be436bb09401?auto=format&fit=crop&w=800&q=80',
-  'glossy-polaroids-16': 'https://images.unsplash.com/photo-1509198397868-475647b2a1e5?auto=format&fit=crop&w=800&q=80',
+  'glossy-polaroids-5': '/assets/catalog/b2c/polaroids.jpg',
+  'glossy-polaroids-8': '/assets/catalog/b2c/polaroids.jpg',
+  'glossy-polaroids-16': '/assets/catalog/b2c/polaroids.jpg',
 
   // Special Photo Products & Keepsakes
-  'kpop-group-pack': 'https://images.unsplash.com/photo-1607604276583-eef5d076aa5f?auto=format&fit=crop&w=800&q=80',
-  'film-strips-3': 'https://images.unsplash.com/photo-1586075010923-2dd4570fb338?auto=format&fit=crop&w=800&q=80',
-  'spotify-polaroids-3': 'https://images.unsplash.com/photo-1614680376593-902f749f7ffc?auto=format&fit=crop&w=800&q=80',
-  'spotify-polaroids-5': 'https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?auto=format&fit=crop&w=800&q=80',
-  'photobooth-strips-3': 'https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=800&q=80',
+  'spotify-couple-photo-frame': '/assets/catalog/b2c/spotify-frame.jpg',
+  'personalised-photo-cushion': '/assets/catalog/b2c/personalised-gifts.jpg',
+  'kpop-group-pack': '/assets/catalog/b2c/polaroids.jpg',
+  'film-strips-3': '/assets/catalog/b2c/polaroids.jpg',
+  'spotify-polaroids-3': '/assets/catalog/b2c/spotify-frame.jpg',
+  'spotify-polaroids-5': '/assets/catalog/b2c/spotify-frame.jpg',
+  'photobooth-strips-3': '/assets/catalog/b2c/polaroids.jpg',
 
-  // Stickers
-  'goofy-cat-stickers': 'https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?auto=format&fit=crop&w=800&q=80',
-  'demon-slayer-stickers': 'https://images.unsplash.com/photo-1578632767115-351597cf2477?auto=format&fit=crop&w=800&q=80',
-  'cool-laptop-stickers': 'https://images.unsplash.com/photo-1581291518655-9523c932edcf?auto=format&fit=crop&w=800&q=80',
-  'bts-stickers': 'https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?auto=format&fit=crop&w=800&q=80',
-  'aesthetic-stickers-transparent': 'https://images.unsplash.com/photo-1544816155-12df9643f363?auto=format&fit=crop&w=800&q=80',
-  'one-piece-stickers-transparent': 'https://images.unsplash.com/photo-1618336753974-aae8e04506aa?auto=format&fit=crop&w=800&q=80',
-  'custom-stickers-transparent': 'https://images.unsplash.com/photo-1586075010923-2dd4570fb338?auto=format&fit=crop&w=800&q=80',
-  'custom-stickers-paper': 'https://images.unsplash.com/photo-1589829085413-56de8ae18c73?auto=format&fit=crop&w=800&q=80',
+  // Stickers & Decals
+  'goofy-cat-stickers': '/assets/catalog/b2c/stickers.jpg',
+  'demon-slayer-stickers': '/assets/catalog/b2c/stickers.jpg',
+  'cool-laptop-stickers': '/assets/catalog/b2c/stickers.jpg',
+  'bts-stickers': '/assets/catalog/b2c/stickers.jpg',
+  'aesthetic-stickers-transparent': '/assets/catalog/b2c/stickers.jpg',
+  'one-piece-stickers-transparent': '/assets/catalog/b2c/stickers.jpg',
+  'custom-stickers-transparent': '/assets/catalog/b2c/stickers.jpg',
+  'custom-stickers-paper': '/assets/catalog/b2c/stickers.jpg',
 
   // Bookmarks & Reading Accessories
-  'page-whisper': 'https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?auto=format&fit=crop&w=800&q=80',
-  'velour-mark': 'https://images.unsplash.com/photo-1512820790803-83ca734da794?auto=format&fit=crop&w=800&q=80',
-  'whispered-duo': 'https://images.unsplash.com/photo-1476275466078-4007374efbbe?auto=format&fit=crop&w=800&q=80',
-  'classic-matte-duo': 'https://images.unsplash.com/photo-1506880018603-83d5b814b5a6?auto=format&fit=crop&w=800&q=80',
+  'page-whisper': '/assets/catalog/b2c/bookmarks.jpg',
+  'velour-mark': '/assets/catalog/b2c/bookmarks.jpg',
+  'whispered-duo': '/assets/catalog/b2c/bookmarks.jpg',
+  'classic-matte-duo': '/assets/catalog/b2c/bookmarks.jpg',
 
   // Posters & Wall Art
-  'a3-matte-grande': 'https://images.unsplash.com/photo-1582561424760-0321d75e81fa?auto=format&fit=crop&w=800&q=80',
-  'a4-glossy-vivid': 'https://images.unsplash.com/photo-1579783902614-a3fb3927b675?auto=format&fit=crop&w=800&q=80',
-  'a3-glossy-grande': 'https://images.unsplash.com/photo-1577083552431-6e5fd01aa342?auto=format&fit=crop&w=800&q=80',
+  'a3-matte-grande': '/assets/catalog/b2c/posters.jpg',
+  'a4-glossy-vivid': '/assets/catalog/b2c/posters.jpg',
+  'a3-glossy-grande': '/assets/catalog/b2c/posters.jpg',
 };
 
 export function getProductImage(productId: string): string {

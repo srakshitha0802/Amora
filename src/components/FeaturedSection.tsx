@@ -124,36 +124,43 @@ const B2C_CATEGORIES: Array<{
   image: string;
 }> = [
   {
+    title: 'Spotify Couple Frame',
+    subtitle: 'Golden standing frame with scannable Spotify waveform & photo',
+    policy: 'No MOQ · Custom Song',
+    category: 'Personalised Gifts',
+    image: '/assets/catalog/b2c/spotify-frame.jpg',
+  },
+  {
     title: 'Polaroids & Photo Products',
-    subtitle: 'Vintage-bordered instant prints & keepsakes',
+    subtitle: 'Warm acrylic LED plaques, vintage-bordered prints & strips',
     policy: 'No MOQ · From ₹125',
     category: 'Polaroids & Photo Products',
     image: '/assets/catalog/b2c/polaroids.jpg',
   },
   {
     title: 'Personalised Gifts',
-    subtitle: 'Spotify plaques & bespoke memory frames',
+    subtitle: 'Glow LED photo cushions & bespoke memory keepsakes',
     policy: 'No MOQ · Customised',
     category: 'Personalised Gifts',
     image: '/assets/catalog/b2c/personalised-gifts.jpg',
   },
   {
     title: 'Stickers & Decals',
-    subtitle: 'Waterproof kiss-cut matte & clear vinyl',
+    subtitle: 'Waterproof kiss-cut matte & clear vinyl for laptops & mugs',
     policy: 'No MOQ · From ₹89',
     category: 'Stickers',
     image: '/assets/catalog/b2c/stickers.jpg',
   },
   {
     title: 'Bookmarks & Stationery',
-    subtitle: '300 GSM cotton card with silk satin tassels',
+    subtitle: 'Resin floral & 300 GSM cotton cards with silk satin tassels',
     policy: 'No MOQ · From ₹99',
     category: 'Bookmarks & Stationery',
     image: '/assets/catalog/b2c/bookmarks.jpg',
   },
   {
     title: 'Posters & Wall Art',
-    subtitle: 'Matte & velvet silk wall art & prints',
+    subtitle: 'Gallery aesthetic matte & velvet silk framed wall art prints',
     policy: 'No MOQ · From ₹149',
     category: 'Posters & Prints',
     image: '/assets/catalog/b2c/posters.jpg',
@@ -467,7 +474,7 @@ export const FeaturedSection: React.FC<FeaturedSectionProps> = ({
             </button>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-6 gap-4">
             {B2C_CATEGORIES.map((item) => (
               <button
                 key={item.title}
@@ -489,7 +496,7 @@ export const FeaturedSection: React.FC<FeaturedSectionProps> = ({
                     className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                     loading="lazy"
                     onError={(e) => {
-                      (e.currentTarget as HTMLImageElement).src = '/assets/amora-logo-official.jpg';
+                      (e.currentTarget as HTMLImageElement).src = '/assets/catalog/b2c/polaroids.jpg';
                     }}
                   />
                   <span className={`absolute top-2 left-2 text-[9px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full ${

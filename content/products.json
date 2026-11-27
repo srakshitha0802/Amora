@@ -1151,7 +1151,93 @@
     "visualType": "photostrips-letters",
     "defaultAccent": "#2E2A32",
     "defaultSampleText": "CINEMA 35MM",
-    "imageUrl": "https://images.unsplash.com/photo-1586075010923-2dd4570fb338?auto=format&fit=crop&w=800&q=80"
+    "imageUrl": "/assets/catalog/b2c/polaroids.jpg"
+  },
+  {
+    "id": "spotify-couple-photo-frame",
+    "name": "Personalized Spotify Couple Photo Frame",
+    "shortName": "Spotify Photo Frame",
+    "category": "photo-products",
+    "categories": [
+      "Personalised Gifts",
+      "Polaroids & Photo Products"
+    ],
+    "primaryCategory": "Personalised Gifts",
+    "description": "Bespoke golden-framed couple memory display with scannable Spotify song barcode, couple portrait, song title, and artist name. Perfect anniversary, wedding, or romantic gift.",
+    "specifications": [
+      "Premium Brushed Gold Metal Standing Frame",
+      "Scannable Spotify Audio Wave Code",
+      "HD Archival Couple Photo Print",
+      "Custom Song Title & Artist Inscription",
+      "No MOQ · Handcrafted in Kalyan"
+    ],
+    "specs": [
+      "Golden Metal Frame",
+      "Scannable Spotify Code",
+      "Custom Couple Photo",
+      "No Minimum Order"
+    ],
+    "price": 499,
+    "currency": "INR",
+    "priceUnit": "piece",
+    "priceLabel": "₹499",
+    "unitPriceEstimate": 499,
+    "unitLabel": "per frame",
+    "moq": 1,
+    "orderType": "consumer-ready",
+    "isBulkOnly": false,
+    "image": "/assets/catalog/b2c/spotify-frame.jpg",
+    "imageType": "actual-product-photo",
+    "shippingIncluded": false,
+    "priceStatus": "provided",
+    "enquiryType": "direct-enquiry",
+    "customisationInfo": "Upload your couple photo and provide your favorite Spotify song link or title.",
+    "visualType": "photo-frame",
+    "defaultAccent": "#DDBB72",
+    "defaultSampleText": "Soch Na Sake · Airlift",
+    "imageUrl": "/assets/catalog/b2c/spotify-frame.jpg"
+  },
+  {
+    "id": "personalised-photo-cushion",
+    "name": "Personalised Warm Light Photo Cushion",
+    "shortName": "Photo Light Cushion",
+    "category": "personalised-gifts",
+    "categories": [
+      "Personalised Gifts"
+    ],
+    "primaryCategory": "Personalised Gifts",
+    "description": "Ultra-soft velvet cushion personalized with high-definition edge-to-edge photo print and embedded warm LED fairy lights. Perfect cozy gift for birthdays, sisters, and partners.",
+    "specifications": [
+      "Ultra-soft velvet plush cushion with filler",
+      "High-definition permanent sublimation photo print",
+      "Internal warm LED micro fairy lights with toggle switch",
+      "No MOQ · Gift wrapped with signature wax seal"
+    ],
+    "specs": [
+      "Velvet Photo Cushion",
+      "Warm LED Glow Lights",
+      "Edge-to-Edge Print",
+      "Zero MOQ"
+    ],
+    "price": 549,
+    "currency": "INR",
+    "priceUnit": "piece",
+    "priceLabel": "₹549",
+    "unitPriceEstimate": 549,
+    "unitLabel": "per piece",
+    "moq": 1,
+    "orderType": "consumer-ready",
+    "isBulkOnly": false,
+    "image": "/assets/catalog/b2c/personalised-gifts.jpg",
+    "imageType": "actual-product-photo",
+    "shippingIncluded": false,
+    "priceStatus": "provided",
+    "enquiryType": "direct-enquiry",
+    "customisationInfo": "Upload your high-res photo to be printed on the cushion.",
+    "visualType": "cushion",
+    "defaultAccent": "#702D58",
+    "defaultSampleText": "MEMORIES WITH YOU",
+    "imageUrl": "/assets/catalog/b2c/personalised-gifts.jpg"
   },
   {
     "id": "spotify-polaroids-3",
