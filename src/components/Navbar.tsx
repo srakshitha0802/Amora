@@ -181,6 +181,19 @@ export const Navbar: React.FC<NavbarProps> = ({
 
           {/* Right: Theme Toggle, Enquiry Cart, WhatsApp Catalog button */}
           <div className="flex items-center gap-2 sm:gap-2.5 shrink-0">
+            <a
+              href="/admin"
+              className={`hidden lg:inline-flex p-2 rounded-full border transition-all cursor-pointer items-center justify-center ${
+                isDark
+                  ? 'border-white/20 text-[#EBC5CC] hover:bg-white/10'
+                  : 'bg-white/90 border-[#702D58]/15 text-[#702D58] hover:bg-white shadow-xs'
+              }`}
+              title="Open Studio Admin"
+              aria-label="Open Studio Admin"
+            >
+              <span className="material-symbols-outlined text-[19px]">admin_panel_settings</span>
+            </a>
+
             {/* Theme Toggle Button using Google Material Symbol */}
             {onToggleTheme && (
               <button
@@ -302,6 +315,16 @@ export const Navbar: React.FC<NavbarProps> = ({
             </button>
 
             <div className="pt-2 border-t border-current/10 flex flex-col gap-2">
+              <a
+                href="/admin"
+                className="w-full py-2.5 px-4 rounded-xl border border-current/20 text-xs font-semibold flex items-center justify-center gap-2"
+              >
+                <span className="material-symbols-outlined text-[#C77F98] text-[18px]">
+                  admin_panel_settings
+                </span>
+                <span>Studio Admin</span>
+              </a>
+
               <button
                 type="button"
                 onClick={handleCartClick}

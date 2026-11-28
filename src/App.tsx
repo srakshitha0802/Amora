@@ -8,7 +8,11 @@ import type {
   ProductCategory,
   ShortlistItem,
 } from './types';
-import { PRODUCTS, buildWhatsAppUrl } from './data/products';
+import { buildWhatsAppUrl } from './data/products';
+import {
+  getPublishedCatalogProducts,
+  subscribeToCatalogChanges,
+} from './services/productCatalog';
 import { Navbar } from './components/Navbar';
 import { ParticleHero } from './components/ParticleHero';
 import { CircularProductOrbit } from './components/CircularProductOrbit';
@@ -43,6 +47,19 @@ export default function App() {
   const [shortlist, setShortlist] = React.useState<ShortlistItem[]>(loadInitialShortlist);
   const [corporatePrefill, setCorporatePrefill] = React.useState<CorporatePrefill | null>(null);
   const [toastText, setToastText] = React.useState<string | null>(null);
+  const [products, setProducts] = React.useState<Product[] | null>(null);
+  const [catalogError, setCatalogError] = React.useState<string | null>(null);
+
+  const refreshProducts = React.useCallback(async () => {
+    try {
+      setProducts(await getPublishedCatalogProducts());
+      setCatalogError(null);
+    } catch (error) {
+      setCatalogError(
+        error instanceof Error ? error.message : 'The product catalogue could not be loaded.'
+      );
+    }
+  }, []);
 
   // Dual Theme Engine (Default: Approved Light Ivory & Plum Foundation)
   const [theme, setTheme] = React.useState<'dark' | 'light'>('light');
@@ -92,6 +109,11 @@ export default function App() {
       // Ignore storage quota errors
     }
   }, [shortlist]);
+
+  React.useEffect(() => {
+    void refreshProducts();
+    return subscribeToCatalogChanges(() => void refreshProducts());
+  }, [refreshProducts]);
 
   const showToast = (message: string) => {
     setToastText(message);
@@ -222,6 +244,32 @@ export default function App() {
     'Hello Amora.co! I would like to enquire about personalised gifting or corporate bulk merchandise.'
   );
 
+  if (catalogError) {
+    return (
+      <main className="min-h-screen grid place-items-center bg-[#F8F4EA] px-6 text-[#2E2A32]">
+        <div className="max-w-md text-center">
+          <h1 className="font-serif text-3xl">Catalogue unavailable</h1>
+          <p className="mt-3 text-sm text-[#76636D]">{catalogError}</p>
+          <button
+            type="button"
+            className="mt-6 rounded-full bg-[#6D2E58] px-5 py-3 text-sm font-semibold text-[#F8F4EA]"
+            onClick={() => void refreshProducts()}
+          >
+            Try again
+          </button>
+        </div>
+      </main>
+    );
+  }
+
+  if (!products) {
+    return (
+      <main className="min-h-screen grid place-items-center bg-[#F8F4EA] text-[#6D2E58]">
+        <span className="font-serif text-xl">Preparing the Amora catalogue…</span>
+      </main>
+    );
+  }
+
   return (
     <div
       className={`min-h-screen relative selection:bg-[#6D2E58] selection:text-[#F8F4EA] transition-colors duration-300 ${
@@ -249,7 +297,7 @@ export default function App() {
         {/* 2. Interactive 3D Circular Orbit Runway (Requested Ring Carousel) */}
         <div id="orbit-showcase" className="border-t border-b border-current/10">
           <CircularProductOrbit
-            products={PRODUCTS}
+            products={products}
             onCustomiseProduct={setCustomisingProduct}
             theme={theme}
           />
@@ -257,6 +305,7 @@ export default function App() {
 
         {/* 3. Brand Positioning & Featured Categories Bento Grid + B2C/B2B Split */}
         <FeaturedSection
+          products={products}
           onExplorePersonal={handleExplorePersonal}
           onExploreCorporate={handleExploreCorporate}
           onJumpToCategory={handleJumpToCategory}
@@ -265,14 +314,14 @@ export default function App() {
 
         {/* 4. Dedicated Track A: Personalised Prints & Keepsakes (No MOQ) Showcase */}
         <KeepsakeShowcase
-          products={PRODUCTS}
+          products={products}
           onCustomiseProduct={setCustomisingProduct}
           theme={theme}
         />
 
         {/* 5. Complete Filterable Shop with 3D Tilt Cards */}
         <ShopSection
-          products={PRODUCTS}
+          products={products}
           activeCategory={activeCategory}
           orderMode={orderMode}
           onCategoryChange={setActiveCategory}
@@ -286,6 +335,7 @@ export default function App() {
 
         {/* 6. Dedicated Track B: Corporate B2B Studio & Bulk Quotation Form (Strict MOQ 36+) */}
         <CorporateSection
+          products={products}
           prefill={corporatePrefill}
           onAddKitToShortlist={handleAddKitToShortlist}
           theme={theme}
